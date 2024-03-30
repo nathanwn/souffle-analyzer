@@ -1,0 +1,11 @@
+name: main
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  test:
+    uses: nathanwn/workflows/.github/workflows/tox.yml@135d93c38e07cb6f5feec8380dc72c81929fc294  # v0.3.1

@@ -1,0 +1,6 @@
+[flake8]
+ignore =
+    # conflicts with black
+    E203
+    W503
+max-line-length = 88

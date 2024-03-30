@@ -1,0 +1,17 @@
+/* A is a relation. */
+.decl A(x: number, y: number)
+
+/**
+ * B is another relation.
+**/
+.decl B(x: number, y: number)
+
+// Some rules for B.
+B(x, y) :- A(x, y).
+B(x, z) :- A(x, y), B(y, z).
+
+.decl C(x: number, y: number)
+C(x, y) :- A(x, y), !B(x, y).
+
+.input A
+.output C

@@ -1,0 +1,8 @@
+.type Piece = Pawn | King
+.type Edge = [
+    from: Node,
+    to: Node,
+    weight: number
+]
+.type Tree = Empty {}
+           | Node {t1: Tree, val: unsigned, t2: Tree}

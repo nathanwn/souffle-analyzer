@@ -1,0 +1,80 @@
+File(range_=[0:0-11:-1]
+  RelationDeclaration(range_=[0:0-0:28]
+    Identifier(range_=[0:6-0:6], val='A')
+    Attribute(range_=[0:8-0:16]
+      Identifier(range_=[0:8-0:8], val='x')
+      TypeReference(range_=[0:11-0:16], names=['number'])
+    )
+    Attribute(range_=[0:19-0:27]
+      Identifier(range_=[0:19-0:19], val='y')
+      TypeReference(range_=[0:22-0:27], names=['number'])
+    )
+  )
+  Fact(range_=[2:0-2:6]
+    QualifiedName(range_=[2:0-2:0]
+      Identifier(range_=[2:0-2:0], val='A')
+    )
+    NumberConstant(range_=[2:2-2:2], val=1)
+    NumberConstant(range_=[2:5-2:5], val=2)
+  )
+  Fact(range_=[3:0-3:6]
+    QualifiedName(range_=[3:0-3:0]
+      Identifier(range_=[3:0-3:0], val='A')
+    )
+    NumberConstant(range_=[3:2-3:2], val=1)
+    NumberConstant(range_=[3:5-3:5], val=3)
+  )
+  Fact(range_=[4:0-4:6]
+    QualifiedName(range_=[4:0-4:0]
+      Identifier(range_=[4:0-4:0], val='A')
+    )
+    NumberConstant(range_=[4:2-4:2], val=1)
+    NumberConstant(range_=[4:5-4:5], val=4)
+  )
+  Fact(range_=[5:0-5:6]
+    QualifiedName(range_=[5:0-5:0]
+      Identifier(range_=[5:0-5:0], val='A')
+    )
+    NumberConstant(range_=[5:2-5:2], val=2)
+    NumberConstant(range_=[5:5-5:5], val=1)
+  )
+  Fact(range_=[6:0-6:6]
+    QualifiedName(range_=[6:0-6:0]
+      Identifier(range_=[6:0-6:0], val='A')
+    )
+    NumberConstant(range_=[6:2-6:2], val=2)
+    NumberConstant(range_=[6:5-6:5], val=5)
+  )
+  Rule(range_=[8:0-8:27]
+    SubsumptionHead(range_=[8:0-8:17]
+      RelationReference(range_=[8:0-8:6]
+        QualifiedName(range_=[8:0-8:0]
+          Identifier(range_=[8:0-8:0], val='A')
+        )
+        Variable(range_=[8:2-8:2], name='x')
+        Variable(range_=[8:5-8:5], name='y')
+      )
+      RelationReference(range_=[8:11-8:17]
+        QualifiedName(range_=[8:11-8:11]
+          Identifier(range_=[8:11-8:11], val='A')
+        )
+        Variable(range_=[8:13-8:13], name='x')
+        Variable(range_=[8:16-8:16], name='z')
+      )
+    )
+    Disjunction(range_=[8:22-8:26]
+      Conjunction(range_=[8:22-8:26]
+        BinaryConstraint(range_=[8:22-8:26]
+          Variable(range_=[8:22-8:22], name='y')
+          BinaryConstraintOp(range_=[8:24-8:24], op='<')
+          Variable(range_=[8:26-8:26], name='z')
+        )
+      )
+    )
+  )
+  Directive(range_=[10:0-10:8]
+    QualifiedName(range_=[10:8-10:8]
+      Identifier(range_=[10:8-10:8], val='A')
+    )
+  )
+)

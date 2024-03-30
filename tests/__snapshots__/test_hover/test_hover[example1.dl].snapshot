@@ -1,0 +1,407 @@
+ 0 | /* A is a relation. */
+ 1 | .decl A(x: number, y: number)
+ 2 |
+ 3 | /**
+ 4 |  * B is another relation.
+ 5 | **/
+ 6 | .decl B(x: number, y: number)
+ 7 |
+ 8 | // Some rules for B.
+ 9 | B(x, y) :- A(x, y).
+10 | B(x, z) :- A(x, y), B(y, z).
+11 |
+12 | .decl C(x: number, y: number)
+13 | C(x, y) :- A(x, y), !B(x, y).
+14 |
+15 | .input A
+16 | .output C
+
+=====
+
+-- Cursor range --
+ 1 | .decl A(x: number, y: number)
+   |            ^^^^^^
+-- Hover range --
+ 1 | .decl A(x: number, y: number)
+   |            ^^^^^^
+--   Message   --
+Type `number`. Each value is a signed integer.
+_____
+
+-- Cursor range --
+ 1 | .decl A(x: number, y: number)
+   |                       ^^^^^^
+-- Hover range --
+ 1 | .decl A(x: number, y: number)
+   |                       ^^^^^^
+--   Message   --
+Type `number`. Each value is a signed integer.
+_____
+
+-- Cursor range --
+ 6 | .decl B(x: number, y: number)
+   |            ^^^^^^
+-- Hover range --
+ 6 | .decl B(x: number, y: number)
+   |            ^^^^^^
+--   Message   --
+Type `number`. Each value is a signed integer.
+_____
+
+-- Cursor range --
+ 6 | .decl B(x: number, y: number)
+   |                       ^^^^^^
+-- Hover range --
+ 6 | .decl B(x: number, y: number)
+   |                       ^^^^^^
+--   Message   --
+Type `number`. Each value is a signed integer.
+_____
+
+-- Cursor range --
+ 9 | B(x, y) :- A(x, y).
+   | ^
+-- Hover range --
+ 9 | B(x, y) :- A(x, y).
+   | ^
+--   Message   --
+```
+B(x: number, y: number)
+```
+
+B is another relation.
+_____
+
+-- Cursor range --
+ 9 | B(x, y) :- A(x, y).
+   |   ^
+-- Hover range --
+ 9 | B(x, y) :- A(x, y).
+   |   ^
+--   Message   --
+```
+x: number
+```
+_____
+
+-- Cursor range --
+ 9 | B(x, y) :- A(x, y).
+   |      ^
+-- Hover range --
+ 9 | B(x, y) :- A(x, y).
+   |      ^
+--   Message   --
+```
+y: number
+```
+_____
+
+-- Cursor range --
+ 9 | B(x, y) :- A(x, y).
+   |            ^
+-- Hover range --
+ 9 | B(x, y) :- A(x, y).
+   |            ^
+--   Message   --
+```
+A(x: number, y: number)
+```
+
+A is a relation. */
+_____
+
+-- Cursor range --
+ 9 | B(x, y) :- A(x, y).
+   |              ^
+-- Hover range --
+ 9 | B(x, y) :- A(x, y).
+   |              ^
+--   Message   --
+```
+x: number
+```
+_____
+
+-- Cursor range --
+ 9 | B(x, y) :- A(x, y).
+   |                 ^
+-- Hover range --
+ 9 | B(x, y) :- A(x, y).
+   |                 ^
+--   Message   --
+```
+y: number
+```
+_____
+
+-- Cursor range --
+10 | B(x, z) :- A(x, y), B(y, z).
+   | ^
+-- Hover range --
+10 | B(x, z) :- A(x, y), B(y, z).
+   | ^
+--   Message   --
+```
+B(x: number, y: number)
+```
+
+B is another relation.
+_____
+
+-- Cursor range --
+10 | B(x, z) :- A(x, y), B(y, z).
+   |   ^
+-- Hover range --
+10 | B(x, z) :- A(x, y), B(y, z).
+   |   ^
+--   Message   --
+```
+x: number
+```
+_____
+
+-- Cursor range --
+10 | B(x, z) :- A(x, y), B(y, z).
+   |      ^
+-- Hover range --
+10 | B(x, z) :- A(x, y), B(y, z).
+   |      ^
+--   Message   --
+```
+y: number
+```
+_____
+
+-- Cursor range --
+10 | B(x, z) :- A(x, y), B(y, z).
+   |            ^
+-- Hover range --
+10 | B(x, z) :- A(x, y), B(y, z).
+   |            ^
+--   Message   --
+```
+A(x: number, y: number)
+```
+
+A is a relation. */
+_____
+
+-- Cursor range --
+10 | B(x, z) :- A(x, y), B(y, z).
+   |              ^
+-- Hover range --
+10 | B(x, z) :- A(x, y), B(y, z).
+   |              ^
+--   Message   --
+```
+x: number
+```
+_____
+
+-- Cursor range --
+10 | B(x, z) :- A(x, y), B(y, z).
+   |                 ^
+-- Hover range --
+10 | B(x, z) :- A(x, y), B(y, z).
+   |                 ^
+--   Message   --
+```
+y: number
+```
+_____
+
+-- Cursor range --
+10 | B(x, z) :- A(x, y), B(y, z).
+   |                     ^
+-- Hover range --
+10 | B(x, z) :- A(x, y), B(y, z).
+   |                     ^
+--   Message   --
+```
+B(x: number, y: number)
+```
+
+B is another relation.
+_____
+
+-- Cursor range --
+10 | B(x, z) :- A(x, y), B(y, z).
+   |                       ^
+-- Hover range --
+10 | B(x, z) :- A(x, y), B(y, z).
+   |                       ^
+--   Message   --
+```
+x: number
+```
+_____
+
+-- Cursor range --
+10 | B(x, z) :- A(x, y), B(y, z).
+   |                          ^
+-- Hover range --
+10 | B(x, z) :- A(x, y), B(y, z).
+   |                          ^
+--   Message   --
+```
+y: number
+```
+_____
+
+-- Cursor range --
+12 | .decl C(x: number, y: number)
+   |            ^^^^^^
+-- Hover range --
+12 | .decl C(x: number, y: number)
+   |            ^^^^^^
+--   Message   --
+Type `number`. Each value is a signed integer.
+_____
+
+-- Cursor range --
+12 | .decl C(x: number, y: number)
+   |                       ^^^^^^
+-- Hover range --
+12 | .decl C(x: number, y: number)
+   |                       ^^^^^^
+--   Message   --
+Type `number`. Each value is a signed integer.
+_____
+
+-- Cursor range --
+13 | C(x, y) :- A(x, y), !B(x, y).
+   | ^
+-- Hover range --
+13 | C(x, y) :- A(x, y), !B(x, y).
+   | ^
+--   Message   --
+```
+C(x: number, y: number)
+```
+_____
+
+-- Cursor range --
+13 | C(x, y) :- A(x, y), !B(x, y).
+   |   ^
+-- Hover range --
+13 | C(x, y) :- A(x, y), !B(x, y).
+   |   ^
+--   Message   --
+```
+x: number
+```
+_____
+
+-- Cursor range --
+13 | C(x, y) :- A(x, y), !B(x, y).
+   |      ^
+-- Hover range --
+13 | C(x, y) :- A(x, y), !B(x, y).
+   |      ^
+--   Message   --
+```
+y: number
+```
+_____
+
+-- Cursor range --
+13 | C(x, y) :- A(x, y), !B(x, y).
+   |            ^
+-- Hover range --
+13 | C(x, y) :- A(x, y), !B(x, y).
+   |            ^
+--   Message   --
+```
+A(x: number, y: number)
+```
+
+A is a relation. */
+_____
+
+-- Cursor range --
+13 | C(x, y) :- A(x, y), !B(x, y).
+   |              ^
+-- Hover range --
+13 | C(x, y) :- A(x, y), !B(x, y).
+   |              ^
+--   Message   --
+```
+x: number
+```
+_____
+
+-- Cursor range --
+13 | C(x, y) :- A(x, y), !B(x, y).
+   |                 ^
+-- Hover range --
+13 | C(x, y) :- A(x, y), !B(x, y).
+   |                 ^
+--   Message   --
+```
+y: number
+```
+_____
+
+-- Cursor range --
+13 | C(x, y) :- A(x, y), !B(x, y).
+   |                      ^
+-- Hover range --
+13 | C(x, y) :- A(x, y), !B(x, y).
+   |                      ^
+--   Message   --
+```
+B(x: number, y: number)
+```
+
+B is another relation.
+_____
+
+-- Cursor range --
+13 | C(x, y) :- A(x, y), !B(x, y).
+   |                        ^
+-- Hover range --
+13 | C(x, y) :- A(x, y), !B(x, y).
+   |                        ^
+--   Message   --
+```
+x: number
+```
+_____
+
+-- Cursor range --
+13 | C(x, y) :- A(x, y), !B(x, y).
+   |                           ^
+-- Hover range --
+13 | C(x, y) :- A(x, y), !B(x, y).
+   |                           ^
+--   Message   --
+```
+y: number
+```
+_____
+
+-- Cursor range --
+15 | .input A
+   |        ^
+-- Hover range --
+15 | .input A
+   |        ^
+--   Message   --
+```
+A(x: number, y: number)
+```
+
+A is a relation. */
+_____
+
+-- Cursor range --
+16 | .output C
+   |         ^
+-- Hover range --
+16 | .output C
+   |         ^
+--   Message   --
+```
+C(x: number, y: number)
+```
+_____

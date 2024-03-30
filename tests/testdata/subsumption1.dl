@@ -1,0 +1,11 @@
+.decl A(x: number, y: number)
+
+A(1, 2).
+A(1, 3).
+A(1, 4).
+A(2, 1).
+A(2, 5).
+
+A(x, y) <= A(x, z) :- y < z.
+
+.output A

@@ -1,0 +1,9 @@
+.decl directed_edge(
+    u: number,
+    v: number
+)
+
+.decl path(
+    u: number,
+    v: number
+)

@@ -1,0 +1,6 @@
+0 | .decl A(x: number, y: number)
+1 |
+2 | A(1, 2)
+3 | A(2, 3).
+4 |
+5 | .output A

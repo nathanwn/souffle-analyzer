@@ -1,0 +1,8 @@
+0 | .type Piece = Pawn | King
+1 | .type Edge = [
+2 |     from: Node,
+3 |     to: Node,
+4 |     weight: number
+5 | ]
+6 | .type Tree = Empty {}
+7 |            | Node {t1: Tree, val: unsigned, t2: Tree}

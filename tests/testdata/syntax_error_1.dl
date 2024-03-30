@@ -1,0 +1,6 @@
+.decl A(x: number, y: number)
+
+A(1, 2)
+A(2, 3).
+
+.output A

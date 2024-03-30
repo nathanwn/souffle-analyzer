@@ -1,0 +1,17 @@
+/// There exists an edge between two nodes `u` and `v`.
+/// @attribute u  the initial node
+/// @attribute v  the terminal node
+.decl directed_edge(u: number, v: number)
+
+directed_edge(1, 2).
+directed_edge(1, 3).
+directed_edge(2, 4).
+directed_edge(3, 5).
+
+/// There exists a path from node `u` to node `v`.
+/// @attribute u  the source node
+/// @attribute v  the sink node
+.decl path(u: number, v: number)
+
+path(u, v) :- directed_edge(u, v).
+path(u, v) :- directed_edge(u, i), directed_edge(i, v)

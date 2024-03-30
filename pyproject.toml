@@ -1,0 +1,62 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "souffle-analyzer"
+description = "A Souffle language server, bundled with other utilities for the language."
+readme = "README.md"
+keywords = [
+    "souffle", "lsp", "language-server", "code-analysis", "ide", "text-editor",
+]
+version = "0.0.1"
+dependencies = [
+    "typing_extensions>=3.10.0; python_version<'3.10'",
+    "lsprotocol>=2023.0.1",
+    "tree-sitter>=0.21.0",
+    "tree-sitter-souffle@git+https://github.com/nathanwn/tree-sitter-souffle@8627617cfe448c13ae43fb7c31ff66707604f8f8",
+]
+requires-python = ">=3.8"
+
+[project.optional-dependencies]
+test = [
+    "coverage",
+    "covdefaults",
+    "hypothesis",
+    "pytest",
+    "syrupy",
+]
+dev = [
+    "pre-commit",
+    "tox",
+    "souffle_analyzer[test]",
+]
+
+[project.scripts]
+souffle-analyzer = "souffle_analyzer.__main__:main"
+
+[tool.setuptools.packages.find]
+# Note: set this if we are using src layout.
+where = ["src"]
+
+[tool.black]
+line-length = 88
+target-version = ['py38']
+
+[tool.isort]
+profile = "black"
+
+[tool.coverage.run]
+branch = true
+
+[tool.coverage.paths]
+# Note: set this if we are using src layout.
+source = [
+    "src"
+]
+
+[tool.coverage.report]
+show_missing = true
+
+[tool.pyright]
+include = ["tests"]
