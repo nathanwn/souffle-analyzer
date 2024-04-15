@@ -42,10 +42,12 @@ def record_analysis_result_at_cursor(
                 else:
                     cur_result = result
                     cur_start = pos
-                    cur_end = pos
+                    # Range-end char index must be exclusive
+                    cur_end = Position(line=pos.line, char=pos.char + 1)
             else:
                 if cur_end is not None:
-                    cur_end = pos
+                    # Range-end char index must be exclusive
+                    cur_end = Position(line=pos.line, char=pos.char + 1)
 
     if cur_start is not None and cur_end is not None and cur_result is not None:
         results.append(

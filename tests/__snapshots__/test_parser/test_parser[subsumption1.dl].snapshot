@@ -1,80 +1,80 @@
-File(range_=[0:0-11:-1]
-  RelationDeclaration(range_=[0:0-0:28]
-    Identifier(range_=[0:6-0:6], val='A')
-    Attribute(range_=[0:8-0:16]
-      Identifier(range_=[0:8-0:8], val='x')
-      TypeReference(range_=[0:11-0:16], names=['number'])
+File(range_=[0:0-11:0]
+  RelationDeclaration(range_=[0:0-0:29]
+    Identifier(range_=[0:6-0:7], val='A')
+    Attribute(range_=[0:8-0:17]
+      Identifier(range_=[0:8-0:9], val='x')
+      TypeReference(range_=[0:11-0:17], names=['number'])
     )
-    Attribute(range_=[0:19-0:27]
-      Identifier(range_=[0:19-0:19], val='y')
-      TypeReference(range_=[0:22-0:27], names=['number'])
+    Attribute(range_=[0:19-0:28]
+      Identifier(range_=[0:19-0:20], val='y')
+      TypeReference(range_=[0:22-0:28], names=['number'])
     )
   )
-  Fact(range_=[2:0-2:6]
-    QualifiedName(range_=[2:0-2:0]
-      Identifier(range_=[2:0-2:0], val='A')
+  Fact(range_=[2:0-2:7]
+    QualifiedName(range_=[2:0-2:1]
+      Identifier(range_=[2:0-2:1], val='A')
     )
-    NumberConstant(range_=[2:2-2:2], val=1)
-    NumberConstant(range_=[2:5-2:5], val=2)
+    NumberConstant(range_=[2:2-2:3], val=1)
+    NumberConstant(range_=[2:5-2:6], val=2)
   )
-  Fact(range_=[3:0-3:6]
-    QualifiedName(range_=[3:0-3:0]
-      Identifier(range_=[3:0-3:0], val='A')
+  Fact(range_=[3:0-3:7]
+    QualifiedName(range_=[3:0-3:1]
+      Identifier(range_=[3:0-3:1], val='A')
     )
-    NumberConstant(range_=[3:2-3:2], val=1)
-    NumberConstant(range_=[3:5-3:5], val=3)
+    NumberConstant(range_=[3:2-3:3], val=1)
+    NumberConstant(range_=[3:5-3:6], val=3)
   )
-  Fact(range_=[4:0-4:6]
-    QualifiedName(range_=[4:0-4:0]
-      Identifier(range_=[4:0-4:0], val='A')
+  Fact(range_=[4:0-4:7]
+    QualifiedName(range_=[4:0-4:1]
+      Identifier(range_=[4:0-4:1], val='A')
     )
-    NumberConstant(range_=[4:2-4:2], val=1)
-    NumberConstant(range_=[4:5-4:5], val=4)
+    NumberConstant(range_=[4:2-4:3], val=1)
+    NumberConstant(range_=[4:5-4:6], val=4)
   )
-  Fact(range_=[5:0-5:6]
-    QualifiedName(range_=[5:0-5:0]
-      Identifier(range_=[5:0-5:0], val='A')
+  Fact(range_=[5:0-5:7]
+    QualifiedName(range_=[5:0-5:1]
+      Identifier(range_=[5:0-5:1], val='A')
     )
-    NumberConstant(range_=[5:2-5:2], val=2)
-    NumberConstant(range_=[5:5-5:5], val=1)
+    NumberConstant(range_=[5:2-5:3], val=2)
+    NumberConstant(range_=[5:5-5:6], val=1)
   )
-  Fact(range_=[6:0-6:6]
-    QualifiedName(range_=[6:0-6:0]
-      Identifier(range_=[6:0-6:0], val='A')
+  Fact(range_=[6:0-6:7]
+    QualifiedName(range_=[6:0-6:1]
+      Identifier(range_=[6:0-6:1], val='A')
     )
-    NumberConstant(range_=[6:2-6:2], val=2)
-    NumberConstant(range_=[6:5-6:5], val=5)
+    NumberConstant(range_=[6:2-6:3], val=2)
+    NumberConstant(range_=[6:5-6:6], val=5)
   )
-  Rule(range_=[8:0-8:27]
-    SubsumptionHead(range_=[8:0-8:17]
-      RelationReference(range_=[8:0-8:6]
-        QualifiedName(range_=[8:0-8:0]
-          Identifier(range_=[8:0-8:0], val='A')
+  Rule(range_=[8:0-8:28]
+    SubsumptionHead(range_=[8:0-8:18]
+      RelationReference(range_=[8:0-8:7]
+        QualifiedName(range_=[8:0-8:1]
+          Identifier(range_=[8:0-8:1], val='A')
         )
-        Variable(range_=[8:2-8:2], name='x')
-        Variable(range_=[8:5-8:5], name='y')
+        Variable(range_=[8:2-8:3], name='x')
+        Variable(range_=[8:5-8:6], name='y')
       )
-      RelationReference(range_=[8:11-8:17]
-        QualifiedName(range_=[8:11-8:11]
-          Identifier(range_=[8:11-8:11], val='A')
+      RelationReference(range_=[8:11-8:18]
+        QualifiedName(range_=[8:11-8:12]
+          Identifier(range_=[8:11-8:12], val='A')
         )
-        Variable(range_=[8:13-8:13], name='x')
-        Variable(range_=[8:16-8:16], name='z')
-      )
-    )
-    Disjunction(range_=[8:22-8:26]
-      Conjunction(range_=[8:22-8:26]
-        BinaryConstraint(range_=[8:22-8:26]
-          Variable(range_=[8:22-8:22], name='y')
-          BinaryConstraintOp(range_=[8:24-8:24], op='<')
-          Variable(range_=[8:26-8:26], name='z')
-        )
+        Variable(range_=[8:13-8:14], name='x')
+        Variable(range_=[8:16-8:17], name='z')
       )
     )
+    Disjunction(range_=[8:22-8:27]
+      Conjunction(range_=[8:22-8:27]
+        BinaryConstraint(range_=[8:22-8:27]
+          Variable(range_=[8:22-8:23], name='y')
+          BinaryConstraintOp(range_=[8:24-8:25], op='<')
+          Variable(range_=[8:26-8:27], name='z')
+        )
+      )
+    )
   )
-  Directive(range_=[10:0-10:8]
-    QualifiedName(range_=[10:8-10:8]
-      Identifier(range_=[10:8-10:8], val='A')
+  Directive(range_=[10:0-10:9]
+    QualifiedName(range_=[10:8-10:9]
+      Identifier(range_=[10:8-10:9], val='A')
     )
   )
 )

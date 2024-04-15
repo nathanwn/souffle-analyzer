@@ -20,7 +20,7 @@
 
 -- Cursor range --
 12 | .decl C(x: number, y: number)
-   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 -- Insertion point --
 12 | .decl C(x: number, y: number)
    | ^

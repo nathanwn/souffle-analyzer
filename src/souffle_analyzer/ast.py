@@ -49,7 +49,9 @@ class Range:
         return f"[{self.start}-{self.end}]"
 
     def covers(self, position: Position) -> bool:
-        return self.start <= position <= self.end
+        # Range-end character on a line is always exclusive.
+        # This is the convention of both tree-sitter and vscode.
+        return self.start <= position < self.end
 
 
 @dataclass

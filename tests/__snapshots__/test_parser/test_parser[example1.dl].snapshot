@@ -1,138 +1,138 @@
-File(range_=[0:0-17:-1]
-  BlockComment(range_=[0:0-0:21], content='/* A is a relation. */')
-  RelationDeclaration(range_=[1:0-1:28]
-    Identifier(range_=[1:6-1:6], val='A')
-    Attribute(range_=[1:8-1:16]
-      Identifier(range_=[1:8-1:8], val='x')
-      TypeReference(range_=[1:11-1:16], names=['number'])
+File(range_=[0:0-17:0]
+  BlockComment(range_=[0:0-0:22], content='/* A is a relation. */')
+  RelationDeclaration(range_=[1:0-1:29]
+    Identifier(range_=[1:6-1:7], val='A')
+    Attribute(range_=[1:8-1:17]
+      Identifier(range_=[1:8-1:9], val='x')
+      TypeReference(range_=[1:11-1:17], names=['number'])
     )
-    Attribute(range_=[1:19-1:27]
-      Identifier(range_=[1:19-1:19], val='y')
-      TypeReference(range_=[1:22-1:27], names=['number'])
-    )
-  )
-  BlockComment(range_=[3:0-5:2], content='/**\n * B is another relation.\n**/')
-  RelationDeclaration(range_=[6:0-6:28]
-    Identifier(range_=[6:6-6:6], val='B')
-    Attribute(range_=[6:8-6:16]
-      Identifier(range_=[6:8-6:8], val='x')
-      TypeReference(range_=[6:11-6:16], names=['number'])
-    )
-    Attribute(range_=[6:19-6:27]
-      Identifier(range_=[6:19-6:19], val='y')
-      TypeReference(range_=[6:22-6:27], names=['number'])
+    Attribute(range_=[1:19-1:28]
+      Identifier(range_=[1:19-1:20], val='y')
+      TypeReference(range_=[1:22-1:28], names=['number'])
     )
   )
-  LineComment(range_=[8:0-8:19], content=['// Some rules for B.'])
-  Rule(range_=[9:0-9:18]
-    RuleHead(range_=[9:0-9:6]
-      RelationReference(range_=[9:0-9:6]
-        QualifiedName(range_=[9:0-9:0]
-          Identifier(range_=[9:0-9:0], val='B')
+  BlockComment(range_=[3:0-5:3], content='/**\n * B is another relation.\n**/')
+  RelationDeclaration(range_=[6:0-6:29]
+    Identifier(range_=[6:6-6:7], val='B')
+    Attribute(range_=[6:8-6:17]
+      Identifier(range_=[6:8-6:9], val='x')
+      TypeReference(range_=[6:11-6:17], names=['number'])
+    )
+    Attribute(range_=[6:19-6:28]
+      Identifier(range_=[6:19-6:20], val='y')
+      TypeReference(range_=[6:22-6:28], names=['number'])
+    )
+  )
+  LineComment(range_=[8:0-8:20], content=['// Some rules for B.'])
+  Rule(range_=[9:0-9:19]
+    RuleHead(range_=[9:0-9:7]
+      RelationReference(range_=[9:0-9:7]
+        QualifiedName(range_=[9:0-9:1]
+          Identifier(range_=[9:0-9:1], val='B')
         )
-        Variable(range_=[9:2-9:2], name='x')
-        Variable(range_=[9:5-9:5], name='y')
+        Variable(range_=[9:2-9:3], name='x')
+        Variable(range_=[9:5-9:6], name='y')
       )
     )
-    Disjunction(range_=[9:11-9:17]
-      Conjunction(range_=[9:11-9:17]
-        RelationReferenceClause(range_=[9:11-9:17]
-          RelationReference(range_=[9:11-9:17]
-            QualifiedName(range_=[9:11-9:11]
-              Identifier(range_=[9:11-9:11], val='A')
+    Disjunction(range_=[9:11-9:18]
+      Conjunction(range_=[9:11-9:18]
+        RelationReferenceClause(range_=[9:11-9:18]
+          RelationReference(range_=[9:11-9:18]
+            QualifiedName(range_=[9:11-9:12]
+              Identifier(range_=[9:11-9:12], val='A')
             )
-            Variable(range_=[9:13-9:13], name='x')
-            Variable(range_=[9:16-9:16], name='y')
+            Variable(range_=[9:13-9:14], name='x')
+            Variable(range_=[9:16-9:17], name='y')
           )
         )
       )
     )
   )
-  Rule(range_=[10:0-10:27]
-    RuleHead(range_=[10:0-10:6]
-      RelationReference(range_=[10:0-10:6]
-        QualifiedName(range_=[10:0-10:0]
-          Identifier(range_=[10:0-10:0], val='B')
+  Rule(range_=[10:0-10:28]
+    RuleHead(range_=[10:0-10:7]
+      RelationReference(range_=[10:0-10:7]
+        QualifiedName(range_=[10:0-10:1]
+          Identifier(range_=[10:0-10:1], val='B')
         )
-        Variable(range_=[10:2-10:2], name='x')
-        Variable(range_=[10:5-10:5], name='z')
+        Variable(range_=[10:2-10:3], name='x')
+        Variable(range_=[10:5-10:6], name='z')
       )
     )
-    Disjunction(range_=[10:11-10:26]
-      Conjunction(range_=[10:11-10:26]
-        RelationReferenceClause(range_=[10:11-10:17]
-          RelationReference(range_=[10:11-10:17]
-            QualifiedName(range_=[10:11-10:11]
-              Identifier(range_=[10:11-10:11], val='A')
+    Disjunction(range_=[10:11-10:27]
+      Conjunction(range_=[10:11-10:27]
+        RelationReferenceClause(range_=[10:11-10:18]
+          RelationReference(range_=[10:11-10:18]
+            QualifiedName(range_=[10:11-10:12]
+              Identifier(range_=[10:11-10:12], val='A')
             )
-            Variable(range_=[10:13-10:13], name='x')
-            Variable(range_=[10:16-10:16], name='y')
+            Variable(range_=[10:13-10:14], name='x')
+            Variable(range_=[10:16-10:17], name='y')
           )
         )
-        RelationReferenceClause(range_=[10:20-10:26]
-          RelationReference(range_=[10:20-10:26]
-            QualifiedName(range_=[10:20-10:20]
-              Identifier(range_=[10:20-10:20], val='B')
+        RelationReferenceClause(range_=[10:20-10:27]
+          RelationReference(range_=[10:20-10:27]
+            QualifiedName(range_=[10:20-10:21]
+              Identifier(range_=[10:20-10:21], val='B')
             )
-            Variable(range_=[10:22-10:22], name='y')
-            Variable(range_=[10:25-10:25], name='z')
-          )
-        )
-      )
-    )
-  )
-  RelationDeclaration(range_=[12:0-12:28]
-    Identifier(range_=[12:6-12:6], val='C')
-    Attribute(range_=[12:8-12:16]
-      Identifier(range_=[12:8-12:8], val='x')
-      TypeReference(range_=[12:11-12:16], names=['number'])
-    )
-    Attribute(range_=[12:19-12:27]
-      Identifier(range_=[12:19-12:19], val='y')
-      TypeReference(range_=[12:22-12:27], names=['number'])
-    )
-  )
-  Rule(range_=[13:0-13:28]
-    RuleHead(range_=[13:0-13:6]
-      RelationReference(range_=[13:0-13:6]
-        QualifiedName(range_=[13:0-13:0]
-          Identifier(range_=[13:0-13:0], val='C')
-        )
-        Variable(range_=[13:2-13:2], name='x')
-        Variable(range_=[13:5-13:5], name='y')
-      )
-    )
-    Disjunction(range_=[13:11-13:27]
-      Conjunction(range_=[13:11-13:27]
-        RelationReferenceClause(range_=[13:11-13:17]
-          RelationReference(range_=[13:11-13:17]
-            QualifiedName(range_=[13:11-13:11]
-              Identifier(range_=[13:11-13:11], val='A')
-            )
-            Variable(range_=[13:13-13:13], name='x')
-            Variable(range_=[13:16-13:16], name='y')
-          )
-        )
-        RelationReferenceClause(range_=[13:20-13:27]
-          RelationReference(range_=[13:21-13:27]
-            QualifiedName(range_=[13:21-13:21]
-              Identifier(range_=[13:21-13:21], val='B')
-            )
-            Variable(range_=[13:23-13:23], name='x')
-            Variable(range_=[13:26-13:26], name='y')
+            Variable(range_=[10:22-10:23], name='y')
+            Variable(range_=[10:25-10:26], name='z')
           )
         )
       )
     )
   )
-  Directive(range_=[15:0-15:7]
-    QualifiedName(range_=[15:7-15:7]
-      Identifier(range_=[15:7-15:7], val='A')
+  RelationDeclaration(range_=[12:0-12:29]
+    Identifier(range_=[12:6-12:7], val='C')
+    Attribute(range_=[12:8-12:17]
+      Identifier(range_=[12:8-12:9], val='x')
+      TypeReference(range_=[12:11-12:17], names=['number'])
+    )
+    Attribute(range_=[12:19-12:28]
+      Identifier(range_=[12:19-12:20], val='y')
+      TypeReference(range_=[12:22-12:28], names=['number'])
     )
   )
-  Directive(range_=[16:0-16:8]
-    QualifiedName(range_=[16:8-16:8]
-      Identifier(range_=[16:8-16:8], val='C')
+  Rule(range_=[13:0-13:29]
+    RuleHead(range_=[13:0-13:7]
+      RelationReference(range_=[13:0-13:7]
+        QualifiedName(range_=[13:0-13:1]
+          Identifier(range_=[13:0-13:1], val='C')
+        )
+        Variable(range_=[13:2-13:3], name='x')
+        Variable(range_=[13:5-13:6], name='y')
+      )
+    )
+    Disjunction(range_=[13:11-13:28]
+      Conjunction(range_=[13:11-13:28]
+        RelationReferenceClause(range_=[13:11-13:18]
+          RelationReference(range_=[13:11-13:18]
+            QualifiedName(range_=[13:11-13:12]
+              Identifier(range_=[13:11-13:12], val='A')
+            )
+            Variable(range_=[13:13-13:14], name='x')
+            Variable(range_=[13:16-13:17], name='y')
+          )
+        )
+        RelationReferenceClause(range_=[13:20-13:28]
+          RelationReference(range_=[13:21-13:28]
+            QualifiedName(range_=[13:21-13:22]
+              Identifier(range_=[13:21-13:22], val='B')
+            )
+            Variable(range_=[13:23-13:24], name='x')
+            Variable(range_=[13:26-13:27], name='y')
+          )
+        )
+      )
+    )
+  )
+  Directive(range_=[15:0-15:8]
+    QualifiedName(range_=[15:7-15:8]
+      Identifier(range_=[15:7-15:8], val='A')
+    )
+  )
+  Directive(range_=[16:0-16:9]
+    QualifiedName(range_=[16:8-16:9]
+      Identifier(range_=[16:8-16:9], val='C')
     )
   )
 )

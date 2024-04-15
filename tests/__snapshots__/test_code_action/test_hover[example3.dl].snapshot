@@ -12,13 +12,13 @@
 
 -- Cursor range --
 0 | .decl directed_edge(
-  | ^^^^^^^^^^^^^^^^^^^^
-1 | u: number,
-  | ^^^^^^^^^^^^^^
-2 | v: number
-  | ^^^^^^^^^^^^^
+  | ~~~~~~~~~~~~~~~~~~~~
+1 |     u: number,
+  | ~~~~~~~~~~~~~~
+2 |     v: number
+  | ~~~~~~~~~~~~~
 3 | )
-  | ^
+  | ~
 -- Insertion point --
 0 | .decl directed_edge(
   | ^
@@ -30,13 +30,13 @@ _____
 
 -- Cursor range --
 5 | .decl path(
-  | ^^^^^^^^^^^
-6 | u: number,
-  | ^^^^^^^^^^^^^^
-7 | v: number
-  | ^^^^^^^^^^^^^
+  | ~~~~~~~~~~~
+6 |     u: number,
+  | ~~~~~~~~~~~~~~
+7 |     v: number
+  | ~~~~~~~~~~~~~
 8 | )
-  | ^
+  | ~
 -- Insertion point --
 5 | .decl path(
   | ^

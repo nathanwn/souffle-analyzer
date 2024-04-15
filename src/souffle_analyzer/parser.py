@@ -73,9 +73,8 @@ class Parser:
             ),
             end=Position(
                 line=node.end_point[0],
-                # Tree-sitter character range end on a line is always exclusive.
-                # Hence the -1.
-                char=node.end_point[1] - 1,
+                # Tree-sitter range-end char on a line is always exclusive.
+                char=node.end_point[1],
             ),
         )
 

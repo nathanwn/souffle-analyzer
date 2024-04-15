@@ -20,80 +20,80 @@
 
 -- Cursor range --
  9 | B(x, y) :- A(x, y).
-   | ^
+   | ~
 -- Definition --
  6 | .decl B(x: number, y: number)
-   |       ^
+   |       ~
 _____
 
 -- Cursor range --
  9 | B(x, y) :- A(x, y).
-   |            ^
+   |            ~
 -- Definition --
  1 | .decl A(x: number, y: number)
-   |       ^
+   |       ~
 _____
 
 -- Cursor range --
 10 | B(x, z) :- A(x, y), B(y, z).
-   | ^
+   | ~
 -- Definition --
  6 | .decl B(x: number, y: number)
-   |       ^
+   |       ~
 _____
 
 -- Cursor range --
 10 | B(x, z) :- A(x, y), B(y, z).
-   |            ^
+   |            ~
 -- Definition --
  1 | .decl A(x: number, y: number)
-   |       ^
+   |       ~
 _____
 
 -- Cursor range --
 10 | B(x, z) :- A(x, y), B(y, z).
-   |                     ^
+   |                     ~
 -- Definition --
  6 | .decl B(x: number, y: number)
-   |       ^
+   |       ~
 _____
 
 -- Cursor range --
 13 | C(x, y) :- A(x, y), !B(x, y).
-   | ^
+   | ~
 -- Definition --
 12 | .decl C(x: number, y: number)
-   |       ^
+   |       ~
 _____
 
 -- Cursor range --
 13 | C(x, y) :- A(x, y), !B(x, y).
-   |            ^
+   |            ~
 -- Definition --
  1 | .decl A(x: number, y: number)
-   |       ^
+   |       ~
 _____
 
 -- Cursor range --
 13 | C(x, y) :- A(x, y), !B(x, y).
-   |                      ^
+   |                      ~
 -- Definition --
  6 | .decl B(x: number, y: number)
-   |       ^
+   |       ~
 _____
 
 -- Cursor range --
 15 | .input A
-   |        ^
+   |        ~
 -- Definition --
  1 | .decl A(x: number, y: number)
-   |       ^
+   |       ~
 _____
 
 -- Cursor range --
 16 | .output C
-   |         ^
+   |         ~
 -- Definition --
 12 | .decl C(x: number, y: number)
-   |       ^
+   |       ~
 _____

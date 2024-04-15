@@ -1,0 +1,8 @@
+.decl directed_edge(u: number, v: number)
+
+dir
+
+.decl path(u: number, v: number)
+
+path(u, v) :- directed_edge(u, v).
+path(u, v) :- directed_edge(u, i), directed_edge(i, v)

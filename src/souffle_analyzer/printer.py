@@ -37,14 +37,16 @@ def format_souffle_code_range(lines: List[str], range_: Range) -> List[str]:
     sidebar_size = len(str(max_line_no))
 
     for line_no in range(range_.start.line, range_.end.line + 1):
-        marker_line_chars = []
+        marker_line_chars = [" " for _ in range(len(lines[line_no]))]
         for char_no in range(len(lines[line_no])):
             if range_.covers(Position(line_no, char_no)):
-                marker_line_chars.append("^")
-            else:
-                marker_line_chars.append(" ")
+                marker_line_chars[char_no] = "~"
+        # Special case: if range start and range end are the same, intepret it
+        # as a single position.
+        if range_.start == range_.end:
+            marker_line_chars[range_.start.char] = "^"
         marker_line = "".join(marker_line_chars).rstrip()
-        code_line = lines[line_no].strip()
+        code_line = lines[line_no].rstrip()
         printed_lines.append(f"{str(line_no).rjust(sidebar_size)} | {code_line}")
         printed_lines.append(f"{''.rjust(sidebar_size)} | {marker_line}")
 

@@ -38,7 +38,6 @@ def main(argv: Sequence[str] | None = None) -> int:
         help="Enable verbose mode.",
     )
     args = parser.parse_args(argv)
-    print(vars(args))
 
     if args.command == "server":
         configure_logging(args.log_file, args.verbose)
