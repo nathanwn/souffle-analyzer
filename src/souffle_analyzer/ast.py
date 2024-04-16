@@ -423,13 +423,23 @@ class RelationDeclaration(Node):
         doc_lines.append("")
         if self.doc_text is not None:
             doc_lines.extend(self.doc_text)
-        for attribute in self.attributes:
+
+        attribute_doc_lines = []
+
+        for attribute_idx, attribute in enumerate(self.attributes):
             if attribute.doc_text:
                 for i, line in enumerate(attribute.doc_text):
                     if i == 0:
-                        doc_lines.append(f"`{attribute.name.val}`: {line}")
+                        attribute_doc_lines.append(f"`{attribute.name.val}`: {line}")
                     else:
-                        doc_lines.append(line)
+                        attribute_doc_lines.append(line)
+                if attribute_idx < len(self.attributes) - 1:
+                    attribute_doc_lines.append("")
+
+        if len(attribute_doc_lines) > 0:
+            doc_lines.append("")
+        doc_lines.extend(attribute_doc_lines)
+
         return "\n".join(doc_lines)
 
 
@@ -573,7 +583,7 @@ class BlockComment(Comment):
 
     def get_text(self) -> list[str]:
         last_line_pattern = re.compile(r"^[\s]*[*]+\/.*$")
-        text_pattern = re.compile(r"^[\s]*[\/]?[*]*[\s]*(.*)$")
+        text_pattern = re.compile(r"^[\s]*[\/]?[*]*[\s]*(.*?)(\s*\*\/)?$")
         text_lines = []
         for line in self.content.splitlines():
             if last_line_pattern.match(line):

@@ -107,7 +107,7 @@ _____
 A(x: number, y: number)
 ```
 
-A is a relation. */
+A is a relation.
 _____
 
 -- Cursor range --
@@ -183,7 +183,7 @@ _____
 A(x: number, y: number)
 ```
 
-A is a relation. */
+A is a relation.
 _____
 
 -- Cursor range --
@@ -315,7 +315,7 @@ _____
 A(x: number, y: number)
 ```
 
-A is a relation. */
+A is a relation.
 _____
 
 -- Cursor range --
@@ -391,7 +391,7 @@ _____
 A(x: number, y: number)
 ```
 
-A is a relation. */
+A is a relation.
 _____
 
 -- Cursor range --
