@@ -1,0 +1,22 @@
+{
+    "name": "souffle-analyzer-vscode-client",
+    "description": "VSCode Client for the Souffle Analyzer language server",
+    "author": "Nhat M. Nguyen (nathanwn)",
+    "license": "MIT",
+    "version": "0.0.1",
+    "publisher": "nathanwn",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/nathanwn/souffle-analyzer"
+    },
+    "engines": {
+        "vscode": "^1.75.0"
+    },
+    "dependencies": {
+        "vscode-languageclient": "^9.0.1"
+    },
+    "devDependencies": {
+        "@types/vscode": "^1.75.1",
+        "@vscode/test-electron": "^2.3.9"
+    }
+}

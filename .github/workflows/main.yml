@@ -7,5 +7,22 @@ on:
   pull_request:
 
 jobs:
-  test:
+  test-souffle-analyzer:
     uses: nathanwn/workflows/.github/workflows/tox.yml@7332c403a7e85d3442cb5598d3a67d67f88876d7  # v0.4.0
+  test-vscode-extension:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+    defaults:
+      run:
+        working-directory: vscode
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - run: npm install
+      - run: npm run lint
+      - run: npm run compile
+      # TODO(nathanwn): Figure out how to run e2e tests on GitHub Actions.
+      # - run: npm run test

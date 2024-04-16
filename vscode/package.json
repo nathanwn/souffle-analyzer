@@ -1,0 +1,73 @@
+{
+    "name": "souffle-analyzer",
+    "description": "VSCode extension for the Souffle Analyzer language server",
+    "author": "Nhat M. Nguyen (nathanwn)",
+    "license": "MIT",
+    "version": "0.0.1",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/nathanwn/souffle-analyzer"
+    },
+    "publisher": "nathanwn",
+    "categories": [],
+    "keywords": [
+        "multi-root ready"
+    ],
+    "engines": {
+        "vscode": "^1.75.0"
+    },
+    "activationEvents": [
+        "onLanguage:plaintext"
+    ],
+    "main": "./client/out/extension",
+    "contributes": {
+        "configuration": {
+            "type": "object",
+            "title": "Souffle Analyzer configuration",
+            "properties": {
+                "souffleAnalyzer.command": {
+                    "scope": "application",
+                    "type": "string",
+                    "default": "souffle-analyzer",
+                    "description": "The command to run souffle-analyzer"
+                },
+                "souffleAnalyzer.logPath": {
+                    "scope": "application",
+                    "type": "string",
+                    "default": ".souffle-analyzer.log",
+                    "description": "The path to the log file for souffle-analyzer"
+                }
+            }
+        },
+        "languages": [
+            {
+                "id": "souffle",
+                "aliases": [
+                    "souffle"
+                ],
+                "extensions": [
+                    ".dl"
+                ],
+                "configuration": "./language-configuration.json"
+            }
+        ]
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -b",
+        "watch": "tsc -b -w",
+        "lint": "eslint ./client/src --ext .ts,.tsx",
+        "postinstall": "cd client && npm install && cd ..",
+        "test": "sh ./scripts/e2e.sh"
+    },
+    "devDependencies": {
+        "@types/mocha": "^10.0.6",
+        "@types/node": "^18.14.6",
+        "@typescript-eslint/eslint-plugin": "^7.1.0",
+        "@typescript-eslint/parser": "^7.1.0",
+        "eslint": "^8.57.0",
+        "mocha": "^10.3.0",
+        "prettier": "3.2.5",
+        "typescript": "^5.3.3"
+    }
+}
