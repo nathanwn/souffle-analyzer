@@ -17,6 +17,7 @@ from tests.util.helper import record_analysis_result_at_cursor
     [
         ("example1.dl"),
         ("example2.dl"),
+        ("types2.dl"),
     ],
 )
 def test_definition(file_snapshot: SnapshotAssertion, filename: str) -> None:

@@ -1,6 +1,8 @@
 from typing import Optional
 
 from souffle_analyzer.ast import (
+    AbstractDataTypeExpression,
+    BranchInit,
     Directive,
     Fact,
     File,
@@ -22,7 +24,7 @@ class DefinitionVisitor(Visitor[T]):
         super().__init__(file)
 
     def process(self) -> T:
-        return self.visit_file(self.file)
+        return self.file.accept(self)
 
     def visit_directive(self, directive: Directive) -> T:
         qualified_relation_name = next(
@@ -66,20 +68,43 @@ class DefinitionVisitor(Visitor[T]):
         return None
 
     def visit_fact(self, fact: Fact) -> T:
-        if len(fact.name.parts) != 1:
-            # Note: only support simple relations now.
-            return None
-
-        relation_name = fact.name.parts[0].val
-        matching_relation_declaration = self.get_relation_declaration_with_name(
-            relation_name
-        )
-        if matching_relation_declaration is None:
-            return None
-
         if fact.name.covers_position(self.position):
-            return matching_relation_declaration.name.range_
+            if len(fact.name.parts) != 1:
+                # Note: only support simple relations now.
+                return None
 
+            relation_name = fact.name.parts[0].val
+            matching_relation_declaration = self.get_relation_declaration_with_name(
+                relation_name
+            )
+            if matching_relation_declaration is None:
+                return None
+            return matching_relation_declaration.name.range_
+        else:
+            for argument in fact.arguments:
+                if argument.covers_position(self.position):
+                    return argument.accept(self)
+
+        return None
+
+    def visit_branch_init(self, branch_init: BranchInit) -> T:
+        if branch_init.name.covers_position(self.position):
+            branch_name_parts = branch_init.name.parts
+            if len(branch_name_parts) > 1:
+                # TODO: support more complex branch names
+                return None
+            branch_name = branch_name_parts[0].val
+
+            for type_declaration in self.file.type_declarations:
+                type_expression = type_declaration.expression
+                if isinstance(type_expression, AbstractDataTypeExpression):
+                    adt_branch = type_expression.get_branch_with_name(branch_name)
+                    if adt_branch is not None:
+                        return adt_branch.name.range_
+        else:
+            for argument in branch_init.arguments:
+                if argument.covers_position(self.position):
+                    return argument.accept(self)
         return None
 
     def generic_visit(self, node: Node) -> T:

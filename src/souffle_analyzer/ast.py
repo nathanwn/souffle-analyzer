@@ -188,6 +188,12 @@ class AbstractDataTypeExpression(TypeExpression):
     def accept(self, visitor: Visitor[T]) -> T:
         return visitor.visit_abstract_data_type_expression(self)
 
+    def get_branch_with_name(self, name: str) -> AbstractDataTypeBranch | None:
+        for branch in self.branches:
+            if branch.name.val == name:
+                return branch
+        return None
+
 
 @dataclass
 class AbstractDataTypeBranch(Node):
@@ -448,6 +454,13 @@ class Fact(Atom):
     name: QualifiedName
     arguments: list[Argument]
 
+    @property
+    def children(self) -> list[Node]:
+        return [
+            self.name,
+            *self.arguments,
+        ]
+
     def accept(self, visitor: Visitor[T]) -> T:
         return visitor.visit_fact(self)
 
@@ -528,8 +541,9 @@ class QualifiedName(Node):
 
 @dataclass
 class Argument(Node):
-    def accept(self, visitor: Visitor[T]) -> T:
-        return visitor.visit_argument(self)
+    pass
+    # def accept(self, visitor: Visitor[T]) -> T:
+    #     return visitor.visit_argument(self)
 
 
 @dataclass
