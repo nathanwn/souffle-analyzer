@@ -1,0 +1,16 @@
+.type Exp = Const { val: number }
+          | Var { id: symbol}
+          | Add { e1: Exp, e2: Exp }
+
+.decl has_expr(exp: Exp)
+
+has_expr($Const(1)).
+has_expr($Var("x")).
+has_expr($Add($Const(2), $Const(3))).
+
+.decl produces_value(val: number)
+
+produces_value(val) :- has_expr($Const(val)).
+produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
+
+.output produces_value

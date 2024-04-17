@@ -15,6 +15,7 @@ from souffle_analyzer.printer import format_souffle_ast
         ("syntax_error_1.dl"),
         ("subsumption1.dl"),
         ("types1.dl"),
+        ("types2.dl"),
         ("include_preproc_directive.dl"),
     ],
 )

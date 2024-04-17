@@ -9,8 +9,12 @@ from souffle_analyzer.ast import (
     Attribute,
     BinaryConstraint,
     BinaryConstraintOp,
+    BinaryOperation,
+    BinaryOperator,
     BlockComment,
+    BranchInit,
     Conjunction,
+    Constant,
     Directive,
     Disjunction,
     Fact,
@@ -100,8 +104,20 @@ class Visitor(Generic[T]):
     def visit_attribute(self, attribute: Attribute) -> T:
         return self.generic_visit(attribute)
 
+    def visit_constant(self, constant: Constant) -> T:
+        return self.generic_visit(constant)
+
     def visit_variable(self, variable: Variable) -> T:
         return self.generic_visit(variable)
+
+    def visit_branch_init(self, branch_init: BranchInit) -> T:
+        return self.generic_visit(branch_init)
+
+    def visit_binary_operation(self, binary_operation: BinaryOperation) -> T:
+        return self.generic_visit(binary_operation)
+
+    def visit_binary_operator(self, binary_operator: BinaryOperator) -> T:
+        return self.generic_visit(binary_operator)
 
     def visit_type_reference(self, type_reference: TypeReference) -> T:
         return self.generic_visit(type_reference)

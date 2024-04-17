@@ -1,0 +1,170 @@
+File(range_=[0:0-16:0]
+  TypeDeclaration(range_=[0:0-2:36]
+    Identifier(range_=[0:6-0:9], val='Exp')
+    TypeDeclarationOp(range_=[0:10-0:11], op=EQ(=))
+    AbstractDataTypeExpression(range_=[0:12-2:36]
+      AbstractDataTypeBranch(range_=[0:12-0:33]
+        Identifier(range_=[0:12-0:17], val='Const')
+        Attribute(range_=[0:20-0:31]
+          Identifier(range_=[0:20-0:23], val='val')
+          TypeReference(range_=[0:25-0:31], names=['number'])
+        )
+      )
+      AbstractDataTypeBranch(range_=[1:12-1:29]
+        Identifier(range_=[1:12-1:15], val='Var')
+        Attribute(range_=[1:18-1:28]
+          Identifier(range_=[1:18-1:20], val='id')
+          TypeReference(range_=[1:22-1:28], names=['symbol'])
+        )
+      )
+      AbstractDataTypeBranch(range_=[2:12-2:36]
+        Identifier(range_=[2:12-2:15], val='Add')
+        Attribute(range_=[2:18-2:25]
+          Identifier(range_=[2:18-2:20], val='e1')
+          TypeReference(range_=[2:22-2:25], names=['Exp'])
+        )
+        Attribute(range_=[2:27-2:34]
+          Identifier(range_=[2:27-2:29], val='e2')
+          TypeReference(range_=[2:31-2:34], names=['Exp'])
+        )
+      )
+    )
+  )
+  RelationDeclaration(range_=[4:0-4:24]
+    Identifier(range_=[4:6-4:14], val='has_expr')
+    Attribute(range_=[4:15-4:23]
+      Identifier(range_=[4:15-4:18], val='exp')
+      TypeReference(range_=[4:20-4:23], names=['Exp'])
+    )
+  )
+  Fact(range_=[6:0-6:19]
+    QualifiedName(range_=[6:0-6:8]
+      Identifier(range_=[6:0-6:8], val='has_expr')
+    )
+    BranchInit(range_=[6:9-6:18]
+      QualifiedName(range_=[6:10-6:15]
+        Identifier(range_=[6:10-6:15], val='Const')
+      )
+      NumberConstant(range_=[6:16-6:17], val=1)
+    )
+  )
+  Fact(range_=[7:0-7:19]
+    QualifiedName(range_=[7:0-7:8]
+      Identifier(range_=[7:0-7:8], val='has_expr')
+    )
+    BranchInit(range_=[7:9-7:18]
+      QualifiedName(range_=[7:10-7:13]
+        Identifier(range_=[7:10-7:13], val='Var')
+      )
+      StringConstant(range_=[7:14-7:17], val='"x"')
+    )
+  )
+  Fact(range_=[8:0-8:36]
+    QualifiedName(range_=[8:0-8:8]
+      Identifier(range_=[8:0-8:8], val='has_expr')
+    )
+    BranchInit(range_=[8:9-8:35]
+      QualifiedName(range_=[8:10-8:13]
+        Identifier(range_=[8:10-8:13], val='Add')
+      )
+      BranchInit(range_=[8:14-8:23]
+        QualifiedName(range_=[8:15-8:20]
+          Identifier(range_=[8:15-8:20], val='Const')
+        )
+        NumberConstant(range_=[8:21-8:22], val=2)
+      )
+      BranchInit(range_=[8:25-8:34]
+        QualifiedName(range_=[8:26-8:31]
+          Identifier(range_=[8:26-8:31], val='Const')
+        )
+        NumberConstant(range_=[8:32-8:33], val=3)
+      )
+    )
+  )
+  RelationDeclaration(range_=[10:0-10:33]
+    Identifier(range_=[10:6-10:20], val='produces_value')
+    Attribute(range_=[10:21-10:32]
+      Identifier(range_=[10:21-10:24], val='val')
+      TypeReference(range_=[10:26-10:32], names=['number'])
+    )
+  )
+  Rule(range_=[12:0-12:45]
+    RuleHead(range_=[12:0-12:19]
+      RelationReference(range_=[12:0-12:19]
+        QualifiedName(range_=[12:0-12:14]
+          Identifier(range_=[12:0-12:14], val='produces_value')
+        )
+        Variable(range_=[12:15-12:18], name='val')
+      )
+    )
+    Disjunction(range_=[12:23-12:44]
+      Conjunction(range_=[12:23-12:44]
+        RelationReferenceClause(range_=[12:23-12:44]
+          RelationReference(range_=[12:23-12:44]
+            QualifiedName(range_=[12:23-12:31]
+              Identifier(range_=[12:23-12:31], val='has_expr')
+            )
+            BranchInit(range_=[12:32-12:43]
+              QualifiedName(range_=[12:33-12:38]
+                Identifier(range_=[12:33-12:38], val='Const')
+              )
+              Variable(range_=[12:39-12:42], name='val')
+            )
+          )
+        )
+      )
+    )
+  )
+  Rule(range_=[13:0-13:77]
+    RuleHead(range_=[13:0-13:19]
+      RelationReference(range_=[13:0-13:19]
+        QualifiedName(range_=[13:0-13:14]
+          Identifier(range_=[13:0-13:14], val='produces_value')
+        )
+        Variable(range_=[13:15-13:18], name='val')
+      )
+    )
+    Disjunction(range_=[13:23-13:76]
+      Conjunction(range_=[13:23-13:76]
+        RelationReferenceClause(range_=[13:23-13:61]
+          RelationReference(range_=[13:23-13:61]
+            QualifiedName(range_=[13:23-13:31]
+              Identifier(range_=[13:23-13:31], val='has_expr')
+            )
+            BranchInit(range_=[13:32-13:60]
+              QualifiedName(range_=[13:33-13:36]
+                Identifier(range_=[13:33-13:36], val='Add')
+              )
+              BranchInit(range_=[13:37-13:47]
+                QualifiedName(range_=[13:38-13:43]
+                  Identifier(range_=[13:38-13:43], val='Const')
+                )
+                Variable(range_=[13:44-13:46], name='c1')
+              )
+              BranchInit(range_=[13:49-13:59]
+                QualifiedName(range_=[13:50-13:55]
+                  Identifier(range_=[13:50-13:55], val='Const')
+                )
+                Variable(range_=[13:56-13:58], name='c2')
+              )
+            )
+          )
+        )
+        BinaryConstraint(range_=[13:63-13:76]
+          Variable(range_=[13:63-13:66], name='val')
+          BinaryConstraintOp(range_=[13:67-13:68], op='=')
+          BinaryOperation(range_=[13:69-13:76]
+            Variable(range_=[13:69-13:71], name='c1')
+            BinaryOperator(range_=[13:72-13:73], op='+')
+            Variable(range_=[13:74-13:76], name='c2')
+          )
+        )
+      )
+    )
+  )
+  Directive(range_=[15:0-15:22]
+    QualifiedName(range_=[15:8-15:22]
+      Identifier(range_=[15:8-15:22], val='produces_value')
+    )
+  )
+)

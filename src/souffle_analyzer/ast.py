@@ -534,7 +534,8 @@ class Argument(Node):
 
 @dataclass
 class Constant(Argument):
-    pass
+    def accept(self, visitor: Visitor[T]) -> T:
+        return visitor.visit_constant(self)
 
 
 @dataclass
@@ -543,6 +544,48 @@ class Variable(Argument):
 
     def accept(self, visitor: Visitor[T]) -> T:
         return visitor.visit_variable(self)
+
+
+@dataclass
+class BranchInit(Argument):
+    name: QualifiedName
+    arguments: list[Argument]
+
+    @property
+    def children(self) -> list[Node]:
+        return [
+            self.name,
+            *self.arguments,
+        ]
+
+    def accept(self, visitor: Visitor[T]) -> T:
+        return visitor.visit_branch_init(self)
+
+
+@dataclass
+class BinaryOperation(Argument):
+    lhs: Argument
+    op: BinaryOperator
+    rhs: Argument
+
+    @property
+    def children(self) -> list[Node]:
+        return [
+            self.lhs,
+            self.op,
+            self.rhs,
+        ]
+
+    def accept(self, visitor: Visitor[T]) -> T:
+        return visitor.visit_binary_operation(self)
+
+
+@dataclass
+class BinaryOperator(Node):
+    op: str
+
+    def accept(self, visitor: Visitor[T]) -> T:
+        return visitor.visit_binary_operator(self)
 
 
 @dataclass

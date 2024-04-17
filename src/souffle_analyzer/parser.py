@@ -13,7 +13,10 @@ from souffle_analyzer.ast import (
     Attribute,
     BinaryConstraint,
     BinaryConstraintOp,
+    BinaryOperation,
+    BinaryOperator,
     BlockComment,
+    BranchInit,
     Clause,
     Comment,
     Conjunction,
@@ -472,6 +475,12 @@ class Parser:
         variable_node = self.get_child_of_type(node, "variable")
         if variable_node:
             return self.parse_variable(variable_node)
+        branch_init_node = self.get_child_of_type(node, "branch_init")
+        if branch_init_node:
+            return self.parse_branch_init(branch_init_node)
+        binary_operation_node = self.get_child_of_type(node, "binary_operation")
+        if binary_operation_node:
+            return self.parse_binary_operation(binary_operation_node)
         logger.error("argument %s is not recognized", node)
         return None  # TODO
 
@@ -490,6 +499,50 @@ class Parser:
             range_=self.get_range(node),
             syntax_issues=self.collect_syntax_issues(node),
             name=self.get_text(node),
+        )
+
+    def parse_branch_init(self, node: ts.Node) -> BranchInit:
+        name_node = self.get_child_of_type(node, "qualified_name")
+        if name_node is None:
+            raise ParserError()
+        name = self.parse_qualified_name(name_node)
+        arg_nodes = self.get_children_of_type(node, "argument")
+        arguments = list(filter(None, (self.parse_argument(_) for _ in arg_nodes)))
+        return BranchInit(
+            range_=self.get_range(node),
+            syntax_issues=self.collect_syntax_issues(node),
+            name=name,
+            arguments=arguments,
+        )
+
+    def parse_binary_operation(self, node: ts.Node) -> BinaryOperation:
+        lhs_node = self.get_child_of_type(node, "lhs")
+        if lhs_node is None:
+            raise ParserError()
+        lhs = self.parse_argument(lhs_node)
+        op_node = self.get_child_of_type(node, "op")
+        if op_node is None:
+            raise ParserError()
+        op = self.parse_binary_operator(op_node)
+        rhs_node = self.get_child_of_type(node, "rhs")
+        if rhs_node is None:
+            raise ParserError()
+        rhs = self.parse_argument(rhs_node)
+        if lhs is None or rhs is None:
+            raise ParserError()
+        return BinaryOperation(
+            range_=self.get_range(node),
+            syntax_issues=self.collect_syntax_issues(node),
+            lhs=lhs,
+            op=op,
+            rhs=rhs,
+        )
+
+    def parse_binary_operator(self, node: ts.Node) -> BinaryOperator:
+        return BinaryOperator(
+            range_=self.get_range(node),
+            syntax_issues=self.collect_syntax_issues(node),
+            op=self.get_text(node),
         )
 
     def parse_decimal(self, node: ts.Node) -> NumberConstant:
