@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from typing import Generic, Optional, TypeVar
+from typing import Generic, TypeVar
 
 from souffle_analyzer.ast import (
     AbstractDataTypeBranch,
@@ -160,14 +160,6 @@ class Visitor(Generic[T]):
 
     def visit_block_comment(self, block_comment: BlockComment) -> T:
         return self.generic_visit(block_comment)
-
-    def get_relation_declaration_with_name(
-        self, name: str
-    ) -> Optional[RelationDeclaration]:
-        for relation_declaration in self.file.relation_declarations:
-            if relation_declaration.name.val == name:
-                return relation_declaration
-        return None
 
     @abstractmethod
     def generic_visit(self, node: Node) -> T:

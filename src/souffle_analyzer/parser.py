@@ -49,6 +49,7 @@ from souffle_analyzer.ast import (
     TypeReference,
     TypeRelationOpKind,
     UnionTypeExpression,
+    UnresolvedType,
     Variable,
 )
 from souffle_analyzer.logging import logger
@@ -210,7 +211,7 @@ class Parser:
             op = TypeDeclarationOp(
                 range_=self.get_range(op_node),
                 syntax_issues=[],
-                op=TypeRelationOpKind.EQ,
+                op=TypeRelationOpKind.EQUIVALENT_TYPE,
             )
             union_type_node = self.get_child_of_type(eq_type_node, "union_type")
             type_name_node = self.get_child_of_type(eq_type_node, "type_name")
@@ -499,6 +500,7 @@ class Parser:
             range_=self.get_range(node),
             syntax_issues=self.collect_syntax_issues(node),
             name=self.get_text(node),
+            ty=UnresolvedType(),
         )
 
     def parse_branch_init(self, node: ts.Node) -> BranchInit:
@@ -513,6 +515,7 @@ class Parser:
             syntax_issues=self.collect_syntax_issues(node),
             name=name,
             arguments=arguments,
+            ty=UnresolvedType(),
         )
 
     def parse_binary_operation(self, node: ts.Node) -> BinaryOperation:
@@ -536,6 +539,7 @@ class Parser:
             lhs=lhs,
             op=op,
             rhs=rhs,
+            ty=UnresolvedType(),
         )
 
     def parse_binary_operator(self, node: ts.Node) -> BinaryOperator:
@@ -550,6 +554,7 @@ class Parser:
             range_=self.get_range(node),
             syntax_issues=self.collect_syntax_issues(node),
             val=int(self.get_text(node)),
+            ty=UnresolvedType(),
         )
 
     def parse_string_literal(self, node: ts.Node) -> StringConstant:
@@ -557,6 +562,7 @@ class Parser:
             range_=self.get_range(node),
             syntax_issues=self.collect_syntax_issues(node),
             val=self.get_text(node),
+            ty=UnresolvedType(),
         )
 
     def parse_qualified_name(self, node: ts.Node) -> QualifiedName:

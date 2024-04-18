@@ -1,6 +1,6 @@
 from typing import List
 
-from souffle_analyzer.ast import Node, Position, Range
+from souffle_analyzer.ast import Argument, Node, Position, Range
 
 
 def get_positions_in_range(range_: Range, code_lines: List[str]) -> List[Position]:
@@ -64,12 +64,10 @@ def format_souffle_ast(node: Node, level=0) -> List[str]:
         return [indent(str(node), level=level)]
     else:
         res = []
-        res.append(
-            indent(
-                f"{type(node).__name__}(range_={node.range_}",
-                level=level,
-            )
-        )
+        res.append(indent(f"{type(node).__name__}(", level=level))
+        res.append(indent(f"range_={node.range_}", level=level + 1))
+        if isinstance(node, Argument):
+            res.append(indent(f"ty={node.ty}", level=level + 1))
 
         for child in children:
             res.extend(format_souffle_ast(node=child, level=level + 1))

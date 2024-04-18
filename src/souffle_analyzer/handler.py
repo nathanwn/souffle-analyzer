@@ -21,6 +21,8 @@ from lsprotocol.types import (
     TextDocumentHoverRequest,
     TextDocumentHoverResponse,
     TextDocumentSyncKind,
+    TextDocumentTypeDefinitionRequest,
+    TextDocumentTypeDefinitionResponse,
     WorkspaceEdit,
 )
 
@@ -48,6 +50,7 @@ def handle_initialize_request(request: InitializeRequest) -> InitializeResponse:
                 text_document_sync=TextDocumentSyncKind.Full,
                 hover_provider=True,
                 definition_provider=True,
+                type_definition_provider=True,
                 code_action_provider=True,
             ),
             server_info=InitializeResultServerInfoType(
@@ -119,6 +122,21 @@ def handle_text_document_definition_request(
     return TextDocumentDefinitionResponse(
         id=request.id,
         result=definition_result,
+    )
+
+
+def handle_text_document_type_definition_request(
+    request: TextDocumentTypeDefinitionRequest,
+    ctx: AnalysisContext,
+) -> TextDocumentTypeDefinitionResponse:
+    document_uri = request.params.text_document.uri
+    position = request.params.position
+    type_definition_result = ctx.get_type_definition(
+        uri=document_uri, position=position
+    )
+    return TextDocumentTypeDefinitionResponse(
+        id=request.id,
+        result=type_definition_result,
     )
 
 

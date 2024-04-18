@@ -1,6 +1,7 @@
 from typing import Optional
 
 from souffle_analyzer.ast import (
+    BUILTIN_TYPES,
     AbstractDataTypeExpression,
     BranchInit,
     Directive,
@@ -12,7 +13,6 @@ from souffle_analyzer.ast import (
     RelationReference,
     TypeReference,
 )
-from souffle_analyzer.language import BUILTIN_TYPES
 from souffle_analyzer.visitor.visitor import Visitor
 
 T = Optional[Range]
@@ -74,8 +74,8 @@ class DefinitionVisitor(Visitor[T]):
                 return None
 
             relation_name = fact.name.parts[0].val
-            matching_relation_declaration = self.get_relation_declaration_with_name(
-                relation_name
+            matching_relation_declaration = (
+                self.file.get_relation_declaration_with_name(relation_name)
             )
             if matching_relation_declaration is None:
                 return None

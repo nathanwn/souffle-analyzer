@@ -1,6 +1,7 @@
 from typing import Optional, Tuple
 
 from souffle_analyzer.ast import (
+    BUILTIN_TYPES,
     Directive,
     Fact,
     File,
@@ -10,7 +11,6 @@ from souffle_analyzer.ast import (
     RelationReference,
     TypeReference,
 )
-from souffle_analyzer.language import BUILTIN_TYPES
 from souffle_analyzer.logging import logger
 from souffle_analyzer.visitor.visitor import Visitor
 
@@ -78,7 +78,7 @@ class HoverVisitor(Visitor[T]):
             # TODO: support more complex relation references.
             return None
         relation_name = relation_name_covering_position.parts[0].val
-        matching_relation_declaration = self.get_relation_declaration_with_name(
+        matching_relation_declaration = self.file.get_relation_declaration_with_name(
             relation_name
         )
         if matching_relation_declaration is None:
@@ -94,7 +94,7 @@ class HoverVisitor(Visitor[T]):
             return None
 
         relation_name = fact.name.parts[0].val
-        matching_relation_declaration = self.get_relation_declaration_with_name(
+        matching_relation_declaration = self.file.get_relation_declaration_with_name(
             relation_name
         )
         if matching_relation_declaration is None:

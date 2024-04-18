@@ -9,6 +9,7 @@ from lsprotocol.types import (
     TextDocumentDidChangeNotification,
     TextDocumentDidOpenNotification,
     TextDocumentHoverRequest,
+    TextDocumentTypeDefinitionRequest,
 )
 
 from souffle_analyzer import handler
@@ -54,6 +55,11 @@ class LanguageServer(JsonRpcNode):
             self.write_server_response(response)
         elif isinstance(request, TextDocumentDefinitionRequest):
             response = handler.handle_text_document_definition_request(
+                request, self.ctx
+            )
+            self.write_server_response(response)
+        elif isinstance(request, TextDocumentTypeDefinitionRequest):
+            response = handler.handle_text_document_type_definition_request(
                 request, self.ctx
             )
             self.write_server_response(response)

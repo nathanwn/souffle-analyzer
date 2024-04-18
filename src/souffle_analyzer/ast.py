@@ -14,6 +14,54 @@ T = TypeVar("T")
 
 
 @dataclass
+class SouffleType:
+    pass
+
+
+@dataclass
+class UnresolvedType(SouffleType):
+    pass
+
+
+@dataclass
+class ErroneousType(SouffleType):
+    pass
+
+
+@dataclass
+class BuiltinType(SouffleType):
+    name: str
+    doc: str
+
+
+class BuiltinTypes:
+    SYMBOL = BuiltinType(
+        name="symbol",
+        doc="Type `symbol`. Each value is a string.",
+    )
+    NUMBER = BuiltinType(
+        name="number",
+        doc="Type `number`. Each value is a signed integer.",
+    )
+    UNSIGNED = BuiltinType(
+        name="unsigned",
+        doc="Type `unsigned`. Each value is a non-negative integer.",
+    )
+    FLOAT = BuiltinType(
+        name="float",
+        doc="Type `float`. Each value is a floating-point number.",
+    )
+
+
+BUILTIN_TYPES = [
+    BuiltinTypes.SYMBOL,
+    BuiltinTypes.NUMBER,
+    BuiltinTypes.UNSIGNED,
+    BuiltinTypes.FLOAT,
+]
+
+
+@dataclass
 class Position:
     line: int
     char: int
@@ -123,9 +171,23 @@ class File(Node):
     def accept(self, visitor: Visitor[T]) -> T:
         return visitor.visit_file(self)
 
+    def get_relation_declaration_with_name(
+        self, name: str
+    ) -> RelationDeclaration | None:
+        for relation_declaration in self.relation_declarations:
+            if relation_declaration.name.val == name:
+                return relation_declaration
+        return None
+
+    def get_type_declaration_with_name(self, name: str) -> TypeDeclaration | None:
+        for type_declaration in self.type_declarations:
+            if type_declaration.name.val == name:
+                return type_declaration
+        return None
+
 
 @dataclass
-class TypeDeclaration(Node):
+class TypeDeclaration(SouffleType, Node):
     name: Identifier
     op: TypeDeclarationOp
     expression: TypeExpression
@@ -140,6 +202,16 @@ class TypeDeclaration(Node):
 
     def accept(self, visitor: Visitor[T]) -> T:
         return visitor.visit_type_declaration(self)
+
+
+@dataclass
+class SubsetType(TypeDeclaration):
+    pass
+
+
+@dataclass
+class AliasType(TypeDeclaration):
+    pass
 
 
 @dataclass
@@ -221,7 +293,7 @@ class TypeDeclarationOp(Node):
 
 class TypeRelationOpKind(Enum):
     SUBTYPE = "<:"
-    EQ = "="
+    EQUIVALENT_TYPE = "="
 
     def __repr__(self) -> str:
         return f"{self.name}({self.value})"
@@ -541,9 +613,7 @@ class QualifiedName(Node):
 
 @dataclass
 class Argument(Node):
-    pass
-    # def accept(self, visitor: Visitor[T]) -> T:
-    #     return visitor.visit_argument(self)
+    ty: SouffleType
 
 
 @dataclass

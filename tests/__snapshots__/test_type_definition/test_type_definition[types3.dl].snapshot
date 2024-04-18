@@ -1,0 +1,46 @@
+ 0 | .type Name <: symbol
+ 1 |
+ 2 | .decl is_student(name: Name, id: number)
+ 3 | .decl is_teacher(name: Name, id: number)
+ 4 |
+ 5 | identity("Alice", 1).
+ 6 | identity("Bob", 2).
+ 7 |
+ 8 | .decl has_id(name: Name)
+ 9 |
+10 | has_id(name) :- is_student(name, _).
+11 | has_id(name) :- is_teacher(name, _).
+
+=====
+
+-- Cursor range --
+10 | has_id(name) :- is_student(name, _).
+   |        ~~~~
+-- Type Definition --
+ 0 | .type Name <: symbol
+   |       ~~~~
+_____
+
+-- Cursor range --
+10 | has_id(name) :- is_student(name, _).
+   |                            ~~~~
+-- Type Definition --
+ 0 | .type Name <: symbol
+   |       ~~~~
+_____
+
+-- Cursor range --
+11 | has_id(name) :- is_teacher(name, _).
+   |        ~~~~
+-- Type Definition --
+ 0 | .type Name <: symbol
+   |       ~~~~
+_____
+
+-- Cursor range --
+11 | has_id(name) :- is_teacher(name, _).
+   |                            ~~~~
+-- Type Definition --
+ 0 | .type Name <: symbol
+   |       ~~~~
+_____

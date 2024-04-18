@@ -10,6 +10,8 @@ from souffle_analyzer.parser import Parser
 from souffle_analyzer.visitor.code_action_visitor import CodeActionVisitor
 from souffle_analyzer.visitor.definition_visitor import DefinitionVisitor
 from souffle_analyzer.visitor.hover_visitor import HoverVisitor
+from souffle_analyzer.visitor.type_definition_visitor import TypeDefinitionVisitor
+from souffle_analyzer.visitor.type_infer_visitor import TypeInferVisitor
 
 
 @dataclass
@@ -54,15 +56,34 @@ class AnalysisContext:
         self, uri: str, position: lsptypes.Position
     ) -> Optional[lsptypes.Location]:
         parser = Parser()
-        program = parser.parse(self.documents[uri].encode())
+        file = parser.parse(self.documents[uri].encode())
         definition_visitor = DefinitionVisitor(
-            file=program,
+            file=file,
             position=Position(
                 line=position.line,
                 char=position.character,
             ),
         )
         range_ = definition_visitor.process()
+        if range_ is None:
+            return None
+        return lsptypes.Location(uri=uri, range=to_lsp_range(range_))
+
+    def get_type_definition(
+        self, uri: str, position: lsptypes.Position
+    ) -> Optional[lsptypes.Location]:
+        parser = Parser()
+        file = parser.parse(self.documents[uri].encode())
+        type_infer_visitor = TypeInferVisitor(file=file)
+        type_infer_visitor.process()
+        type_definition_visitor = TypeDefinitionVisitor(
+            file=file,
+            position=Position(
+                line=position.line,
+                char=position.character,
+            ),
+        )
+        range_ = type_definition_visitor.process()
         if range_ is None:
             return None
         return lsptypes.Location(uri=uri, range=to_lsp_range(range_))

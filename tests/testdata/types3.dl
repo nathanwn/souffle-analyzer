@@ -1,0 +1,12 @@
+.type Name <: symbol
+
+.decl is_student(name: Name, id: number)
+.decl is_teacher(name: Name, id: number)
+
+identity("Alice", 1).
+identity("Bob", 2).
+
+.decl has_id(name: Name)
+
+has_id(name) :- is_student(name, _).
+has_id(name) :- is_teacher(name, _).
