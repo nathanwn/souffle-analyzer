@@ -6,9 +6,8 @@ from syrupy.assertion import SnapshotAssertion
 
 from souffle_analyzer.analysis import AnalysisContext
 from souffle_analyzer.ast import Position, Range
-from souffle_analyzer.lsp import to_lsp_position
 from souffle_analyzer.printer import format_souffle_code_range
-from tests.util.helper import record_analysis_result_at_cursor
+from tests.util.helper import format_cursorwise_results
 
 
 @pytest.mark.parametrize(
@@ -32,7 +31,7 @@ def test_hover(file_snapshot: SnapshotAssertion, filename: str) -> None:
     code_lines = code.splitlines()
 
     def analyze(position: Position) -> Optional[Tuple[str, Range]]:
-        return ctx.hover(filename, to_lsp_position(position))
+        return ctx.hover(filename, position.to_lsp_type())
 
     def format_result(result: Tuple[str, Range]) -> List[str]:
         out = []
@@ -43,7 +42,7 @@ def test_hover(file_snapshot: SnapshotAssertion, filename: str) -> None:
         return out
 
     assert (
-        record_analysis_result_at_cursor(
+        format_cursorwise_results(
             code_lines=code_lines,
             analyze=analyze,
             format_result=format_result,

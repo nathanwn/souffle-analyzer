@@ -1,0 +1,38 @@
+0 | .decl foo(x: number, y: number)
+1 |
+2 | foo().
+3 | foo(1).
+4 | foo(1, 2).
+5 | foo(1, 2, 3).
+
+=====
+
+-- Cursor range --
+2 | foo().
+  | ~~~~~
+-- Range --
+2 | foo().
+  | ~~~~~
+-- Message --
+Number of arguments: have 0, want 2.
+_____
+
+-- Cursor range --
+3 | foo(1).
+  | ~~~~~~
+-- Range --
+3 | foo(1).
+  | ~~~~~~
+-- Message --
+Number of arguments: have 1, want 2.
+_____
+
+-- Cursor range --
+5 | foo(1, 2, 3).
+  | ~~~~~~~~~~~~
+-- Range --
+5 | foo(1, 2, 3).
+  | ~~~~~~~~~~~~
+-- Message --
+Number of arguments: have 3, want 2.
+_____

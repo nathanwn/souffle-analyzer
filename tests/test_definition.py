@@ -6,10 +6,9 @@ from lsprotocol import types as lsptypes
 from syrupy.assertion import SnapshotAssertion
 
 from souffle_analyzer.analysis import AnalysisContext
-from souffle_analyzer.ast import Position
-from souffle_analyzer.lsp import from_lsp_range, to_lsp_position
+from souffle_analyzer.ast import Position, Range
 from souffle_analyzer.printer import format_souffle_code_range
-from tests.util.helper import record_analysis_result_at_cursor
+from tests.util.helper import format_cursorwise_results
 
 
 @pytest.mark.parametrize(
@@ -34,17 +33,17 @@ def test_definition(file_snapshot: SnapshotAssertion, filename: str) -> None:
     code_lines = code.splitlines()
 
     def analyze(position: Position) -> Optional[lsptypes.Location]:
-        return ctx.get_definition(filename, to_lsp_position(position))
+        return ctx.get_definition(filename, position.to_lsp_type())
 
     def format_result(result: lsptypes.Location) -> List[str]:
         out = []
         out.append("-- Definition --")
-        range_ = from_lsp_range(result.range)
+        range_ = Range.from_lsp_type(result.range)
         out.extend(format_souffle_code_range(code_lines, range_))
         return out
 
     assert (
-        record_analysis_result_at_cursor(
+        format_cursorwise_results(
             code_lines=code_lines,
             analyze=analyze,
             format_result=format_result,

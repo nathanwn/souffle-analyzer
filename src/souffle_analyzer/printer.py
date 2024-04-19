@@ -6,15 +6,15 @@ from souffle_analyzer.ast import Argument, Node, Position, Range
 def get_positions_in_range(range_: Range, code_lines: List[str]) -> List[Position]:
     start = range_.start
     end = range_.end
-    cur = Position(start.line, start.char)
+    cur = Position(start.line, start.character)
     res = []
 
     while cur <= end:
         res.append(cur)
-        if cur.char + 1 == len(code_lines[cur.line]):
+        if cur.character + 1 == len(code_lines[cur.line]):
             cur = Position(cur.line + 1, 0)
         else:
-            cur = Position(cur.line, cur.char + 1)
+            cur = Position(cur.line, cur.character + 1)
 
     return res
 
@@ -44,7 +44,7 @@ def format_souffle_code_range(lines: List[str], range_: Range) -> List[str]:
         # Special case: if range start and range end are the same, intepret it
         # as a single position.
         if range_.start == range_.end:
-            marker_line_chars[range_.start.char] = "^"
+            marker_line_chars[range_.start.character] = "^"
         marker_line = "".join(marker_line_chars).rstrip()
         code_line = lines[line_no].rstrip()
         printed_lines.append(f"{str(line_no).rjust(sidebar_size)} | {code_line}")

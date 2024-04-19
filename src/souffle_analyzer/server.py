@@ -1,7 +1,8 @@
-from typing import TextIO
+from typing import Optional, TextIO, Tuple
 
 from lsprotocol import converters
 from lsprotocol.types import (
+    METHOD_TO_TYPES,
     InitializedNotification,
     InitializeRequest,
     TextDocumentCodeActionRequest,
@@ -15,7 +16,6 @@ from lsprotocol.types import (
 from souffle_analyzer import handler
 from souffle_analyzer.analysis import AnalysisContext
 from souffle_analyzer.logging import logger
-from souffle_analyzer.lsp import get_request_type_from_method
 from souffle_analyzer.rpc import JsonRpcNode
 
 
@@ -45,11 +45,17 @@ class LanguageServer(JsonRpcNode):
         elif isinstance(request, InitializedNotification):
             logger.info("Connection established successfully.")
         elif isinstance(request, TextDocumentDidOpenNotification):
-            handler.handle_text_document_did_open_notification(request, self.ctx)
+            diagnostic_notification = (
+                handler.handle_text_document_did_open_notification(request, self.ctx)
+            )
             logger.info("Opened: %s", request.params.text_document.uri)
+            self.write_server_response(diagnostic_notification)
         elif isinstance(request, TextDocumentDidChangeNotification):
-            handler.handle_text_document_did_change_notification(request, self.ctx)
+            diagnostic_notification = (
+                handler.handle_text_document_did_change_notification(request, self.ctx)
+            )
             logger.info("Changed: %s", request.params.text_document.uri)
+            self.write_server_response(diagnostic_notification)
         elif isinstance(request, TextDocumentHoverRequest):
             response = handler.handle_text_document_hover_request(request, self.ctx)
             self.write_server_response(response)
@@ -74,3 +80,21 @@ class LanguageServer(JsonRpcNode):
     def serve(self) -> None:
         while msg := self.read_message():
             self.handle_incoming_message(msg)
+
+
+def get_lsp_types_from_method(method: str) -> Optional[Tuple[type, ...]]:
+    return METHOD_TO_TYPES.get(method)
+
+
+def get_request_type_from_method(method: str) -> Optional[type]:
+    types = get_lsp_types_from_method(method)
+    if types is None:
+        return None
+    return types[0]
+
+
+def get_response_type_from_method(method: str) -> Optional[type]:
+    types = get_lsp_types_from_method(method)
+    if types is None:
+        return None
+    return types[1]

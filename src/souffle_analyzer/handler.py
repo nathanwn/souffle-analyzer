@@ -2,6 +2,7 @@ from importlib import metadata as importlib_metadata
 
 from lsprotocol.types import (
     CodeAction,
+    DiagnosticOptions,
     Hover,
     InitializeRequest,
     InitializeResponse,
@@ -10,6 +11,7 @@ from lsprotocol.types import (
     MarkupContent,
     MarkupKind,
     OptionalVersionedTextDocumentIdentifier,
+    PublishDiagnosticsParams,
     ServerCapabilities,
     TextDocumentCodeActionRequest,
     TextDocumentCodeActionResponse,
@@ -20,6 +22,7 @@ from lsprotocol.types import (
     TextDocumentEdit,
     TextDocumentHoverRequest,
     TextDocumentHoverResponse,
+    TextDocumentPublishDiagnosticsNotification,
     TextDocumentSyncKind,
     TextDocumentTypeDefinitionRequest,
     TextDocumentTypeDefinitionResponse,
@@ -28,7 +31,6 @@ from lsprotocol.types import (
 
 from souffle_analyzer.analysis import AnalysisContext
 from souffle_analyzer.logging import logger
-from souffle_analyzer.lsp import to_lsp_range
 from souffle_analyzer.metadata import PROG
 
 
@@ -52,6 +54,11 @@ def handle_initialize_request(request: InitializeRequest) -> InitializeResponse:
                 definition_provider=True,
                 type_definition_provider=True,
                 code_action_provider=True,
+                diagnostic_provider=DiagnosticOptions(
+                    # TODO: update this once the server support these capabilities.
+                    inter_file_dependencies=False,
+                    workspace_diagnostics=False,
+                ),
             ),
             server_info=InitializeResultServerInfoType(
                 name=PROG,
@@ -64,20 +71,28 @@ def handle_initialize_request(request: InitializeRequest) -> InitializeResponse:
 def handle_text_document_did_open_notification(
     request: TextDocumentDidOpenNotification,
     ctx: AnalysisContext,
-) -> None:
-    ctx.open_document(
-        uri=request.params.text_document.uri,
+) -> TextDocumentPublishDiagnosticsNotification:
+    uri = request.params.text_document.uri
+    diagnostics = ctx.open_document(
+        uri=uri,
         text=request.params.text_document.text,
+    )
+    return TextDocumentPublishDiagnosticsNotification(
+        params=PublishDiagnosticsParams(uri=uri, diagnostics=diagnostics),
     )
 
 
 def handle_text_document_did_change_notification(
     request: TextDocumentDidChangeNotification,
     ctx: AnalysisContext,
-) -> None:
-    ctx.update_document(
-        uri=request.params.text_document.uri,
+) -> TextDocumentPublishDiagnosticsNotification:
+    uri = request.params.text_document.uri
+    diagnostics = ctx.update_document(
+        uri=uri,
         changes=request.params.content_changes,
+    )
+    return TextDocumentPublishDiagnosticsNotification(
+        params=PublishDiagnosticsParams(uri=uri, diagnostics=diagnostics),
     )
 
 
@@ -96,7 +111,7 @@ def handle_text_document_hover_request(
         contents, range_ = hover_result
         result = Hover(
             contents=MarkupContent(kind=MarkupKind.Markdown, value=contents),
-            range=to_lsp_range(range_),
+            range=range_.to_lsp_type(),
         )
         logger.debug("Hover result found: %s", result)
 

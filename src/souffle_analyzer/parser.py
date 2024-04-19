@@ -73,12 +73,12 @@ class Parser:
         return Range(
             start=Position(
                 line=node.start_point[0],
-                char=node.start_point[1],
+                character=node.start_point[1],
             ),
             end=Position(
                 line=node.end_point[0],
-                # Tree-sitter range-end char on a line is always exclusive.
-                char=node.end_point[1],
+                # Tree-sitter range-end character on a line is always exclusive.
+                character=node.end_point[1],
             ),
         )
 
@@ -459,8 +459,6 @@ class Parser:
             raise ParserError()
         name = self.parse_qualified_name(name_node)
         argument_nodes = self.get_children_of_type(node, "argument")
-        if not argument_nodes:
-            raise ParserError()
         arguments = list(filter(None, [self.parse_argument(_) for _ in argument_nodes]))
         return atom_type(
             range_=self.get_range(node),

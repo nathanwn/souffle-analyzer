@@ -6,6 +6,8 @@ from dataclasses import dataclass, field
 from enum import Enum
 from typing import TYPE_CHECKING, TypeVar
 
+import lsprotocol.types as lsptypes
+
 if TYPE_CHECKING:
     from souffle_analyzer.visitor.visitor import Visitor
 
@@ -64,34 +66,56 @@ BUILTIN_TYPES = [
 @dataclass
 class Position:
     line: int
-    char: int
+    character: int
+
+    @classmethod
+    def from_lsp_type(cls, position: lsptypes.Position) -> Position:
+        return Position(
+            line=position.line,
+            character=position.character,
+        )
+
+    def to_lsp_type(self) -> lsptypes.Position:
+        return lsptypes.Position(line=self.line, character=self.character)
 
     def __lt__(self, other: object) -> bool:
         if not isinstance(other, Position):
             raise TypeError()
-        return (self.line, self.char) < (other.line, other.char)
+        return (self.line, self.character) < (other.line, other.character)
 
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, Position):
             raise TypeError()
-        return (self.line, self.char) == (other.line, other.char)
+        return (self.line, self.character) == (other.line, other.character)
 
     def __le__(self, other: object) -> bool:
         if not isinstance(other, Position):
             raise TypeError()
-        return (self.line, self.char) < (other.line, other.char) or (
+        return (self.line, self.character) < (other.line, other.character) or (
             self.line,
-            self.char,
-        ) == (other.line, other.char)
+            self.character,
+        ) == (other.line, other.character)
 
     def __repr__(self) -> str:
-        return f"{self.line}:{self.char}"
+        return f"{self.line}:{self.character}"
 
 
 @dataclass
 class Range:
     start: Position
     end: Position
+
+    @classmethod
+    def from_lsp_type(cls, range_: lsptypes.Range) -> Range:
+        return Range(
+            start=Position.from_lsp_type(range_.start),
+            end=Position.from_lsp_type(range_.end),
+        )
+
+    def to_lsp_type(self) -> lsptypes.Range:
+        return lsptypes.Range(
+            start=self.start.to_lsp_type(), end=self.end.to_lsp_type()
+        )
 
     def __repr__(self) -> str:
         return f"[{self.start}-{self.end}]"

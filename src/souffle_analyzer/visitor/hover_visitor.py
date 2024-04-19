@@ -11,7 +11,6 @@ from souffle_analyzer.ast import (
     RelationReference,
     TypeReference,
 )
-from souffle_analyzer.logging import logger
 from souffle_analyzer.visitor.visitor import Visitor
 
 T = Optional[Tuple[str, Range]]
@@ -23,9 +22,6 @@ class HoverVisitor(Visitor[T]):
         super().__init__(file)
 
     def process(self) -> T:
-        logger.debug("start hover visitor")
-        for line in self.file.code.decode().splitlines():
-            logger.debug("line: %s", line)
         return self.visit_file(self.file)
 
     def visit_type_reference(self, type_reference: TypeReference) -> T:
@@ -36,7 +32,6 @@ class HoverVisitor(Visitor[T]):
         return None
 
     def visit_relation_reference(self, relation_reference: RelationReference) -> T:
-        logger.debug(relation_reference)
         if len(relation_reference.name.parts) != 1:
             # TODO: support more complex relation references.
             return None
@@ -116,7 +111,6 @@ class HoverVisitor(Visitor[T]):
         return None
 
     def generic_visit(self, node: Node) -> T:
-        logger.debug("inside %s", node.__class__.__name__)
         for child in node.children_sorted_by_range:
             if child.covers_position(self.position):
                 return child.accept(self)
