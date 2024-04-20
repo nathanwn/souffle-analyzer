@@ -4,6 +4,10 @@
 3 | foo(1).
 4 | foo(1, 2).
 5 | foo(1, 2, 3).
+6 |
+7 | .decl bar(x: number, y: number)
+8 |
+9 | bar(x, y, z) :- foo(x, y).
 
 =====
 
@@ -32,6 +36,16 @@ _____
   | ~~~~~~~~~~~~
 -- Range --
 5 | foo(1, 2, 3).
+  | ~~~~~~~~~~~~
+-- Message --
+Number of arguments: have 3, want 2.
+_____
+
+-- Cursor range --
+9 | bar(x, y, z) :- foo(x, y).
+  | ~~~~~~~~~~~~
+-- Range --
+9 | bar(x, y, z) :- foo(x, y).
   | ~~~~~~~~~~~~
 -- Message --
 Number of arguments: have 3, want 2.

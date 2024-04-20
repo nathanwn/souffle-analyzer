@@ -9,6 +9,9 @@ from souffle_analyzer.parser import Parser
 from souffle_analyzer.visitor.code_action_visitor import CodeActionVisitor
 from souffle_analyzer.visitor.definition_visitor import DefinitionVisitor
 from souffle_analyzer.visitor.hover_visitor import HoverVisitor
+from souffle_analyzer.visitor.resolve_declaration_visitor import (
+    ResolveDeclarationVisitor,
+)
 from souffle_analyzer.visitor.simple_semantic_check_visitor import (
     SimpleSemanticCheckVisitor,
 )
@@ -20,35 +23,32 @@ from souffle_analyzer.visitor.type_definition_visitor import TypeDefinitionVisit
 class AnalysisContext:
     documents: Dict[str, File] = field(default_factory=dict)
 
-    def open_document(self, uri: str, text: str) -> List[lsptypes.Diagnostic]:
-        logger.debug("open document")
+    def load_document(self, uri: str, text: str) -> List[lsptypes.Diagnostic]:
         for line in text.splitlines():
             logger.debug(line)
         parser = Parser()
         file = parser.parse(text.encode())
-        self.documents[uri] = file
+        resolve_reference_visitor = ResolveDeclarationVisitor(file)
+        resolve_reference_visitor.transform()
         simple_semantic_check_visitor = SimpleSemanticCheckVisitor(file)
         diagnostics = simple_semantic_check_visitor.process()
+        self.documents[uri] = file
         return diagnostics
+
+    def open_document(self, uri: str, text: str) -> List[lsptypes.Diagnostic]:
+        logger.debug("open document")
+        return self.load_document(uri, text)
 
     def update_document(
         self, uri: str, changes: List[lsptypes.TextDocumentContentChangeEvent]
     ) -> List[lsptypes.Diagnostic]:
-        diagnostics = []
-        parser = Parser()
+        diagnostics: List[lsptypes.Diagnostic] = []
         for change in changes:
-            # Only handle whole-document change
-            logger.info("change event: %s", change)
             if isinstance(change, lsptypes.TextDocumentContentChangeEvent_Type1):
                 pass
             if isinstance(change, lsptypes.TextDocumentContentChangeEvent_Type2):
-                file = parser.parse(change.text.encode())
-                self.documents[uri] = file
-                simple_semantic_check_visitor = SimpleSemanticCheckVisitor(file)
-                diagnostics.extend(simple_semantic_check_visitor.process())
                 logger.debug("update document")
-                for line in change.text.splitlines():
-                    logger.debug(line)
+                self.load_document(uri, change.text)
         return diagnostics
 
     def hover(

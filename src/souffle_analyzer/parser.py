@@ -17,6 +17,7 @@ from souffle_analyzer.ast import (
     BinaryOperator,
     BlockComment,
     BranchInit,
+    BranchInitName,
     Clause,
     Comment,
     Conjunction,
@@ -38,6 +39,7 @@ from souffle_analyzer.ast import (
     RelationDeclaration,
     RelationReference,
     RelationReferenceClause,
+    RelationReferenceName,
     Rule,
     RuleHead,
     StringConstant,
@@ -47,6 +49,7 @@ from souffle_analyzer.ast import (
     TypeDeclarationOp,
     TypeExpression,
     TypeReference,
+    TypeReferenceName,
     TypeRelationOpKind,
     UnionTypeExpression,
     UnresolvedType,
@@ -245,7 +248,10 @@ class Parser:
 
     def parse_directive(self, node: ts.Node) -> Directive:
         relation_name_nodes = self.get_children_of_type(node, "qualified_name")
-        relation_names = [self.parse_qualified_name(_) for _ in relation_name_nodes]
+        relation_names = [
+            self.parse_qualified_name(_, RelationReferenceName)
+            for _ in relation_name_nodes
+        ]
         return Directive(
             range_=self.get_range(node),
             syntax_issues=self.collect_syntax_issues(node),
@@ -457,7 +463,7 @@ class Parser:
         name_node = node.child_by_field_name("name")
         if not name_node:
             raise ParserError()
-        name = self.parse_qualified_name(name_node)
+        name = self.parse_qualified_name(name_node, RelationReferenceName)
         argument_nodes = self.get_children_of_type(node, "argument")
         arguments = list(filter(None, [self.parse_argument(_) for _ in argument_nodes]))
         return atom_type(
@@ -505,7 +511,7 @@ class Parser:
         name_node = self.get_child_of_type(node, "qualified_name")
         if name_node is None:
             raise ParserError()
-        name = self.parse_qualified_name(name_node)
+        name = self.parse_qualified_name(name_node, BranchInitName)
         arg_nodes = self.get_children_of_type(node, "argument")
         arguments = list(filter(None, (self.parse_argument(_) for _ in arg_nodes)))
         return BranchInit(
@@ -563,9 +569,15 @@ class Parser:
             ty=UnresolvedType(),
         )
 
-    def parse_qualified_name(self, node: ts.Node) -> QualifiedName:
+    QualifiedNameT = TypeVar("QualifiedNameT", bound=QualifiedName)
+
+    def parse_qualified_name(
+        self,
+        node: ts.Node,
+        qualified_name_type: type[QualifiedNameT],
+    ) -> QualifiedNameT:
         identifier_nodes = self.get_children_of_type(node, "identifier")
-        return QualifiedName(
+        return qualified_name_type(
             range_=self.get_range(node),
             syntax_issues=self.collect_syntax_issues(node),
             parts=[self.parse_identifier(_) for _ in identifier_nodes],
@@ -603,12 +615,7 @@ class Parser:
             return TypeReference(
                 range_=self.get_range(node),
                 syntax_issues=self.collect_syntax_issues(node),
-                names=list(
-                    map(
-                        lambda _: _.val,
-                        self.parse_qualified_name(qualified_name_node).parts,
-                    )
-                ),
+                name=self.parse_qualified_name(qualified_name_node, TypeReferenceName),
             )
         raise ParserError()
 
@@ -616,7 +623,11 @@ class Parser:
         return TypeReference(
             range_=self.get_range(node),
             syntax_issues=self.collect_syntax_issues(node),
-            names=[self.get_text(node)],
+            name=TypeReferenceName(
+                range_=self.get_range(node),
+                syntax_issues=[],
+                parts=[self.parse_identifier(node)],
+            ),
         )
 
     def parse_block_comment(self, node: ts.Node) -> BlockComment:

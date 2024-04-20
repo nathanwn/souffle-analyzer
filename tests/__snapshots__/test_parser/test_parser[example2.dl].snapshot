@@ -7,17 +7,29 @@ File(
     Attribute(
       range_=[3:20-3:29]
       Identifier(range_=[3:20-3:21], val='u')
-      TypeReference(range_=[3:23-3:29], names=['number'])
+      TypeReference(
+        range_=[3:23-3:29]
+        TypeReferenceName(
+          range_=[3:23-3:29]
+          Identifier(range_=[3:23-3:29], val='number')
+        )
+      )
     )
     Attribute(
       range_=[3:31-3:40]
       Identifier(range_=[3:31-3:32], val='v')
-      TypeReference(range_=[3:34-3:40], names=['number'])
+      TypeReference(
+        range_=[3:34-3:40]
+        TypeReferenceName(
+          range_=[3:34-3:40]
+          Identifier(range_=[3:34-3:40], val='number')
+        )
+      )
     )
   )
   Fact(
     range_=[5:0-5:19]
-    QualifiedName(
+    RelationReferenceName(
       range_=[5:0-5:13]
       Identifier(range_=[5:0-5:13], val='directed_edge')
     )
@@ -26,7 +38,7 @@ File(
   )
   Fact(
     range_=[6:0-6:19]
-    QualifiedName(
+    RelationReferenceName(
       range_=[6:0-6:13]
       Identifier(range_=[6:0-6:13], val='directed_edge')
     )
@@ -35,7 +47,7 @@ File(
   )
   Fact(
     range_=[7:0-7:19]
-    QualifiedName(
+    RelationReferenceName(
       range_=[7:0-7:13]
       Identifier(range_=[7:0-7:13], val='directed_edge')
     )
@@ -44,7 +56,7 @@ File(
   )
   Fact(
     range_=[8:0-8:19]
-    QualifiedName(
+    RelationReferenceName(
       range_=[8:0-8:13]
       Identifier(range_=[8:0-8:13], val='directed_edge')
     )
@@ -58,12 +70,24 @@ File(
     Attribute(
       range_=[13:11-13:20]
       Identifier(range_=[13:11-13:12], val='u')
-      TypeReference(range_=[13:14-13:20], names=['number'])
+      TypeReference(
+        range_=[13:14-13:20]
+        TypeReferenceName(
+          range_=[13:14-13:20]
+          Identifier(range_=[13:14-13:20], val='number')
+        )
+      )
     )
     Attribute(
       range_=[13:22-13:31]
       Identifier(range_=[13:22-13:23], val='v')
-      TypeReference(range_=[13:25-13:31], names=['number'])
+      TypeReference(
+        range_=[13:25-13:31]
+        TypeReferenceName(
+          range_=[13:25-13:31]
+          Identifier(range_=[13:25-13:31], val='number')
+        )
+      )
     )
   )
   Rule(
@@ -72,7 +96,7 @@ File(
       range_=[15:0-15:10]
       RelationReference(
         range_=[15:0-15:10]
-        QualifiedName(
+        RelationReferenceName(
           range_=[15:0-15:4]
           Identifier(range_=[15:0-15:4], val='path')
         )
@@ -88,7 +112,7 @@ File(
           range_=[15:14-15:33]
           RelationReference(
             range_=[15:14-15:33]
-            QualifiedName(
+            RelationReferenceName(
               range_=[15:14-15:27]
               Identifier(range_=[15:14-15:27], val='directed_edge')
             )
@@ -105,7 +129,7 @@ File(
       range_=[16:0-16:10]
       RelationReference(
         range_=[16:0-16:10]
-        QualifiedName(
+        RelationReferenceName(
           range_=[16:0-16:4]
           Identifier(range_=[16:0-16:4], val='path')
         )
@@ -121,7 +145,7 @@ File(
           range_=[16:14-16:33]
           RelationReference(
             range_=[16:14-16:33]
-            QualifiedName(
+            RelationReferenceName(
               range_=[16:14-16:27]
               Identifier(range_=[16:14-16:27], val='directed_edge')
             )
@@ -133,7 +157,7 @@ File(
           range_=[16:35-16:54]
           RelationReference(
             range_=[16:35-16:54]
-            QualifiedName(
+            RelationReferenceName(
               range_=[16:35-16:48]
               Identifier(range_=[16:35-16:48], val='directed_edge')
             )

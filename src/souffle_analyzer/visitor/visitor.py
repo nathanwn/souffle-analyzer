@@ -13,6 +13,7 @@ from souffle_analyzer.ast import (
     BinaryOperator,
     BlockComment,
     BranchInit,
+    BranchInitName,
     Conjunction,
     Constant,
     Directive,
@@ -29,12 +30,14 @@ from souffle_analyzer.ast import (
     RelationDeclaration,
     RelationReference,
     RelationReferenceClause,
+    RelationReferenceName,
     Rule,
     RuleHead,
     SubsumptionHead,
     TypeDeclaration,
     TypeDeclarationOp,
     TypeReference,
+    TypeReferenceName,
     UnionTypeExpression,
     Variable,
 )
@@ -84,13 +87,24 @@ class Visitor(Generic[T]):
     def visit_subsumption_head(self, subsumption_head: SubsumptionHead) -> T:
         return self.generic_visit(subsumption_head)
 
-    def visit_relation_reference(self, relation_reference: RelationReference) -> T:
-        return self.generic_visit(relation_reference)
-
     def visit_relation_declaration(
         self, relation_declaration: RelationDeclaration
     ) -> T:
         return self.generic_visit(relation_declaration)
+
+    def visit_relation_reference(self, relation_reference: RelationReference) -> T:
+        return self.generic_visit(relation_reference)
+
+    def visit_relation_reference_name(
+        self, relation_reference_name: RelationReferenceName
+    ) -> T:
+        return self.generic_visit(relation_reference_name)
+
+    def visit_type_reference_name(self, type_reference_name: TypeReferenceName) -> T:
+        return self.generic_visit(type_reference_name)
+
+    def visit_branch_init_name(self, branch_init_name: BranchInitName) -> T:
+        return self.generic_visit(branch_init_name)
 
     def visit_fact(self, fact: Fact) -> T:
         return self.generic_visit(fact)

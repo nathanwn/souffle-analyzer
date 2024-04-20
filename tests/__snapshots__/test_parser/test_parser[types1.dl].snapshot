@@ -6,8 +6,20 @@ File(
     TypeDeclarationOp(range_=[0:12-0:13], op=EQUIVALENT_TYPE(=))
     UnionTypeExpression(
       range_=[0:14-0:25]
-      TypeReference(range_=[0:14-0:18], names=['Pawn'])
-      TypeReference(range_=[0:21-0:25], names=['King'])
+      TypeReference(
+        range_=[0:14-0:18]
+        TypeReferenceName(
+          range_=[0:14-0:18]
+          Identifier(range_=[0:14-0:18], val='Pawn')
+        )
+      )
+      TypeReference(
+        range_=[0:21-0:25]
+        TypeReferenceName(
+          range_=[0:21-0:25]
+          Identifier(range_=[0:21-0:25], val='King')
+        )
+      )
     )
   )
   TypeDeclaration(
@@ -19,17 +31,35 @@ File(
       Attribute(
         range_=[2:4-2:14]
         Identifier(range_=[2:4-2:8], val='from')
-        TypeReference(range_=[2:10-2:14], names=['Node'])
+        TypeReference(
+          range_=[2:10-2:14]
+          TypeReferenceName(
+            range_=[2:10-2:14]
+            Identifier(range_=[2:10-2:14], val='Node')
+          )
+        )
       )
       Attribute(
         range_=[3:4-3:12]
         Identifier(range_=[3:4-3:6], val='to')
-        TypeReference(range_=[3:8-3:12], names=['Node'])
+        TypeReference(
+          range_=[3:8-3:12]
+          TypeReferenceName(
+            range_=[3:8-3:12]
+            Identifier(range_=[3:8-3:12], val='Node')
+          )
+        )
       )
       Attribute(
         range_=[4:4-4:18]
         Identifier(range_=[4:4-4:10], val='weight')
-        TypeReference(range_=[4:12-4:18], names=['number'])
+        TypeReference(
+          range_=[4:12-4:18]
+          TypeReferenceName(
+            range_=[4:12-4:18]
+            Identifier(range_=[4:12-4:18], val='number')
+          )
+        )
       )
     )
   )
@@ -49,17 +79,35 @@ File(
         Attribute(
           range_=[7:19-7:27]
           Identifier(range_=[7:19-7:21], val='t1')
-          TypeReference(range_=[7:23-7:27], names=['Tree'])
+          TypeReference(
+            range_=[7:23-7:27]
+            TypeReferenceName(
+              range_=[7:23-7:27]
+              Identifier(range_=[7:23-7:27], val='Tree')
+            )
+          )
         )
         Attribute(
           range_=[7:29-7:42]
           Identifier(range_=[7:29-7:32], val='val')
-          TypeReference(range_=[7:34-7:42], names=['unsigned'])
+          TypeReference(
+            range_=[7:34-7:42]
+            TypeReferenceName(
+              range_=[7:34-7:42]
+              Identifier(range_=[7:34-7:42], val='unsigned')
+            )
+          )
         )
         Attribute(
           range_=[7:44-7:52]
           Identifier(range_=[7:44-7:46], val='t2')
-          TypeReference(range_=[7:48-7:52], names=['Tree'])
+          TypeReference(
+            range_=[7:48-7:52]
+            TypeReferenceName(
+              range_=[7:48-7:52]
+              Identifier(range_=[7:48-7:52], val='Tree')
+            )
+          )
         )
       )
     )

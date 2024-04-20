@@ -4,7 +4,13 @@ File(
     range_=[0:0-0:20]
     Identifier(range_=[0:6-0:10], val='Name')
     TypeDeclarationOp(range_=[0:11-0:13], op=SUBTYPE(<:))
-    TypeReference(range_=[0:14-0:20], names=['symbol'])
+    TypeReference(
+      range_=[0:14-0:20]
+      TypeReferenceName(
+        range_=[0:14-0:20]
+        Identifier(range_=[0:14-0:20], val='symbol')
+      )
+    )
   )
   RelationDeclaration(
     range_=[2:0-2:40]
@@ -12,12 +18,24 @@ File(
     Attribute(
       range_=[2:17-2:27]
       Identifier(range_=[2:17-2:21], val='name')
-      TypeReference(range_=[2:23-2:27], names=['Name'])
+      TypeReference(
+        range_=[2:23-2:27]
+        TypeReferenceName(
+          range_=[2:23-2:27]
+          Identifier(range_=[2:23-2:27], val='Name')
+        )
+      )
     )
     Attribute(
       range_=[2:29-2:39]
       Identifier(range_=[2:29-2:31], val='id')
-      TypeReference(range_=[2:33-2:39], names=['number'])
+      TypeReference(
+        range_=[2:33-2:39]
+        TypeReferenceName(
+          range_=[2:33-2:39]
+          Identifier(range_=[2:33-2:39], val='number')
+        )
+      )
     )
   )
   RelationDeclaration(
@@ -26,17 +44,29 @@ File(
     Attribute(
       range_=[3:17-3:27]
       Identifier(range_=[3:17-3:21], val='name')
-      TypeReference(range_=[3:23-3:27], names=['Name'])
+      TypeReference(
+        range_=[3:23-3:27]
+        TypeReferenceName(
+          range_=[3:23-3:27]
+          Identifier(range_=[3:23-3:27], val='Name')
+        )
+      )
     )
     Attribute(
       range_=[3:29-3:39]
       Identifier(range_=[3:29-3:31], val='id')
-      TypeReference(range_=[3:33-3:39], names=['number'])
+      TypeReference(
+        range_=[3:33-3:39]
+        TypeReferenceName(
+          range_=[3:33-3:39]
+          Identifier(range_=[3:33-3:39], val='number')
+        )
+      )
     )
   )
   Fact(
     range_=[5:0-5:20]
-    QualifiedName(
+    RelationReferenceName(
       range_=[5:0-5:8]
       Identifier(range_=[5:0-5:8], val='identity')
     )
@@ -45,7 +75,7 @@ File(
   )
   Fact(
     range_=[6:0-6:18]
-    QualifiedName(
+    RelationReferenceName(
       range_=[6:0-6:8]
       Identifier(range_=[6:0-6:8], val='identity')
     )
@@ -58,7 +88,13 @@ File(
     Attribute(
       range_=[8:13-8:23]
       Identifier(range_=[8:13-8:17], val='name')
-      TypeReference(range_=[8:19-8:23], names=['Name'])
+      TypeReference(
+        range_=[8:19-8:23]
+        TypeReferenceName(
+          range_=[8:19-8:23]
+          Identifier(range_=[8:19-8:23], val='Name')
+        )
+      )
     )
   )
   Rule(
@@ -67,7 +103,7 @@ File(
       range_=[10:0-10:12]
       RelationReference(
         range_=[10:0-10:12]
-        QualifiedName(
+        RelationReferenceName(
           range_=[10:0-10:6]
           Identifier(range_=[10:0-10:6], val='has_id')
         )
@@ -82,7 +118,7 @@ File(
           range_=[10:16-10:35]
           RelationReference(
             range_=[10:16-10:35]
-            QualifiedName(
+            RelationReferenceName(
               range_=[10:16-10:26]
               Identifier(range_=[10:16-10:26], val='is_student')
             )
@@ -99,7 +135,7 @@ File(
       range_=[11:0-11:12]
       RelationReference(
         range_=[11:0-11:12]
-        QualifiedName(
+        RelationReferenceName(
           range_=[11:0-11:6]
           Identifier(range_=[11:0-11:6], val='has_id')
         )
@@ -114,7 +150,7 @@ File(
           range_=[11:16-11:35]
           RelationReference(
             range_=[11:16-11:35]
-            QualifiedName(
+            RelationReferenceName(
               range_=[11:16-11:26]
               Identifier(range_=[11:16-11:26], val='is_teacher')
             )

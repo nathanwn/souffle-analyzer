@@ -122,6 +122,14 @@ _____
 _____
 
 -- Cursor range --
+12 | produces_value(val) :- has_expr($Const(val)).
+   |                                  ~~~~~
+-- Definition --
+ 0 | .type Exp = Const { val: number }
+   |             ~~~~~
+_____
+
+-- Cursor range --
 13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
    | ~~~~~~~~~~~~~~
 -- Definition --
@@ -135,6 +143,30 @@ _____
 -- Definition --
  4 | .decl has_expr(exp: Exp)
    |       ~~~~~~~~
+_____
+
+-- Cursor range --
+13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
+   |                                  ~~~
+-- Definition --
+ 2 |           | Add { e1: Exp, e2: Exp }
+   |             ~~~
+_____
+
+-- Cursor range --
+13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
+   |                                       ~~~~~
+-- Definition --
+ 0 | .type Exp = Const { val: number }
+   |             ~~~~~
+_____
+
+-- Cursor range --
+13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
+   |                                                   ~~~~~
+-- Definition --
+ 0 | .type Exp = Const { val: number }
+   |             ~~~~~
 _____
 
 -- Cursor range --

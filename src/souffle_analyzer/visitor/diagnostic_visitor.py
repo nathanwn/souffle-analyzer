@@ -29,11 +29,7 @@ class DiagnosticVisitor(Visitor[T]):
         return self.visit_atom(relation_reference)
 
     def visit_atom(self, atom: Atom) -> None:
-        if len(atom.name.parts) > 1:
-            # TODO
-            return
-        name = atom.name.parts[0].val
-        relation = self.file.get_relation_declaration_with_name(name)
+        relation = self.file.get_relation_declaration_with_name(atom.name)
         if not relation:
             # TODO: handle this, but probably in a different step/another visitor?
             return

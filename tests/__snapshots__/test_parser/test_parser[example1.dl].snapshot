@@ -7,12 +7,24 @@ File(
     Attribute(
       range_=[1:8-1:17]
       Identifier(range_=[1:8-1:9], val='x')
-      TypeReference(range_=[1:11-1:17], names=['number'])
+      TypeReference(
+        range_=[1:11-1:17]
+        TypeReferenceName(
+          range_=[1:11-1:17]
+          Identifier(range_=[1:11-1:17], val='number')
+        )
+      )
     )
     Attribute(
       range_=[1:19-1:28]
       Identifier(range_=[1:19-1:20], val='y')
-      TypeReference(range_=[1:22-1:28], names=['number'])
+      TypeReference(
+        range_=[1:22-1:28]
+        TypeReferenceName(
+          range_=[1:22-1:28]
+          Identifier(range_=[1:22-1:28], val='number')
+        )
+      )
     )
   )
   BlockComment(range_=[3:0-5:3], content='/**\n * B is another relation.\n**/')
@@ -22,12 +34,24 @@ File(
     Attribute(
       range_=[6:8-6:17]
       Identifier(range_=[6:8-6:9], val='x')
-      TypeReference(range_=[6:11-6:17], names=['number'])
+      TypeReference(
+        range_=[6:11-6:17]
+        TypeReferenceName(
+          range_=[6:11-6:17]
+          Identifier(range_=[6:11-6:17], val='number')
+        )
+      )
     )
     Attribute(
       range_=[6:19-6:28]
       Identifier(range_=[6:19-6:20], val='y')
-      TypeReference(range_=[6:22-6:28], names=['number'])
+      TypeReference(
+        range_=[6:22-6:28]
+        TypeReferenceName(
+          range_=[6:22-6:28]
+          Identifier(range_=[6:22-6:28], val='number')
+        )
+      )
     )
   )
   LineComment(range_=[8:0-8:20], content=['// Some rules for B.'])
@@ -37,7 +61,7 @@ File(
       range_=[9:0-9:7]
       RelationReference(
         range_=[9:0-9:7]
-        QualifiedName(
+        RelationReferenceName(
           range_=[9:0-9:1]
           Identifier(range_=[9:0-9:1], val='B')
         )
@@ -53,7 +77,7 @@ File(
           range_=[9:11-9:18]
           RelationReference(
             range_=[9:11-9:18]
-            QualifiedName(
+            RelationReferenceName(
               range_=[9:11-9:12]
               Identifier(range_=[9:11-9:12], val='A')
             )
@@ -70,7 +94,7 @@ File(
       range_=[10:0-10:7]
       RelationReference(
         range_=[10:0-10:7]
-        QualifiedName(
+        RelationReferenceName(
           range_=[10:0-10:1]
           Identifier(range_=[10:0-10:1], val='B')
         )
@@ -86,7 +110,7 @@ File(
           range_=[10:11-10:18]
           RelationReference(
             range_=[10:11-10:18]
-            QualifiedName(
+            RelationReferenceName(
               range_=[10:11-10:12]
               Identifier(range_=[10:11-10:12], val='A')
             )
@@ -98,7 +122,7 @@ File(
           range_=[10:20-10:27]
           RelationReference(
             range_=[10:20-10:27]
-            QualifiedName(
+            RelationReferenceName(
               range_=[10:20-10:21]
               Identifier(range_=[10:20-10:21], val='B')
             )
@@ -115,12 +139,24 @@ File(
     Attribute(
       range_=[12:8-12:17]
       Identifier(range_=[12:8-12:9], val='x')
-      TypeReference(range_=[12:11-12:17], names=['number'])
+      TypeReference(
+        range_=[12:11-12:17]
+        TypeReferenceName(
+          range_=[12:11-12:17]
+          Identifier(range_=[12:11-12:17], val='number')
+        )
+      )
     )
     Attribute(
       range_=[12:19-12:28]
       Identifier(range_=[12:19-12:20], val='y')
-      TypeReference(range_=[12:22-12:28], names=['number'])
+      TypeReference(
+        range_=[12:22-12:28]
+        TypeReferenceName(
+          range_=[12:22-12:28]
+          Identifier(range_=[12:22-12:28], val='number')
+        )
+      )
     )
   )
   Rule(
@@ -129,7 +165,7 @@ File(
       range_=[13:0-13:7]
       RelationReference(
         range_=[13:0-13:7]
-        QualifiedName(
+        RelationReferenceName(
           range_=[13:0-13:1]
           Identifier(range_=[13:0-13:1], val='C')
         )
@@ -145,7 +181,7 @@ File(
           range_=[13:11-13:18]
           RelationReference(
             range_=[13:11-13:18]
-            QualifiedName(
+            RelationReferenceName(
               range_=[13:11-13:12]
               Identifier(range_=[13:11-13:12], val='A')
             )
@@ -157,7 +193,7 @@ File(
           range_=[13:20-13:28]
           RelationReference(
             range_=[13:21-13:28]
-            QualifiedName(
+            RelationReferenceName(
               range_=[13:21-13:22]
               Identifier(range_=[13:21-13:22], val='B')
             )
@@ -170,14 +206,14 @@ File(
   )
   Directive(
     range_=[15:0-15:8]
-    QualifiedName(
+    RelationReferenceName(
       range_=[15:7-15:8]
       Identifier(range_=[15:7-15:8], val='A')
     )
   )
   Directive(
     range_=[16:0-16:9]
-    QualifiedName(
+    RelationReferenceName(
       range_=[16:8-16:9]
       Identifier(range_=[16:8-16:9], val='C')
     )

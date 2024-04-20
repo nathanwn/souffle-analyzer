@@ -155,7 +155,7 @@ class Node:
 
 @dataclass
 class Atom(Node):
-    name: QualifiedName
+    name: RelationReferenceName
     arguments: list[Argument]
 
     def accept(self, visitor: Visitor[T]) -> T:
@@ -196,17 +196,42 @@ class File(Node):
         return visitor.visit_file(self)
 
     def get_relation_declaration_with_name(
-        self, name: str
+        self,
+        name: RelationReferenceName,
     ) -> RelationDeclaration | None:
+        if len(name.parts) != 1:
+            # TODO: support more complex names
+            return None
         for relation_declaration in self.relation_declarations:
-            if relation_declaration.name.val == name:
+            if relation_declaration.name.val == name.parts[0].val:
                 return relation_declaration
         return None
 
-    def get_type_declaration_with_name(self, name: str) -> TypeDeclaration | None:
+    def get_type_declaration_with_name(
+        self,
+        name: TypeReferenceName,
+    ) -> TypeDeclaration | None:
+        if len(name.parts) != 1:
+            # TODO: support more complex names
+            return None
         for type_declaration in self.type_declarations:
-            if type_declaration.name.val == name:
+            if type_declaration.name.val == name.parts[0].val:
                 return type_declaration
+        return None
+
+    def get_adt_branch_with_name(
+        self,
+        name: BranchInitName,
+    ) -> AbstractDataTypeBranch | None:
+        if len(name.parts) != 1:
+            # TODO: support more complex names
+            return None
+        for type_declaration in self.type_declarations:
+            type_expression = type_declaration.expression
+            if isinstance(type_expression, AbstractDataTypeExpression):
+                adt_branch = type_expression.get_branch_with_name(name.parts[0].val)
+                if adt_branch is not None:
+                    return adt_branch
         return None
 
 
@@ -547,23 +572,13 @@ class RelationDeclaration(Node):
 
 @dataclass
 class Fact(Atom):
-    name: QualifiedName
-    arguments: list[Argument]
-
-    @property
-    def children(self) -> list[Node]:
-        return [
-            self.name,
-            *self.arguments,
-        ]
-
     def accept(self, visitor: Visitor[T]) -> T:
         return visitor.visit_fact(self)
 
 
 @dataclass
 class Directive(Node):
-    relation_names: list[QualifiedName]
+    relation_names: list[RelationReferenceName]
 
     @property
     def children(self) -> list[Node]:
@@ -592,7 +607,8 @@ class Attribute(Node):
         return visitor.visit_attribute(self)
 
     def get_signature(self) -> str:
-        return f"{self.name.val}: {'.'.join(self.type_.names)}"
+        type_name = ".".join(map(lambda part: part.val, self.type_.name.parts))
+        return f"{self.name.val}: {type_name}"
 
     def get_hover_result(self) -> str:
         doc_lines = []
@@ -602,23 +618,6 @@ class Attribute(Node):
         if self.doc_text is not None:
             doc_lines.extend(self.doc_text)
         return "\n".join(doc_lines)
-
-
-@dataclass
-class TypeReference(TypeExpression):
-    # A sequence of dot-separated names
-    names: list[str]
-
-    def accept(self, visitor: Visitor[T]) -> T:
-        return visitor.visit_type_reference(self)
-
-
-@dataclass
-class Identifier(Node):
-    val: str
-
-    def accept(self, visitor: Visitor[T]) -> T:
-        return visitor.visit_identifier(self)
 
 
 @dataclass
@@ -633,6 +632,53 @@ class QualifiedName(Node):
 
     def accept(self, visitor: Visitor[T]) -> T:
         return visitor.visit_qualified_name(self)
+
+
+@dataclass
+class TypeReference(TypeExpression):
+    # A sequence of dot-separated names
+    name: TypeReferenceName
+
+    @property
+    def children(self) -> list[Node]:
+        return [
+            self.name,
+        ]
+
+    def accept(self, visitor: Visitor[T]) -> T:
+        return visitor.visit_type_reference(self)
+
+
+@dataclass
+class RelationReferenceName(QualifiedName):
+    declaration: RelationDeclaration | None = field(default=None)
+
+    def accept(self, visitor: Visitor[T]) -> T:
+        return visitor.visit_relation_reference_name(self)
+
+
+@dataclass
+class TypeReferenceName(QualifiedName):
+    declaration: TypeDeclaration | None = field(default=None)
+
+    def accept(self, visitor: Visitor[T]) -> T:
+        return visitor.visit_type_reference_name(self)
+
+
+@dataclass
+class BranchInitName(QualifiedName):
+    declaration: AbstractDataTypeBranch | None = field(default=None)
+
+    def accept(self, visitor: Visitor[T]) -> T:
+        return visitor.visit_branch_init_name(self)
+
+
+@dataclass
+class Identifier(Node):
+    val: str
+
+    def accept(self, visitor: Visitor[T]) -> T:
+        return visitor.visit_identifier(self)
 
 
 @dataclass
@@ -658,6 +704,7 @@ class Variable(Argument):
 class BranchInit(Argument):
     name: QualifiedName
     arguments: list[Argument]
+    definition: AbstractDataTypeBranch | None = field(default=None)
 
     @property
     def children(self) -> list[Node]:

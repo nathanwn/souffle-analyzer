@@ -28,11 +28,7 @@ class TypeInferVisitor(Visitor[None]):
         return self.visit_atom(relation_reference)
 
     def visit_atom(self, atom: Atom) -> None:
-        if len(atom.name.parts) > 1:
-            # TODO
-            return
-        name = atom.name.parts[0].val
-        relation = self.file.get_relation_declaration_with_name(name)
+        relation = self.file.get_relation_declaration_with_name(atom.name)
         if not relation:
             # This should be already been checked and reported.
             return
@@ -41,12 +37,7 @@ class TypeInferVisitor(Visitor[None]):
             return
         for attribute, argument in zip(relation.attributes, atom.arguments):
             if isinstance(argument.ty, UnresolvedType):
-                type_name_parts = attribute.type_.names
-                if len(type_name_parts) > 1:
-                    # TODO
-                    continue
-                type_name = attribute.type_.names[0]
-                ty = self.file.get_type_declaration_with_name(type_name)
+                ty = self.file.get_type_declaration_with_name(attribute.type_.name)
                 if ty is not None:
                     argument.ty = ty
 

@@ -4,3 +4,7 @@ foo().
 foo(1).
 foo(1, 2).
 foo(1, 2, 3).
+
+.decl bar(x: number, y: number)
+
+bar(x, y, z) :- foo(x, y).
