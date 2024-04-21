@@ -2,5 +2,6 @@
 ignore =
     # conflicts with black
     E203
+    E704
     W503
 max-line-length = 88

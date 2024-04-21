@@ -34,7 +34,6 @@ def test_parser(file_snapshot: SnapshotAssertion, filename: str) -> None:
     file = parser.parse(code)
 
     res = "\n".join(format_souffle_ast(file))
-    print(file_snapshot.test_location)
     assert res == file_snapshot
 
 
@@ -69,7 +68,6 @@ def test_parser_on_incomplete_files(
         range_=file.range_,
         code_lines=code_lines,
     )
-    print(all_positions)
 
     for i in range(len(all_positions)):
         prev = None

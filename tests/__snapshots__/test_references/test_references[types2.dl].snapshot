@@ -1,0 +1,456 @@
+ 0 | .type Exp = Const { val: number }
+ 1 |           | Var { id: symbol}
+ 2 |           | Add { e1: Exp, e2: Exp }
+ 3 |
+ 4 | .decl has_expr(exp: Exp)
+ 5 |
+ 6 | has_expr($Const(1)).
+ 7 | has_expr($Var("x")).
+ 8 | has_expr($Add($Const(2), $Const(3))).
+ 9 |
+10 | .decl produces_value(val: number)
+11 |
+12 | produces_value(val) :- has_expr($Const(val)).
+13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
+14 |
+15 | .output produces_value
+
+=====
+
+-- Cursor range --
+ 0 | .type Exp = Const { val: number }
+   |       ~~~
+-- References --
+ 0 | .type Exp = Const { val: number }
+   |       ~~~
+
+ 2 |           | Add { e1: Exp, e2: Exp }
+   |                       ~~~
+
+ 2 |           | Add { e1: Exp, e2: Exp }
+   |                                ~~~
+
+ 4 | .decl has_expr(exp: Exp)
+   |                     ~~~
+
+_____
+
+-- Cursor range --
+ 0 | .type Exp = Const { val: number }
+   |             ~~~~~
+-- References --
+ 0 | .type Exp = Const { val: number }
+   |             ~~~~~
+
+ 6 | has_expr($Const(1)).
+   |           ~~~~~
+
+ 8 | has_expr($Add($Const(2), $Const(3))).
+   |                ~~~~~
+
+ 8 | has_expr($Add($Const(2), $Const(3))).
+   |                           ~~~~~
+
+12 | produces_value(val) :- has_expr($Const(val)).
+   |                                  ~~~~~
+
+13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
+   |                                       ~~~~~
+
+13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
+   |                                                   ~~~~~
+
+_____
+
+-- Cursor range --
+ 1 |           | Var { id: symbol}
+   |             ~~~
+-- References --
+ 1 |           | Var { id: symbol}
+   |             ~~~
+
+ 7 | has_expr($Var("x")).
+   |           ~~~
+
+_____
+
+-- Cursor range --
+ 2 |           | Add { e1: Exp, e2: Exp }
+   |             ~~~
+-- References --
+ 2 |           | Add { e1: Exp, e2: Exp }
+   |             ~~~
+
+ 8 | has_expr($Add($Const(2), $Const(3))).
+   |           ~~~
+
+13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
+   |                                  ~~~
+
+_____
+
+-- Cursor range --
+ 2 |           | Add { e1: Exp, e2: Exp }
+   |                       ~~~
+-- References --
+ 0 | .type Exp = Const { val: number }
+   |       ~~~
+
+ 2 |           | Add { e1: Exp, e2: Exp }
+   |                       ~~~
+
+ 2 |           | Add { e1: Exp, e2: Exp }
+   |                                ~~~
+
+ 4 | .decl has_expr(exp: Exp)
+   |                     ~~~
+
+_____
+
+-- Cursor range --
+ 2 |           | Add { e1: Exp, e2: Exp }
+   |                                ~~~
+-- References --
+ 0 | .type Exp = Const { val: number }
+   |       ~~~
+
+ 2 |           | Add { e1: Exp, e2: Exp }
+   |                       ~~~
+
+ 2 |           | Add { e1: Exp, e2: Exp }
+   |                                ~~~
+
+ 4 | .decl has_expr(exp: Exp)
+   |                     ~~~
+
+_____
+
+-- Cursor range --
+ 4 | .decl has_expr(exp: Exp)
+   |       ~~~~~~~~
+-- References --
+ 4 | .decl has_expr(exp: Exp)
+   |       ~~~~~~~~
+
+ 6 | has_expr($Const(1)).
+   | ~~~~~~~~
+
+ 7 | has_expr($Var("x")).
+   | ~~~~~~~~
+
+ 8 | has_expr($Add($Const(2), $Const(3))).
+   | ~~~~~~~~
+
+12 | produces_value(val) :- has_expr($Const(val)).
+   |                        ~~~~~~~~
+
+13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
+   |                        ~~~~~~~~
+
+_____
+
+-- Cursor range --
+ 4 | .decl has_expr(exp: Exp)
+   |                     ~~~
+-- References --
+ 0 | .type Exp = Const { val: number }
+   |       ~~~
+
+ 2 |           | Add { e1: Exp, e2: Exp }
+   |                       ~~~
+
+ 2 |           | Add { e1: Exp, e2: Exp }
+   |                                ~~~
+
+ 4 | .decl has_expr(exp: Exp)
+   |                     ~~~
+
+_____
+
+-- Cursor range --
+ 6 | has_expr($Const(1)).
+   | ~~~~~~~~
+-- References --
+ 4 | .decl has_expr(exp: Exp)
+   |       ~~~~~~~~
+
+ 6 | has_expr($Const(1)).
+   | ~~~~~~~~
+
+ 7 | has_expr($Var("x")).
+   | ~~~~~~~~
+
+ 8 | has_expr($Add($Const(2), $Const(3))).
+   | ~~~~~~~~
+
+12 | produces_value(val) :- has_expr($Const(val)).
+   |                        ~~~~~~~~
+
+13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
+   |                        ~~~~~~~~
+
+_____
+
+-- Cursor range --
+ 6 | has_expr($Const(1)).
+   |           ~~~~~
+-- References --
+ 0 | .type Exp = Const { val: number }
+   |             ~~~~~
+
+ 6 | has_expr($Const(1)).
+   |           ~~~~~
+
+ 8 | has_expr($Add($Const(2), $Const(3))).
+   |                ~~~~~
+
+ 8 | has_expr($Add($Const(2), $Const(3))).
+   |                           ~~~~~
+
+12 | produces_value(val) :- has_expr($Const(val)).
+   |                                  ~~~~~
+
+13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
+   |                                       ~~~~~
+
+13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
+   |                                                   ~~~~~
+
+_____
+
+-- Cursor range --
+ 7 | has_expr($Var("x")).
+   | ~~~~~~~~
+-- References --
+ 4 | .decl has_expr(exp: Exp)
+   |       ~~~~~~~~
+
+ 6 | has_expr($Const(1)).
+   | ~~~~~~~~
+
+ 7 | has_expr($Var("x")).
+   | ~~~~~~~~
+
+ 8 | has_expr($Add($Const(2), $Const(3))).
+   | ~~~~~~~~
+
+12 | produces_value(val) :- has_expr($Const(val)).
+   |                        ~~~~~~~~
+
+13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
+   |                        ~~~~~~~~
+
+_____
+
+-- Cursor range --
+ 7 | has_expr($Var("x")).
+   |           ~~~
+-- References --
+ 1 |           | Var { id: symbol}
+   |             ~~~
+
+ 7 | has_expr($Var("x")).
+   |           ~~~
+
+_____
+
+-- Cursor range --
+ 8 | has_expr($Add($Const(2), $Const(3))).
+   | ~~~~~~~~
+-- References --
+ 4 | .decl has_expr(exp: Exp)
+   |       ~~~~~~~~
+
+ 6 | has_expr($Const(1)).
+   | ~~~~~~~~
+
+ 7 | has_expr($Var("x")).
+   | ~~~~~~~~
+
+ 8 | has_expr($Add($Const(2), $Const(3))).
+   | ~~~~~~~~
+
+12 | produces_value(val) :- has_expr($Const(val)).
+   |                        ~~~~~~~~
+
+13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
+   |                        ~~~~~~~~
+
+_____
+
+-- Cursor range --
+ 8 | has_expr($Add($Const(2), $Const(3))).
+   |           ~~~
+-- References --
+ 2 |           | Add { e1: Exp, e2: Exp }
+   |             ~~~
+
+ 8 | has_expr($Add($Const(2), $Const(3))).
+   |           ~~~
+
+13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
+   |                                  ~~~
+
+_____
+
+-- Cursor range --
+10 | .decl produces_value(val: number)
+   |       ~~~~~~~~~~~~~~
+-- References --
+10 | .decl produces_value(val: number)
+   |       ~~~~~~~~~~~~~~
+
+12 | produces_value(val) :- has_expr($Const(val)).
+   | ~~~~~~~~~~~~~~
+
+13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
+   | ~~~~~~~~~~~~~~
+
+15 | .output produces_value
+   |         ~~~~~~~~~~~~~~
+
+_____
+
+-- Cursor range --
+12 | produces_value(val) :- has_expr($Const(val)).
+   | ~~~~~~~~~~~~~~
+-- References --
+10 | .decl produces_value(val: number)
+   |       ~~~~~~~~~~~~~~
+
+12 | produces_value(val) :- has_expr($Const(val)).
+   | ~~~~~~~~~~~~~~
+
+13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
+   | ~~~~~~~~~~~~~~
+
+15 | .output produces_value
+   |         ~~~~~~~~~~~~~~
+
+_____
+
+-- Cursor range --
+12 | produces_value(val) :- has_expr($Const(val)).
+   |                        ~~~~~~~~
+-- References --
+ 4 | .decl has_expr(exp: Exp)
+   |       ~~~~~~~~
+
+ 6 | has_expr($Const(1)).
+   | ~~~~~~~~
+
+ 7 | has_expr($Var("x")).
+   | ~~~~~~~~
+
+ 8 | has_expr($Add($Const(2), $Const(3))).
+   | ~~~~~~~~
+
+12 | produces_value(val) :- has_expr($Const(val)).
+   |                        ~~~~~~~~
+
+13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
+   |                        ~~~~~~~~
+
+_____
+
+-- Cursor range --
+12 | produces_value(val) :- has_expr($Const(val)).
+   |                                  ~~~~~
+-- References --
+ 0 | .type Exp = Const { val: number }
+   |             ~~~~~
+
+ 6 | has_expr($Const(1)).
+   |           ~~~~~
+
+ 8 | has_expr($Add($Const(2), $Const(3))).
+   |                ~~~~~
+
+ 8 | has_expr($Add($Const(2), $Const(3))).
+   |                           ~~~~~
+
+12 | produces_value(val) :- has_expr($Const(val)).
+   |                                  ~~~~~
+
+13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
+   |                                       ~~~~~
+
+13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
+   |                                                   ~~~~~
+
+_____
+
+-- Cursor range --
+13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
+   | ~~~~~~~~~~~~~~
+-- References --
+10 | .decl produces_value(val: number)
+   |       ~~~~~~~~~~~~~~
+
+12 | produces_value(val) :- has_expr($Const(val)).
+   | ~~~~~~~~~~~~~~
+
+13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
+   | ~~~~~~~~~~~~~~
+
+15 | .output produces_value
+   |         ~~~~~~~~~~~~~~
+
+_____
+
+-- Cursor range --
+13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
+   |                        ~~~~~~~~
+-- References --
+ 4 | .decl has_expr(exp: Exp)
+   |       ~~~~~~~~
+
+ 6 | has_expr($Const(1)).
+   | ~~~~~~~~
+
+ 7 | has_expr($Var("x")).
+   | ~~~~~~~~
+
+ 8 | has_expr($Add($Const(2), $Const(3))).
+   | ~~~~~~~~
+
+12 | produces_value(val) :- has_expr($Const(val)).
+   |                        ~~~~~~~~
+
+13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
+   |                        ~~~~~~~~
+
+_____
+
+-- Cursor range --
+13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
+   |                                  ~~~
+-- References --
+ 2 |           | Add { e1: Exp, e2: Exp }
+   |             ~~~
+
+ 8 | has_expr($Add($Const(2), $Const(3))).
+   |           ~~~
+
+13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
+   |                                  ~~~
+
+_____
+
+-- Cursor range --
+15 | .output produces_value
+   |         ~~~~~~~~~~~~~~
+-- References --
+10 | .decl produces_value(val: number)
+   |       ~~~~~~~~~~~~~~
+
+12 | produces_value(val) :- has_expr($Const(val)).
+   | ~~~~~~~~~~~~~~
+
+13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
+   | ~~~~~~~~~~~~~~
+
+15 | .output produces_value
+   |         ~~~~~~~~~~~~~~
+
+_____

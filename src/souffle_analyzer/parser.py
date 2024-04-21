@@ -728,7 +728,7 @@ class Parser:
     def parse_branch_init(self, node: ts.Node) -> BranchInit:
         name_node = self.get_child_of_type(node, "qualified_name")
         if name_node is None:
-            name: ResultNode[QualifiedName] = ResultNode(
+            name: ResultNode[BranchInitName] = ResultNode(
                 range_=self.get_range(node),
                 inner=ErrorNode(
                     range_=self.get_range(node),

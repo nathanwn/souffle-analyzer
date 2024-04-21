@@ -4,7 +4,7 @@ import re
 from abc import abstractmethod
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import TYPE_CHECKING, Generic, TypeVar
+from typing import TYPE_CHECKING, Generic, Protocol, TypeVar
 
 import lsprotocol.types as lsptypes
 
@@ -106,6 +106,13 @@ class Range:
     end: Position
 
     @classmethod
+    def from_single_position(cls, position: Position) -> Range:
+        return Range(
+            start=position,
+            end=position,
+        )
+
+    @classmethod
     def from_lsp_type(cls, range_: lsptypes.Range) -> Range:
         return Range(
             start=Position.from_lsp_type(range_.start),
@@ -119,6 +126,9 @@ class Range:
 
     def __repr__(self) -> str:
         return f"[{self.start}-{self.end}]"
+
+    def is_single_position(self) -> bool:
+        return self.start == self.end
 
     def covers(self, position: Position) -> bool:
         # Range-end character on a line is always exclusive.
@@ -151,6 +161,10 @@ class Node:
     @abstractmethod
     def accept(self, visitor: Visitor):
         raise NotImplementedError()
+
+
+class IsDeclarationNode(Protocol):
+    def get_declaration_name_range(self) -> Range | None: ...
 
 
 @dataclass
@@ -292,6 +306,11 @@ class TypeDeclaration(SouffleType, ValidNode):
     def accept(self, visitor: Visitor[T]) -> T:
         return visitor.visit_type_declaration(self)
 
+    def get_declaration_name_range(self) -> Range | None:
+        if isinstance(self.name.inner, ErrorNode):
+            return None
+        return self.name.inner.range_
+
 
 @dataclass
 class SubsetType(TypeDeclaration):
@@ -352,7 +371,9 @@ class AbstractDataTypeExpression(TypeExpression):
     def get_branch_with_name(self, name: str) -> AbstractDataTypeBranch | None:
         for branch in self.branches:
             branch_name = branch.name.inner
-            if branch_name == name:
+            if isinstance(branch_name, ErrorNode):
+                continue
+            if branch_name.val == name:
                 return branch
         return None
 
@@ -371,6 +392,11 @@ class AbstractDataTypeBranch(ValidNode):
 
     def accept(self, visitor: Visitor[T]) -> T:
         return visitor.visit_abstract_data_type_branch(self)
+
+    def get_declaration_name_range(self) -> Range | None:
+        if isinstance(self.name.inner, ErrorNode):
+            return None
+        return self.name.inner.range_
 
 
 @dataclass
@@ -542,6 +568,11 @@ class RelationDeclaration(ValidNode):
 
     def accept(self, visitor: Visitor[T]) -> T:
         return visitor.visit_relation_declaration(self)
+
+    def get_declaration_name_range(self) -> Range | None:
+        if isinstance(self.name.inner, ErrorNode):
+            return None
+        return self.name.inner.range_
 
     def get_signature(self) -> str | None:
         builder: list[str] = []
@@ -787,7 +818,7 @@ class Variable(Argument):
 
 @dataclass
 class BranchInit(Argument):
-    name: ResultNode[QualifiedName]
+    name: ResultNode[BranchInitName]
     arguments: list[Argument]
     definition: ResultNode[AbstractDataTypeBranch] | None = field(default=None)
 

@@ -1,0 +1,304 @@
+ 0 | /// There exists an edge between two nodes `u` and `v`.
+ 1 | /// @attribute u  the initial node
+ 2 | /// @attribute v  the terminal node
+ 3 | .decl directed_edge(u: number, v: number)
+ 4 |
+ 5 | directed_edge(1, 2).
+ 6 | directed_edge(1, 3).
+ 7 | directed_edge(2, 4).
+ 8 | directed_edge(3, 5).
+ 9 |
+10 | /// There exists a path from node `u` to node `v`.
+11 | /// @attribute u  the source node
+12 | /// @attribute v  the sink node
+13 | .decl path(u: number, v: number)
+14 |
+15 | path(u, v) :- directed_edge(u, v).
+16 | path(u, v) :- directed_edge(u, i), directed_edge(i, v)
+
+=====
+
+-- Cursor range --
+ 3 | .decl directed_edge(u: number, v: number)
+   |       ~~~~~~~~~~~~~
+-- References --
+ 3 | .decl directed_edge(u: number, v: number)
+   |       ~~~~~~~~~~~~~
+
+ 5 | directed_edge(1, 2).
+   | ~~~~~~~~~~~~~
+
+ 6 | directed_edge(1, 3).
+   | ~~~~~~~~~~~~~
+
+ 7 | directed_edge(2, 4).
+   | ~~~~~~~~~~~~~
+
+ 8 | directed_edge(3, 5).
+   | ~~~~~~~~~~~~~
+
+15 | path(u, v) :- directed_edge(u, v).
+   |               ~~~~~~~~~~~~~
+
+16 | path(u, v) :- directed_edge(u, i), directed_edge(i, v)
+   |               ~~~~~~~~~~~~~
+
+16 | path(u, v) :- directed_edge(u, i), directed_edge(i, v)
+   |                                    ~~~~~~~~~~~~~
+
+_____
+
+-- Cursor range --
+ 5 | directed_edge(1, 2).
+   | ~~~~~~~~~~~~~
+-- References --
+ 3 | .decl directed_edge(u: number, v: number)
+   |       ~~~~~~~~~~~~~
+
+ 5 | directed_edge(1, 2).
+   | ~~~~~~~~~~~~~
+
+ 6 | directed_edge(1, 3).
+   | ~~~~~~~~~~~~~
+
+ 7 | directed_edge(2, 4).
+   | ~~~~~~~~~~~~~
+
+ 8 | directed_edge(3, 5).
+   | ~~~~~~~~~~~~~
+
+15 | path(u, v) :- directed_edge(u, v).
+   |               ~~~~~~~~~~~~~
+
+16 | path(u, v) :- directed_edge(u, i), directed_edge(i, v)
+   |               ~~~~~~~~~~~~~
+
+16 | path(u, v) :- directed_edge(u, i), directed_edge(i, v)
+   |                                    ~~~~~~~~~~~~~
+
+_____
+
+-- Cursor range --
+ 6 | directed_edge(1, 3).
+   | ~~~~~~~~~~~~~
+-- References --
+ 3 | .decl directed_edge(u: number, v: number)
+   |       ~~~~~~~~~~~~~
+
+ 5 | directed_edge(1, 2).
+   | ~~~~~~~~~~~~~
+
+ 6 | directed_edge(1, 3).
+   | ~~~~~~~~~~~~~
+
+ 7 | directed_edge(2, 4).
+   | ~~~~~~~~~~~~~
+
+ 8 | directed_edge(3, 5).
+   | ~~~~~~~~~~~~~
+
+15 | path(u, v) :- directed_edge(u, v).
+   |               ~~~~~~~~~~~~~
+
+16 | path(u, v) :- directed_edge(u, i), directed_edge(i, v)
+   |               ~~~~~~~~~~~~~
+
+16 | path(u, v) :- directed_edge(u, i), directed_edge(i, v)
+   |                                    ~~~~~~~~~~~~~
+
+_____
+
+-- Cursor range --
+ 7 | directed_edge(2, 4).
+   | ~~~~~~~~~~~~~
+-- References --
+ 3 | .decl directed_edge(u: number, v: number)
+   |       ~~~~~~~~~~~~~
+
+ 5 | directed_edge(1, 2).
+   | ~~~~~~~~~~~~~
+
+ 6 | directed_edge(1, 3).
+   | ~~~~~~~~~~~~~
+
+ 7 | directed_edge(2, 4).
+   | ~~~~~~~~~~~~~
+
+ 8 | directed_edge(3, 5).
+   | ~~~~~~~~~~~~~
+
+15 | path(u, v) :- directed_edge(u, v).
+   |               ~~~~~~~~~~~~~
+
+16 | path(u, v) :- directed_edge(u, i), directed_edge(i, v)
+   |               ~~~~~~~~~~~~~
+
+16 | path(u, v) :- directed_edge(u, i), directed_edge(i, v)
+   |                                    ~~~~~~~~~~~~~
+
+_____
+
+-- Cursor range --
+ 8 | directed_edge(3, 5).
+   | ~~~~~~~~~~~~~
+-- References --
+ 3 | .decl directed_edge(u: number, v: number)
+   |       ~~~~~~~~~~~~~
+
+ 5 | directed_edge(1, 2).
+   | ~~~~~~~~~~~~~
+
+ 6 | directed_edge(1, 3).
+   | ~~~~~~~~~~~~~
+
+ 7 | directed_edge(2, 4).
+   | ~~~~~~~~~~~~~
+
+ 8 | directed_edge(3, 5).
+   | ~~~~~~~~~~~~~
+
+15 | path(u, v) :- directed_edge(u, v).
+   |               ~~~~~~~~~~~~~
+
+16 | path(u, v) :- directed_edge(u, i), directed_edge(i, v)
+   |               ~~~~~~~~~~~~~
+
+16 | path(u, v) :- directed_edge(u, i), directed_edge(i, v)
+   |                                    ~~~~~~~~~~~~~
+
+_____
+
+-- Cursor range --
+13 | .decl path(u: number, v: number)
+   |       ~~~~
+-- References --
+13 | .decl path(u: number, v: number)
+   |       ~~~~
+
+15 | path(u, v) :- directed_edge(u, v).
+   | ~~~~
+
+16 | path(u, v) :- directed_edge(u, i), directed_edge(i, v)
+   | ~~~~
+
+_____
+
+-- Cursor range --
+15 | path(u, v) :- directed_edge(u, v).
+   | ~~~~
+-- References --
+13 | .decl path(u: number, v: number)
+   |       ~~~~
+
+15 | path(u, v) :- directed_edge(u, v).
+   | ~~~~
+
+16 | path(u, v) :- directed_edge(u, i), directed_edge(i, v)
+   | ~~~~
+
+_____
+
+-- Cursor range --
+15 | path(u, v) :- directed_edge(u, v).
+   |               ~~~~~~~~~~~~~
+-- References --
+ 3 | .decl directed_edge(u: number, v: number)
+   |       ~~~~~~~~~~~~~
+
+ 5 | directed_edge(1, 2).
+   | ~~~~~~~~~~~~~
+
+ 6 | directed_edge(1, 3).
+   | ~~~~~~~~~~~~~
+
+ 7 | directed_edge(2, 4).
+   | ~~~~~~~~~~~~~
+
+ 8 | directed_edge(3, 5).
+   | ~~~~~~~~~~~~~
+
+15 | path(u, v) :- directed_edge(u, v).
+   |               ~~~~~~~~~~~~~
+
+16 | path(u, v) :- directed_edge(u, i), directed_edge(i, v)
+   |               ~~~~~~~~~~~~~
+
+16 | path(u, v) :- directed_edge(u, i), directed_edge(i, v)
+   |                                    ~~~~~~~~~~~~~
+
+_____
+
+-- Cursor range --
+16 | path(u, v) :- directed_edge(u, i), directed_edge(i, v)
+   | ~~~~
+-- References --
+13 | .decl path(u: number, v: number)
+   |       ~~~~
+
+15 | path(u, v) :- directed_edge(u, v).
+   | ~~~~
+
+16 | path(u, v) :- directed_edge(u, i), directed_edge(i, v)
+   | ~~~~
+
+_____
+
+-- Cursor range --
+16 | path(u, v) :- directed_edge(u, i), directed_edge(i, v)
+   |               ~~~~~~~~~~~~~
+-- References --
+ 3 | .decl directed_edge(u: number, v: number)
+   |       ~~~~~~~~~~~~~
+
+ 5 | directed_edge(1, 2).
+   | ~~~~~~~~~~~~~
+
+ 6 | directed_edge(1, 3).
+   | ~~~~~~~~~~~~~
+
+ 7 | directed_edge(2, 4).
+   | ~~~~~~~~~~~~~
+
+ 8 | directed_edge(3, 5).
+   | ~~~~~~~~~~~~~
+
+15 | path(u, v) :- directed_edge(u, v).
+   |               ~~~~~~~~~~~~~
+
+16 | path(u, v) :- directed_edge(u, i), directed_edge(i, v)
+   |               ~~~~~~~~~~~~~
+
+16 | path(u, v) :- directed_edge(u, i), directed_edge(i, v)
+   |                                    ~~~~~~~~~~~~~
+
+_____
+
+-- Cursor range --
+16 | path(u, v) :- directed_edge(u, i), directed_edge(i, v)
+   |                                    ~~~~~~~~~~~~~
+-- References --
+ 3 | .decl directed_edge(u: number, v: number)
+   |       ~~~~~~~~~~~~~
+
+ 5 | directed_edge(1, 2).
+   | ~~~~~~~~~~~~~
+
+ 6 | directed_edge(1, 3).
+   | ~~~~~~~~~~~~~
+
+ 7 | directed_edge(2, 4).
+   | ~~~~~~~~~~~~~
+
+ 8 | directed_edge(3, 5).
+   | ~~~~~~~~~~~~~
+
+15 | path(u, v) :- directed_edge(u, v).
+   |               ~~~~~~~~~~~~~
+
+16 | path(u, v) :- directed_edge(u, i), directed_edge(i, v)
+   |               ~~~~~~~~~~~~~
+
+16 | path(u, v) :- directed_edge(u, i), directed_edge(i, v)
+   |                                    ~~~~~~~~~~~~~
+
+_____

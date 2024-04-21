@@ -21,7 +21,6 @@ class ResolveDeclarationVisitor(Visitor[None]):
         )
 
     def visit_type_reference_name(self, type_reference_name: TypeReferenceName) -> None:
-        print(type_reference_name)
         type_reference_name.declaration = self.file.get_type_declaration_with_name(
             name=type_reference_name
         )
