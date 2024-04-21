@@ -4,7 +4,7 @@ import re
 from abc import abstractmethod
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import TYPE_CHECKING, TypeVar
+from typing import TYPE_CHECKING, Generic, TypeVar
 
 import lsprotocol.types as lsptypes
 
@@ -135,7 +135,7 @@ class SyntaxIssue:
 @dataclass
 class Node:
     range_: Range
-    syntax_issues: list[SyntaxIssue] = field(repr=False)
+    # syntax_issues: list[SyntaxIssue] = field(repr=False)
 
     @property
     def children_sorted_by_range(self) -> list[Node]:
@@ -154,8 +154,40 @@ class Node:
 
 
 @dataclass
-class Atom(Node):
-    name: RelationReferenceName
+class ErrorNode(Node):
+    msg: str
+
+    @property
+    def children(self) -> list[Node]:
+        return []
+
+    def accept(self, visitor: Visitor):
+        return visitor.visit_error_node(self)
+
+
+@dataclass
+class ValidNode(Node):
+    pass
+
+
+ValidNodeT = TypeVar("ValidNodeT", bound=ValidNode, covariant=True)
+
+
+@dataclass
+class ResultNode(Generic[ValidNodeT], Node):
+    inner: ValidNodeT | ErrorNode
+
+    @property
+    def children(self) -> list[Node]:
+        return [self.inner]
+
+    def accept(self, visitor: Visitor):
+        return visitor.visit_result_node(self)
+
+
+@dataclass
+class Atom(ValidNode):
+    name: ResultNode[RelationReferenceName]
     arguments: list[Argument]
 
     def accept(self, visitor: Visitor[T]) -> T:
@@ -170,14 +202,14 @@ class Atom(Node):
 
 
 @dataclass
-class File(Node):
+class File(ValidNode):
     code: bytes
     relation_declarations: list[RelationDeclaration]
     type_declarations: list[TypeDeclaration]
-    facts: list[Fact]
+    facts: list[ResultNode[Fact]]
     rules: list[Rule]
     directives: list[Directive]
-    preprocessor_directives: list[Node]
+    preprocessor_directives: list[ValidNode]
     comments: list[Comment]
 
     @property
@@ -203,7 +235,10 @@ class File(Node):
             # TODO: support more complex names
             return None
         for relation_declaration in self.relation_declarations:
-            if relation_declaration.name.val == name.parts[0].val:
+            relation_declaration_name = relation_declaration.name.inner
+            if isinstance(relation_declaration_name, ErrorNode):
+                continue
+            if relation_declaration_name.val == name.parts[0].val:
                 return relation_declaration
         return None
 
@@ -215,7 +250,10 @@ class File(Node):
             # TODO: support more complex names
             return None
         for type_declaration in self.type_declarations:
-            if type_declaration.name.val == name.parts[0].val:
+            type_declaration_name = type_declaration.name.inner
+            if not isinstance(type_declaration_name, ValidNode):
+                continue
+            if type_declaration_name.val == name.parts[0].val:
                 return type_declaration
         return None
 
@@ -227,19 +265,21 @@ class File(Node):
             # TODO: support more complex names
             return None
         for type_declaration in self.type_declarations:
-            type_expression = type_declaration.expression
-            if isinstance(type_expression, AbstractDataTypeExpression):
-                adt_branch = type_expression.get_branch_with_name(name.parts[0].val)
-                if adt_branch is not None:
-                    return adt_branch
+            type_expression_node = type_declaration.expression
+            if not isinstance(type_expression_node.inner, AbstractDataTypeExpression):
+                continue
+            type_expression = type_expression_node.inner
+            adt_branch = type_expression.get_branch_with_name(name.parts[0].val)
+            if adt_branch is not None:
+                return adt_branch
         return None
 
 
 @dataclass
-class TypeDeclaration(SouffleType, Node):
-    name: Identifier
-    op: TypeDeclarationOp
-    expression: TypeExpression
+class TypeDeclaration(SouffleType, ValidNode):
+    name: ResultNode[Identifier]
+    op: ResultNode[TypeDeclarationOp]
+    expression: ResultNode[TypeExpression]
 
     @property
     def children(self) -> list[Node]:
@@ -264,7 +304,7 @@ class AliasType(TypeDeclaration):
 
 
 @dataclass
-class TypeExpression(Node):
+class TypeExpression(ValidNode):
     pass
 
 
@@ -311,14 +351,15 @@ class AbstractDataTypeExpression(TypeExpression):
 
     def get_branch_with_name(self, name: str) -> AbstractDataTypeBranch | None:
         for branch in self.branches:
-            if branch.name.val == name:
+            branch_name = branch.name.inner
+            if branch_name == name:
                 return branch
         return None
 
 
 @dataclass
-class AbstractDataTypeBranch(Node):
-    name: Identifier
+class AbstractDataTypeBranch(ValidNode):
+    name: ResultNode[Identifier]
     attributes: list[Attribute]
 
     @property
@@ -333,7 +374,7 @@ class AbstractDataTypeBranch(Node):
 
 
 @dataclass
-class TypeDeclarationOp(Node):
+class TypeDeclarationOp(ValidNode):
     op: TypeRelationOpKind
 
     def accept(self, visitor: Visitor[T]) -> T:
@@ -349,9 +390,9 @@ class TypeRelationOpKind(Enum):
 
 
 @dataclass
-class Rule(Node):
+class Rule(ValidNode):
     heads: list[RuleHead | SubsumptionHead]
-    body: Disjunction
+    body: ResultNode[Disjunction]
 
     @property
     def children(self) -> list[Node]:
@@ -365,8 +406,8 @@ class Rule(Node):
 
 
 @dataclass
-class RuleHead(Node):
-    relation_references: list[RelationReference]
+class RuleHead(ValidNode):
+    relation_references: list[ResultNode[RelationReference]]
 
     @property
     def children(self) -> list[Node]:
@@ -379,9 +420,9 @@ class RuleHead(Node):
 
 
 @dataclass
-class SubsumptionHead(Node):
-    first: RelationReference
-    second: RelationReference
+class SubsumptionHead(ValidNode):
+    first: ResultNode[RelationReference]
+    second: ResultNode[RelationReference]
 
     @property
     def children(self) -> list[Node]:
@@ -395,7 +436,7 @@ class SubsumptionHead(Node):
 
 
 @dataclass
-class NegOp(Node):
+class NegOp(ValidNode):
     is_neg: bool
 
     def accept(self, visitor: Visitor[T]) -> T:
@@ -403,7 +444,7 @@ class NegOp(Node):
 
 
 @dataclass
-class Clause(Node):
+class Clause(ValidNode):
     pass
 
 
@@ -422,8 +463,8 @@ class Disjunction(Clause):
 
 
 @dataclass
-class Conjunction(Node):
-    clauses: list[Clause]
+class Conjunction(ValidNode):
+    clauses: list[ResultNode[Clause]]
     neg: NegOp | None
 
     @property
@@ -440,7 +481,7 @@ class Conjunction(Node):
 
 @dataclass
 class RelationReferenceClause(Clause):
-    relation_reference: RelationReference
+    relation_reference: ResultNode[RelationReference]
 
     @property
     def children(self) -> list[Node]:
@@ -454,9 +495,9 @@ class RelationReferenceClause(Clause):
 
 @dataclass
 class BinaryConstraint(Clause):
-    lhs: Argument | None
-    op: BinaryConstraintOp
-    rhs: Argument | None
+    lhs: ResultNode[Argument]
+    op: ResultNode[BinaryConstraintOp]
+    rhs: ResultNode[Argument]
 
     @property
     def children(self) -> list[Node]:
@@ -473,7 +514,7 @@ class BinaryConstraint(Clause):
 
 
 @dataclass
-class BinaryConstraintOp(Node):
+class BinaryConstraintOp(ValidNode):
     op: str
 
     def accept(self, visitor: Visitor[T]) -> T:
@@ -487,8 +528,8 @@ class RelationReference(Atom):
 
 
 @dataclass
-class RelationDeclaration(Node):
-    name: Identifier
+class RelationDeclaration(ValidNode):
+    name: ResultNode[Identifier]
     attributes: list[Attribute]
     doc_text: list[str] | None = None
 
@@ -502,33 +543,54 @@ class RelationDeclaration(Node):
     def accept(self, visitor: Visitor[T]) -> T:
         return visitor.visit_relation_declaration(self)
 
-    def get_attribute_hover_text(self, attribute_idx: int) -> str:
-        return f"{self.attributes[attribute_idx].get_hover_result()}"
-
-    def get_signature(self) -> str:
+    def get_signature(self) -> str | None:
         builder: list[str] = []
-        builder.append(self.name.val)
+        if isinstance(self.name.inner, ErrorNode):
+            return None
+        name = self.name.inner
+        attributes: list[Attribute] = []
+        for attribute in self.attributes:
+            attributes.append(attribute)
+
+        builder.append(name.val)
         builder.append("(")
-        for i, attribute in enumerate(self.attributes):
+        for i, attribute in enumerate(attributes):
             if i != 0:
                 builder.append(", ")
-            builder.append(attribute.get_signature())
+            signature = attribute.get_signature()
+            if signature is None:
+                return None
+            builder.append(signature)
         builder.append(")")
         return "".join(builder)
 
-    def get_attribute_signature(self, attribute_idx: int) -> str:
-        return self.attributes[attribute_idx].get_signature()
+    def get_attribute_hover_text(self, attribute_idx: int) -> str | None:
+        attribute = self.attributes[attribute_idx]
+        return attribute.get_hover_result()
+
+    def get_attribute_signature(self, attribute_idx: int) -> str | None:
+        attribute = self.attributes[attribute_idx]
+        return attribute.get_signature()
 
     def parse_doc_comment(self, comment: Comment) -> None:
+        if isinstance(self.name.inner, ErrorNode):
+            return None
+
+        attributes = {}
+        for attribute in self.attributes:
+            if isinstance(attribute.name.inner, ErrorNode):
+                return None
+            attributes[attribute.name.inner.val] = attribute
+
         current_attribute = None
         for line in comment.get_text():
             marker, _, remain = line.partition(" ")
             if marker == "@attribute":
-                attribute_name, _, remain = remain.partition(" ")
+                doc_attribute_name, _, remain = remain.partition(" ")
                 if remain is None:
                     continue
-                for attribute in self.attributes:
-                    if attribute_name == attribute.name.val:
+                for attribute_name, attribute in attributes.items():
+                    if doc_attribute_name == attribute_name:
                         current_attribute = attribute
                         attribute.doc_text = [remain]
                         break
@@ -542,10 +604,16 @@ class RelationDeclaration(Node):
                         raise AssertionError("unreachable")
                     current_attribute.doc_text.append(line)
 
-    def get_hover_result(self) -> str:
+    def get_hover_result(self) -> str | None:
+        if isinstance(self.name.inner, ErrorNode):
+            return None
+
         doc_lines = []
+        signature = self.get_signature()
+        if signature is None:
+            return None
         doc_lines.append("```")
-        doc_lines.append(self.get_signature())
+        doc_lines.append(signature)
         doc_lines.append("```")
         doc_lines.append("")
         if self.doc_text is not None:
@@ -554,10 +622,14 @@ class RelationDeclaration(Node):
         attribute_doc_lines = []
 
         for attribute_idx, attribute in enumerate(self.attributes):
+            if isinstance(attribute.name.inner, ErrorNode):
+                return None
+            attribute_name = attribute.name.inner.val
+
             if attribute.doc_text:
                 for i, line in enumerate(attribute.doc_text):
                     if i == 0:
-                        attribute_doc_lines.append(f"`{attribute.name.val}`: {line}")
+                        attribute_doc_lines.append(f"`{attribute_name}`: {line}")
                     else:
                         attribute_doc_lines.append(line)
                 if attribute_idx < len(self.attributes) - 1:
@@ -577,7 +649,7 @@ class Fact(Atom):
 
 
 @dataclass
-class Directive(Node):
+class Directive(ValidNode):
     relation_names: list[RelationReferenceName]
 
     @property
@@ -591,9 +663,9 @@ class Directive(Node):
 
 
 @dataclass
-class Attribute(Node):
-    name: Identifier
-    type_: TypeReference
+class Attribute(ValidNode):
+    name: ResultNode[Identifier]
+    type_: ResultNode[TypeReference]
     doc_text: list[str] | None = None
 
     @property
@@ -606,14 +678,27 @@ class Attribute(Node):
     def accept(self, visitor: Visitor[T]) -> T:
         return visitor.visit_attribute(self)
 
-    def get_signature(self) -> str:
-        type_name = ".".join(map(lambda part: part.val, self.type_.name.parts))
-        return f"{self.name.val}: {type_name}"
+    def get_signature(self) -> str | None:
+        name = self.name.inner
+        if isinstance(name, ErrorNode):
+            return None
+        type_reference = self.type_.inner
+        if isinstance(type_reference, ErrorNode):
+            return None
+        type_reference_name = type_reference.name.inner
+        if isinstance(type_reference_name, ErrorNode):
+            return None
+        type_name_parts = type_reference_name.parts
+        type_name = ".".join(map(lambda part: part.val, type_name_parts))
+        return f"{name.val}: {type_name}"
 
-    def get_hover_result(self) -> str:
+    def get_hover_result(self) -> str | None:
+        signature = self.get_signature()
+        if signature is None:
+            return None
         doc_lines = []
         doc_lines.append("```")
-        doc_lines.append(self.get_signature())
+        doc_lines.append(signature)
         doc_lines.append("```")
         if self.doc_text is not None:
             doc_lines.extend(self.doc_text)
@@ -621,7 +706,7 @@ class Attribute(Node):
 
 
 @dataclass
-class QualifiedName(Node):
+class QualifiedName(ValidNode):
     parts: list[Identifier]
 
     @property
@@ -637,7 +722,7 @@ class QualifiedName(Node):
 @dataclass
 class TypeReference(TypeExpression):
     # A sequence of dot-separated names
-    name: TypeReferenceName
+    name: ResultNode[TypeReferenceName]
 
     @property
     def children(self) -> list[Node]:
@@ -674,7 +759,7 @@ class BranchInitName(QualifiedName):
 
 
 @dataclass
-class Identifier(Node):
+class Identifier(ValidNode):
     val: str
 
     def accept(self, visitor: Visitor[T]) -> T:
@@ -682,7 +767,7 @@ class Identifier(Node):
 
 
 @dataclass
-class Argument(Node):
+class Argument(ValidNode):
     ty: SouffleType
 
 
@@ -702,9 +787,9 @@ class Variable(Argument):
 
 @dataclass
 class BranchInit(Argument):
-    name: QualifiedName
+    name: ResultNode[QualifiedName]
     arguments: list[Argument]
-    definition: AbstractDataTypeBranch | None = field(default=None)
+    definition: ResultNode[AbstractDataTypeBranch] | None = field(default=None)
 
     @property
     def children(self) -> list[Node]:
@@ -719,9 +804,9 @@ class BranchInit(Argument):
 
 @dataclass
 class BinaryOperation(Argument):
-    lhs: Argument
-    op: BinaryOperator
-    rhs: Argument
+    lhs: ResultNode[Argument]
+    op: ResultNode[BinaryOperator]
+    rhs: ResultNode[Argument]
 
     @property
     def children(self) -> list[Node]:
@@ -736,7 +821,7 @@ class BinaryOperation(Argument):
 
 
 @dataclass
-class BinaryOperator(Node):
+class BinaryOperator(ValidNode):
     op: str
 
     def accept(self, visitor: Visitor[T]) -> T:
@@ -754,8 +839,8 @@ class NumberConstant(Constant):
 
 
 @dataclass
-class PreprocInclude(Node):
-    path: StringConstant
+class PreprocInclude(ValidNode):
+    path: ResultNode[StringConstant]
 
     @property
     def children(self) -> list[Node]:
@@ -766,7 +851,7 @@ class PreprocInclude(Node):
 
 
 @dataclass
-class Comment(Node):
+class Comment(ValidNode):
     @abstractmethod
     def get_text(self) -> list[str]:
         raise NotImplementedError()
@@ -815,7 +900,7 @@ class LineComment(Comment):
     def merge(self, other: LineComment) -> LineComment:
         return LineComment(
             range_=Range(self.range_.start, other.range_.end),
-            syntax_issues=[*self.syntax_issues, *other.syntax_issues],
+            # syntax_issues=[*self.syntax_issues, *other.syntax_issues],
             content=[*self.content, *other.content],
         )
 

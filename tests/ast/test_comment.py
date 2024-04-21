@@ -6,7 +6,7 @@ from souffle_analyzer.ast import BlockComment, LineComment, Position, Range
 @pytest.mark.parametrize(
     ("content", "text"),
     [
-        (
+        pytest.param(
             """
          /**
           * This is the first line
@@ -14,6 +14,7 @@ from souffle_analyzer.ast import BlockComment, LineComment, Position, Range
          **/
          """,
             ["This is the first line", "This is the second line"],
+            id="Normal block comment",
         ),
         pytest.param(
             """
@@ -36,7 +37,7 @@ from souffle_analyzer.ast import BlockComment, LineComment, Position, Range
 def test_block_comment_get_text(content: str, text: str):
     block_comment = BlockComment(
         range_=Range(Position(0, 0), Position(1, 1)),
-        syntax_issues=[],
+        # syntax_issues=[],
         content=content,
     )
     assert block_comment.get_text() == text
@@ -67,7 +68,7 @@ def test_block_comment_get_text(content: str, text: str):
 def test_line_comment_get_text(content: str, text: str):
     line_comment = LineComment(
         range_=Range(Position(0, 0), Position(1, 1)),
-        syntax_issues=[],
+        # syntax_issues=[],
         content=content.splitlines(),
     )
     assert line_comment.get_text() == text

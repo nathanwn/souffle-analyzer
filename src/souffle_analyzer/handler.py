@@ -23,6 +23,8 @@ from lsprotocol.types import (
     TextDocumentHoverRequest,
     TextDocumentHoverResponse,
     TextDocumentPublishDiagnosticsNotification,
+    TextDocumentReferencesRequest,
+    TextDocumentReferencesResponse,
     TextDocumentSyncKind,
     TextDocumentTypeDefinitionRequest,
     TextDocumentTypeDefinitionResponse,
@@ -53,6 +55,7 @@ def handle_initialize_request(request: InitializeRequest) -> InitializeResponse:
                 hover_provider=True,
                 definition_provider=True,
                 type_definition_provider=True,
+                references_provider=True,
                 code_action_provider=True,
                 diagnostic_provider=DiagnosticOptions(
                     # TODO: update this once the server support these capabilities.
@@ -137,6 +140,19 @@ def handle_text_document_definition_request(
     return TextDocumentDefinitionResponse(
         id=request.id,
         result=definition_result,
+    )
+
+
+def handle_text_document_reference_request(
+    request: TextDocumentReferencesRequest, ctx: AnalysisContext
+) -> TextDocumentReferencesResponse:
+    result = ctx.get_references(
+        uri=request.params.text_document.uri,
+        position=request.params.position,
+    )
+    return TextDocumentReferencesResponse(
+        id=request.id,
+        result=result,
     )
 
 

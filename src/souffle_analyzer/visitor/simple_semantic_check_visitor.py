@@ -2,7 +2,7 @@ from typing import List
 
 from lsprotocol.types import Diagnostic
 
-from souffle_analyzer.ast import Atom, Fact, File, Node, RelationReference
+from souffle_analyzer.ast import Atom, ErrorNode, Fact, File, Node, RelationReference
 from souffle_analyzer.visitor.visitor import Visitor
 
 
@@ -22,7 +22,10 @@ class SimpleSemanticCheckVisitor(Visitor[None]):
         return self.visit_atom(relation_reference)
 
     def visit_atom(self, atom: Atom) -> None:
-        relation = self.file.get_relation_declaration_with_name(atom.name)
+        relation_name = atom.name.inner
+        if isinstance(relation_name, ErrorNode):
+            return
+        relation = self.file.get_relation_declaration_with_name(relation_name)
         if not relation:
             return
         if len(relation.attributes) != len(atom.arguments):

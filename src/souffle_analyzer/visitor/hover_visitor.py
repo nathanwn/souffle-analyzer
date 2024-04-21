@@ -2,6 +2,7 @@ from typing import Optional, Tuple
 
 from souffle_analyzer.ast import (
     BUILTIN_TYPES,
+    ErrorNode,
     Fact,
     File,
     Node,
@@ -40,7 +41,7 @@ class HoverVisitor(Visitor[T]):
         if matching_relation_declaration is None:
             return None
         return (
-            matching_relation_declaration.get_hover_result(),
+            matching_relation_declaration.get_hover_result() or "",
             relation_reference_name.range_,
         )
 
@@ -49,20 +50,29 @@ class HoverVisitor(Visitor[T]):
             return relation_reference.name.accept(self)
         arguments = relation_reference.arguments
 
-        declaration = relation_reference.name.declaration
+        relation_reference_name = relation_reference.name.inner
+        if isinstance(relation_reference_name, ErrorNode):
+            return None
+
+        declaration = relation_reference_name.declaration
+
         if declaration is None:
             return None
 
         for i, argument in enumerate(arguments):
             if argument.covers_position(self.position):
                 return (
-                    declaration.get_attribute_hover_text(i),
+                    declaration.get_attribute_hover_text(i) or "",
                     argument.range_,
                 )
         return None
 
     def visit_fact(self, fact: Fact) -> T:
-        relation_declaration = self.file.get_relation_declaration_with_name(fact.name)
+        fact_name = fact.name.inner
+        if isinstance(fact_name, ErrorNode):
+            return None
+
+        relation_declaration = self.file.get_relation_declaration_with_name(fact_name)
         if relation_declaration is None:
             return None
 
@@ -72,7 +82,7 @@ class HoverVisitor(Visitor[T]):
         for i, argument in enumerate(fact.arguments):
             if argument.covers_position(self.position):
                 return (
-                    relation_declaration.get_attribute_hover_text(i),
+                    relation_declaration.get_attribute_hover_text(i) or "",
                     argument.range_,
                 )
 

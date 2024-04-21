@@ -9,10 +9,13 @@ def get_positions_in_range(range_: Range, code_lines: List[str]) -> List[Positio
     cur = Position(start.line, start.character)
     res = []
 
-    while cur <= end:
+    while cur < end:
         res.append(cur)
-        if cur.character + 1 == len(code_lines[cur.line]):
+        if cur.character + 1 >= len(code_lines[cur.line]):
             cur = Position(cur.line + 1, 0)
+            # Skip empty lines
+            while cur.line < len(code_lines) and len(code_lines[cur.line]) == 0:
+                cur = Position(cur.line + 1, 0)
         else:
             cur = Position(cur.line, cur.character + 1)
 
@@ -72,11 +75,11 @@ def format_souffle_ast(node: Node, level=0) -> List[str]:
         for child in children:
             res.extend(format_souffle_ast(node=child, level=level + 1))
 
-        if node.syntax_issues:
-            res.append(indent("SyntaxIssues[", level + 1))
-            for issue in node.syntax_issues:
-                res.append(indent(str(issue), level + 2) + ",")
-            res.append(indent("]", level + 1))
+        # if node.syntax_issues:
+        #     res.append(indent("SyntaxIssues[", level + 1))
+        #     for issue in node.syntax_issues:
+        #         res.append(indent(str(issue), level + 2) + ",")
+        #     res.append(indent("]", level + 1))
 
         res.append(indent(")", level=level))
         return res

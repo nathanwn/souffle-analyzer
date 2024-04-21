@@ -1,5 +1,5 @@
 File(
-  range_=[0:0-6:0]
+  range_=[0:0-4:0]
   RelationDeclaration(
     range_=[0:0-0:29]
     ResultNode(
@@ -47,26 +47,51 @@ File(
       )
     )
   )
-  ResultNode(
-    range_=[2:0-2:7]
-    Fact(
-      range_=[2:0-2:7]
+  RelationDeclaration(
+    range_=[1:0-1:29]
+    ResultNode(
+      range_=[1:6-1:7]
+      Identifier(range_=[1:6-1:7], val='B')
+    )
+    Attribute(
+      range_=[1:8-1:17]
       ResultNode(
-        range_=[2:0-2:1]
-        RelationReferenceName(
-          range_=[2:0-2:1]
-          Identifier(range_=[2:0-2:1], val='A')
+        range_=[1:8-1:9]
+        Identifier(range_=[1:8-1:9], val='x')
+      )
+      ResultNode(
+        range_=[1:11-1:17]
+        TypeReference(
+          range_=[1:11-1:17]
+          ResultNode(
+            range_=[1:11-1:17]
+            TypeReferenceName(
+              range_=[1:11-1:17]
+              Identifier(range_=[1:11-1:17], val='number')
+            )
+          )
         )
       )
-      NumberConstant(range_=[2:2-2:3], ty=UnresolvedType(), val=1)
-      NumberConstant(range_=[2:5-2:6], ty=UnresolvedType(), val=2)
     )
-  )
-  Directive(
-    range_=[5:0-5:9]
-    RelationReferenceName(
-      range_=[5:8-5:9]
-      Identifier(range_=[5:8-5:9], val='A')
+    Attribute(
+      range_=[1:19-1:28]
+      ResultNode(
+        range_=[1:19-1:20]
+        Identifier(range_=[1:19-1:20], val='y')
+      )
+      ResultNode(
+        range_=[1:22-1:28]
+        TypeReference(
+          range_=[1:22-1:28]
+          ResultNode(
+            range_=[1:22-1:28]
+            TypeReferenceName(
+              range_=[1:22-1:28]
+              Identifier(range_=[1:22-1:28], val='number')
+            )
+          )
+        )
+      )
     )
   )
 )

@@ -8,6 +8,7 @@ from souffle_analyzer.logging import logger
 from souffle_analyzer.parser import Parser
 from souffle_analyzer.visitor.code_action_visitor import CodeActionVisitor
 from souffle_analyzer.visitor.definition_visitor import DefinitionVisitor
+from souffle_analyzer.visitor.find_references_visitor import FindReferencesVisitor
 from souffle_analyzer.visitor.hover_visitor import HoverVisitor
 from souffle_analyzer.visitor.resolve_declaration_visitor import (
     ResolveDeclarationVisitor,
@@ -77,6 +78,19 @@ class AnalysisContext:
         if range_ is None:
             return None
         return lsptypes.Location(uri=uri, range=range_.to_lsp_type())
+
+    def get_references(
+        self, uri: str, position: lsptypes.Position
+    ) -> List[lsptypes.Location]:
+        find_references_visitor = FindReferencesVisitor(
+            file=self.documents[uri],
+            position=Position.from_lsp_type(position),
+        )
+        ranges = find_references_visitor.process()
+        locations = []
+        for range_ in ranges:
+            locations.append(lsptypes.Location(uri=uri, range=range_.to_lsp_type()))
+        return locations
 
     def get_type_definition(
         self, uri: str, position: lsptypes.Position

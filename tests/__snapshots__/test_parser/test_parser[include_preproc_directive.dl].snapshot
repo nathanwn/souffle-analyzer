@@ -2,6 +2,9 @@ File(
   range_=[0:0-1:0]
   PreprocInclude(
     range_=[0:0-0:17]
-    StringConstant(range_=[0:9-0:17], ty=UnresolvedType(), val='"lib.dl"')
+    ResultNode(
+      range_=[0:0-0:17]
+      StringConstant(range_=[0:9-0:17], ty=UnresolvedType(), val='"lib.dl"')
+    )
   )
 )

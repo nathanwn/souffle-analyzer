@@ -2,6 +2,7 @@ from typing import Optional
 
 from souffle_analyzer.ast import (
     Atom,
+    ErrorNode,
     Fact,
     File,
     Node,
@@ -29,7 +30,10 @@ class DiagnosticVisitor(Visitor[T]):
         return self.visit_atom(relation_reference)
 
     def visit_atom(self, atom: Atom) -> None:
-        relation = self.file.get_relation_declaration_with_name(atom.name)
+        relation_reference_name = atom.name.inner
+        if isinstance(relation_reference_name, ErrorNode):
+            return
+        relation = self.file.get_relation_declaration_with_name(relation_reference_name)
         if not relation:
             # TODO: handle this, but probably in a different step/another visitor?
             return

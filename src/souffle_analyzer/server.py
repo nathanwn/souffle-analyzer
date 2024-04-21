@@ -10,6 +10,7 @@ from lsprotocol.types import (
     TextDocumentDidChangeNotification,
     TextDocumentDidOpenNotification,
     TextDocumentHoverRequest,
+    TextDocumentReferencesRequest,
     TextDocumentTypeDefinitionRequest,
 )
 
@@ -62,6 +63,12 @@ class LanguageServer(JsonRpcNode):
         elif isinstance(request, TextDocumentDefinitionRequest):
             response = handler.handle_text_document_definition_request(
                 request, self.ctx
+            )
+            self.write_server_response(response)
+        elif isinstance(request, TextDocumentReferencesRequest):
+            response = handler.handle_text_document_reference_request(
+                request,
+                self.ctx,
             )
             self.write_server_response(response)
         elif isinstance(request, TextDocumentTypeDefinitionRequest):

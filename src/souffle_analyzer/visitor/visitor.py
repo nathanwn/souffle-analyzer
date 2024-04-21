@@ -18,6 +18,7 @@ from souffle_analyzer.ast import (
     Constant,
     Directive,
     Disjunction,
+    ErrorNode,
     Fact,
     File,
     Identifier,
@@ -31,6 +32,7 @@ from souffle_analyzer.ast import (
     RelationReference,
     RelationReferenceClause,
     RelationReferenceName,
+    ResultNode,
     Rule,
     RuleHead,
     SubsumptionHead,
@@ -48,6 +50,12 @@ T = TypeVar("T")
 class Visitor(Generic[T]):
     def __init__(self, file: File) -> None:
         self.file = file
+
+    def visit_error_node(self, error_node: ErrorNode) -> T:
+        return self.generic_visit(error_node)
+
+    def visit_result_node(self, result_node: ResultNode) -> T:
+        return self.generic_visit(result_node)
 
     def visit_file(self, file: File) -> T:
         return self.generic_visit(file)

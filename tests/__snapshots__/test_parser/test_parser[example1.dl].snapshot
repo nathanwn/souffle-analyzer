@@ -3,26 +3,47 @@ File(
   BlockComment(range_=[0:0-0:22], content='/* A is a relation. */')
   RelationDeclaration(
     range_=[1:0-1:29]
-    Identifier(range_=[1:6-1:7], val='A')
+    ResultNode(
+      range_=[1:6-1:7]
+      Identifier(range_=[1:6-1:7], val='A')
+    )
     Attribute(
       range_=[1:8-1:17]
-      Identifier(range_=[1:8-1:9], val='x')
-      TypeReference(
+      ResultNode(
+        range_=[1:8-1:9]
+        Identifier(range_=[1:8-1:9], val='x')
+      )
+      ResultNode(
         range_=[1:11-1:17]
-        TypeReferenceName(
+        TypeReference(
           range_=[1:11-1:17]
-          Identifier(range_=[1:11-1:17], val='number')
+          ResultNode(
+            range_=[1:11-1:17]
+            TypeReferenceName(
+              range_=[1:11-1:17]
+              Identifier(range_=[1:11-1:17], val='number')
+            )
+          )
         )
       )
     )
     Attribute(
       range_=[1:19-1:28]
-      Identifier(range_=[1:19-1:20], val='y')
-      TypeReference(
+      ResultNode(
+        range_=[1:19-1:20]
+        Identifier(range_=[1:19-1:20], val='y')
+      )
+      ResultNode(
         range_=[1:22-1:28]
-        TypeReferenceName(
+        TypeReference(
           range_=[1:22-1:28]
-          Identifier(range_=[1:22-1:28], val='number')
+          ResultNode(
+            range_=[1:22-1:28]
+            TypeReferenceName(
+              range_=[1:22-1:28]
+              Identifier(range_=[1:22-1:28], val='number')
+            )
+          )
         )
       )
     )
@@ -30,26 +51,47 @@ File(
   BlockComment(range_=[3:0-5:3], content='/**\n * B is another relation.\n**/')
   RelationDeclaration(
     range_=[6:0-6:29]
-    Identifier(range_=[6:6-6:7], val='B')
+    ResultNode(
+      range_=[6:6-6:7]
+      Identifier(range_=[6:6-6:7], val='B')
+    )
     Attribute(
       range_=[6:8-6:17]
-      Identifier(range_=[6:8-6:9], val='x')
-      TypeReference(
+      ResultNode(
+        range_=[6:8-6:9]
+        Identifier(range_=[6:8-6:9], val='x')
+      )
+      ResultNode(
         range_=[6:11-6:17]
-        TypeReferenceName(
+        TypeReference(
           range_=[6:11-6:17]
-          Identifier(range_=[6:11-6:17], val='number')
+          ResultNode(
+            range_=[6:11-6:17]
+            TypeReferenceName(
+              range_=[6:11-6:17]
+              Identifier(range_=[6:11-6:17], val='number')
+            )
+          )
         )
       )
     )
     Attribute(
       range_=[6:19-6:28]
-      Identifier(range_=[6:19-6:20], val='y')
-      TypeReference(
+      ResultNode(
+        range_=[6:19-6:20]
+        Identifier(range_=[6:19-6:20], val='y')
+      )
+      ResultNode(
         range_=[6:22-6:28]
-        TypeReferenceName(
+        TypeReference(
           range_=[6:22-6:28]
-          Identifier(range_=[6:22-6:28], val='number')
+          ResultNode(
+            range_=[6:22-6:28]
+            TypeReferenceName(
+              range_=[6:22-6:28]
+              Identifier(range_=[6:22-6:28], val='number')
+            )
+          )
         )
       )
     )
@@ -59,30 +101,48 @@ File(
     range_=[9:0-9:19]
     RuleHead(
       range_=[9:0-9:7]
-      RelationReference(
+      ResultNode(
         range_=[9:0-9:7]
-        RelationReferenceName(
-          range_=[9:0-9:1]
-          Identifier(range_=[9:0-9:1], val='B')
+        RelationReference(
+          range_=[9:0-9:7]
+          ResultNode(
+            range_=[9:0-9:1]
+            RelationReferenceName(
+              range_=[9:0-9:1]
+              Identifier(range_=[9:0-9:1], val='B')
+            )
+          )
+          Variable(range_=[9:2-9:3], ty=UnresolvedType(), name='x')
+          Variable(range_=[9:5-9:6], ty=UnresolvedType(), name='y')
         )
-        Variable(range_=[9:2-9:3], ty=UnresolvedType(), name='x')
-        Variable(range_=[9:5-9:6], ty=UnresolvedType(), name='y')
       )
     )
-    Disjunction(
+    ResultNode(
       range_=[9:11-9:18]
-      Conjunction(
+      Disjunction(
         range_=[9:11-9:18]
-        RelationReferenceClause(
+        Conjunction(
           range_=[9:11-9:18]
-          RelationReference(
+          ResultNode(
             range_=[9:11-9:18]
-            RelationReferenceName(
-              range_=[9:11-9:12]
-              Identifier(range_=[9:11-9:12], val='A')
+            RelationReferenceClause(
+              range_=[9:11-9:18]
+              ResultNode(
+                range_=[9:11-9:18]
+                RelationReference(
+                  range_=[9:11-9:18]
+                  ResultNode(
+                    range_=[9:11-9:12]
+                    RelationReferenceName(
+                      range_=[9:11-9:12]
+                      Identifier(range_=[9:11-9:12], val='A')
+                    )
+                  )
+                  Variable(range_=[9:13-9:14], ty=UnresolvedType(), name='x')
+                  Variable(range_=[9:16-9:17], ty=UnresolvedType(), name='y')
+                )
+              )
             )
-            Variable(range_=[9:13-9:14], ty=UnresolvedType(), name='x')
-            Variable(range_=[9:16-9:17], ty=UnresolvedType(), name='y')
           )
         )
       )
@@ -92,42 +152,69 @@ File(
     range_=[10:0-10:28]
     RuleHead(
       range_=[10:0-10:7]
-      RelationReference(
+      ResultNode(
         range_=[10:0-10:7]
-        RelationReferenceName(
-          range_=[10:0-10:1]
-          Identifier(range_=[10:0-10:1], val='B')
+        RelationReference(
+          range_=[10:0-10:7]
+          ResultNode(
+            range_=[10:0-10:1]
+            RelationReferenceName(
+              range_=[10:0-10:1]
+              Identifier(range_=[10:0-10:1], val='B')
+            )
+          )
+          Variable(range_=[10:2-10:3], ty=UnresolvedType(), name='x')
+          Variable(range_=[10:5-10:6], ty=UnresolvedType(), name='z')
         )
-        Variable(range_=[10:2-10:3], ty=UnresolvedType(), name='x')
-        Variable(range_=[10:5-10:6], ty=UnresolvedType(), name='z')
       )
     )
-    Disjunction(
+    ResultNode(
       range_=[10:11-10:27]
-      Conjunction(
+      Disjunction(
         range_=[10:11-10:27]
-        RelationReferenceClause(
-          range_=[10:11-10:18]
-          RelationReference(
+        Conjunction(
+          range_=[10:11-10:27]
+          ResultNode(
             range_=[10:11-10:18]
-            RelationReferenceName(
-              range_=[10:11-10:12]
-              Identifier(range_=[10:11-10:12], val='A')
+            RelationReferenceClause(
+              range_=[10:11-10:18]
+              ResultNode(
+                range_=[10:11-10:18]
+                RelationReference(
+                  range_=[10:11-10:18]
+                  ResultNode(
+                    range_=[10:11-10:12]
+                    RelationReferenceName(
+                      range_=[10:11-10:12]
+                      Identifier(range_=[10:11-10:12], val='A')
+                    )
+                  )
+                  Variable(range_=[10:13-10:14], ty=UnresolvedType(), name='x')
+                  Variable(range_=[10:16-10:17], ty=UnresolvedType(), name='y')
+                )
+              )
             )
-            Variable(range_=[10:13-10:14], ty=UnresolvedType(), name='x')
-            Variable(range_=[10:16-10:17], ty=UnresolvedType(), name='y')
           )
-        )
-        RelationReferenceClause(
-          range_=[10:20-10:27]
-          RelationReference(
+          ResultNode(
             range_=[10:20-10:27]
-            RelationReferenceName(
-              range_=[10:20-10:21]
-              Identifier(range_=[10:20-10:21], val='B')
+            RelationReferenceClause(
+              range_=[10:20-10:27]
+              ResultNode(
+                range_=[10:20-10:27]
+                RelationReference(
+                  range_=[10:20-10:27]
+                  ResultNode(
+                    range_=[10:20-10:21]
+                    RelationReferenceName(
+                      range_=[10:20-10:21]
+                      Identifier(range_=[10:20-10:21], val='B')
+                    )
+                  )
+                  Variable(range_=[10:22-10:23], ty=UnresolvedType(), name='y')
+                  Variable(range_=[10:25-10:26], ty=UnresolvedType(), name='z')
+                )
+              )
             )
-            Variable(range_=[10:22-10:23], ty=UnresolvedType(), name='y')
-            Variable(range_=[10:25-10:26], ty=UnresolvedType(), name='z')
           )
         )
       )
@@ -135,26 +222,47 @@ File(
   )
   RelationDeclaration(
     range_=[12:0-12:29]
-    Identifier(range_=[12:6-12:7], val='C')
+    ResultNode(
+      range_=[12:6-12:7]
+      Identifier(range_=[12:6-12:7], val='C')
+    )
     Attribute(
       range_=[12:8-12:17]
-      Identifier(range_=[12:8-12:9], val='x')
-      TypeReference(
+      ResultNode(
+        range_=[12:8-12:9]
+        Identifier(range_=[12:8-12:9], val='x')
+      )
+      ResultNode(
         range_=[12:11-12:17]
-        TypeReferenceName(
+        TypeReference(
           range_=[12:11-12:17]
-          Identifier(range_=[12:11-12:17], val='number')
+          ResultNode(
+            range_=[12:11-12:17]
+            TypeReferenceName(
+              range_=[12:11-12:17]
+              Identifier(range_=[12:11-12:17], val='number')
+            )
+          )
         )
       )
     )
     Attribute(
       range_=[12:19-12:28]
-      Identifier(range_=[12:19-12:20], val='y')
-      TypeReference(
+      ResultNode(
+        range_=[12:19-12:20]
+        Identifier(range_=[12:19-12:20], val='y')
+      )
+      ResultNode(
         range_=[12:22-12:28]
-        TypeReferenceName(
+        TypeReference(
           range_=[12:22-12:28]
-          Identifier(range_=[12:22-12:28], val='number')
+          ResultNode(
+            range_=[12:22-12:28]
+            TypeReferenceName(
+              range_=[12:22-12:28]
+              Identifier(range_=[12:22-12:28], val='number')
+            )
+          )
         )
       )
     )
@@ -163,42 +271,69 @@ File(
     range_=[13:0-13:29]
     RuleHead(
       range_=[13:0-13:7]
-      RelationReference(
+      ResultNode(
         range_=[13:0-13:7]
-        RelationReferenceName(
-          range_=[13:0-13:1]
-          Identifier(range_=[13:0-13:1], val='C')
+        RelationReference(
+          range_=[13:0-13:7]
+          ResultNode(
+            range_=[13:0-13:1]
+            RelationReferenceName(
+              range_=[13:0-13:1]
+              Identifier(range_=[13:0-13:1], val='C')
+            )
+          )
+          Variable(range_=[13:2-13:3], ty=UnresolvedType(), name='x')
+          Variable(range_=[13:5-13:6], ty=UnresolvedType(), name='y')
         )
-        Variable(range_=[13:2-13:3], ty=UnresolvedType(), name='x')
-        Variable(range_=[13:5-13:6], ty=UnresolvedType(), name='y')
       )
     )
-    Disjunction(
+    ResultNode(
       range_=[13:11-13:28]
-      Conjunction(
+      Disjunction(
         range_=[13:11-13:28]
-        RelationReferenceClause(
-          range_=[13:11-13:18]
-          RelationReference(
+        Conjunction(
+          range_=[13:11-13:28]
+          ResultNode(
             range_=[13:11-13:18]
-            RelationReferenceName(
-              range_=[13:11-13:12]
-              Identifier(range_=[13:11-13:12], val='A')
+            RelationReferenceClause(
+              range_=[13:11-13:18]
+              ResultNode(
+                range_=[13:11-13:18]
+                RelationReference(
+                  range_=[13:11-13:18]
+                  ResultNode(
+                    range_=[13:11-13:12]
+                    RelationReferenceName(
+                      range_=[13:11-13:12]
+                      Identifier(range_=[13:11-13:12], val='A')
+                    )
+                  )
+                  Variable(range_=[13:13-13:14], ty=UnresolvedType(), name='x')
+                  Variable(range_=[13:16-13:17], ty=UnresolvedType(), name='y')
+                )
+              )
             )
-            Variable(range_=[13:13-13:14], ty=UnresolvedType(), name='x')
-            Variable(range_=[13:16-13:17], ty=UnresolvedType(), name='y')
           )
-        )
-        RelationReferenceClause(
-          range_=[13:20-13:28]
-          RelationReference(
-            range_=[13:21-13:28]
-            RelationReferenceName(
-              range_=[13:21-13:22]
-              Identifier(range_=[13:21-13:22], val='B')
+          ResultNode(
+            range_=[13:20-13:28]
+            RelationReferenceClause(
+              range_=[13:20-13:28]
+              ResultNode(
+                range_=[13:21-13:28]
+                RelationReference(
+                  range_=[13:21-13:28]
+                  ResultNode(
+                    range_=[13:21-13:22]
+                    RelationReferenceName(
+                      range_=[13:21-13:22]
+                      Identifier(range_=[13:21-13:22], val='B')
+                    )
+                  )
+                  Variable(range_=[13:23-13:24], ty=UnresolvedType(), name='x')
+                  Variable(range_=[13:26-13:27], ty=UnresolvedType(), name='y')
+                )
+              )
             )
-            Variable(range_=[13:23-13:24], ty=UnresolvedType(), name='x')
-            Variable(range_=[13:26-13:27], ty=UnresolvedType(), name='y')
           )
         )
       )

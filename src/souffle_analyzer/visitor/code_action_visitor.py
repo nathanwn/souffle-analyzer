@@ -1,6 +1,13 @@
 from typing import List, Optional, Tuple
 
-from souffle_analyzer.ast import File, Node, Position, Range, RelationDeclaration
+from souffle_analyzer.ast import (
+    ErrorNode,
+    File,
+    Node,
+    Position,
+    Range,
+    RelationDeclaration,
+)
 from souffle_analyzer.visitor.visitor import Visitor
 
 T = Optional[List[Tuple[Range, str]]]
@@ -22,7 +29,10 @@ class CodeActionVisitor(Visitor[T]):
         doc_text_template = []
         doc_text_template.append("///")
         for attribute in relation_declaration.attributes:
-            doc_text_template.append(f"/// @attribute {attribute.name.val}")
+            attribute_name = attribute.name.inner
+            if isinstance(attribute_name, ErrorNode):
+                return None
+            doc_text_template.append(f"/// @attribute {attribute_name.val}")
         doc_text_template.append("")
         pos = relation_declaration.range_.start
         return [(Range(pos, pos), "\n".join(doc_text_template))]
