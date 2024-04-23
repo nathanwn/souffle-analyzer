@@ -13,7 +13,7 @@ version = "0.0.1"
 dependencies = [
     "typing_extensions>=3.10.0; python_version<'3.10'",
     "lsprotocol>=2023.0.1",
-    "tree-sitter>=0.21.0",
+    "tree-sitter>=0.21.3",
     "tree-sitter-souffle@git+https://github.com/nathanwn/tree-sitter-souffle@0c0c8a49ce776b8b85a76d91c98dca65cf2e8746",
 ]
 requires-python = ">=3.8"

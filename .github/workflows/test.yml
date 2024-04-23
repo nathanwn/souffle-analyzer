@@ -36,3 +36,41 @@ jobs:
       - run: npm run compile
       # TODO(nathanwn): Figure out how to run e2e tests on GitHub Actions.
       # - run: npm run test
+
+  build_binaries:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-20.04, windows-2019, macos-latest]
+        include:
+          - os: ubuntu-20.04
+            pathsep: ":"
+            asset_name: souffle-analyzer-linux
+            executable_mime: "application/x-executable"
+          - os: windows-2019
+            pathsep: ";"
+            asset_name: souffle-analyzer-windows.exe
+            executable_mime: "application/vnd.microsoft.portable-executable"
+          - os: macos-latest
+            pathsep: ":"
+            asset_name: souffle-analyzer-macos
+            executable_mime: "application/x-mach-binary"
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: |
+          python -m pip install --upgrade pip wheel
+          python -m pip install pyinstaller
+          python -m pip install .
+      - name: Build executable
+        run: >
+          python -m PyInstaller -F --name ${{ matrix.asset_name }}
+          --copy-metadata souffle-analyzer
+          src/souffle_analyzer/__main__.py
+      - name: Test executable
+        run: |
+          ./dist/${{ matrix.asset_name }} --version
