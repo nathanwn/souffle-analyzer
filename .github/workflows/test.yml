@@ -8,7 +8,11 @@ on:
 
 jobs:
   test-souffle-analyzer:
-    uses: nathanwn/workflows/.github/workflows/tox.yml@7332c403a7e85d3442cb5598d3a67d67f88876d7  # v0.4.0
+    uses: nathanwn/workflows/.github/workflows/tox.yml@3654b0bc8b591f0b6ef0deae901a8645ed9330c7  # v0.5.0
+    with:
+      os: '["ubuntu-latest", "windows-latest", "macos-latest"]'
+      env: '["py38", "py39", "py310", "py311", "py312", "pre-commit"]'
+
   test-vscode-extension:
     runs-on: ubuntu-latest
     strategy:
