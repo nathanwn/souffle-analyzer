@@ -1,3 +1,4 @@
+import os
 from typing import List, Optional, Tuple
 
 from souffle_analyzer.ast import (
@@ -35,7 +36,7 @@ class CodeActionVisitor(Visitor[T]):
             doc_text_template.append(f"/// @attribute {attribute_name.val}")
         doc_text_template.append("")
         pos = relation_declaration.range_.start
-        return [(Range(pos, pos), "\n".join(doc_text_template))]
+        return [(Range(pos, pos), os.linesep.join(doc_text_template))]
 
     def generic_visit(self, node: Node) -> T:
         for child in node.children_sorted_by_range:

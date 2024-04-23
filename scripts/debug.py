@@ -1,4 +1,5 @@
 import argparse
+import os
 from typing import List, Optional
 
 import lsprotocol.types as lsptypes
@@ -70,7 +71,7 @@ def main() -> int:
             content = f.read()
         souffle_parser = Parser()
         ast = souffle_parser.parse(content.encode())
-        print("\n".join(format_souffle_ast(ast)))
+        print(os.linesep.join(format_souffle_ast(ast)))
     elif args.command == "references":
         ctx = AnalysisContext()
         with open(args.filename) as f:
@@ -83,10 +84,10 @@ def main() -> int:
             position=Position(line=args.line, character=args.character),
         )
         print("-- File --")
-        print("\n".join(format_souffle_code(code_lines)))
+        print(os.linesep.join(format_souffle_code(code_lines)))
         print("-- Cursor --")
         print(
-            "\n".join(
+            os.linesep.join(
                 format_souffle_code_range(
                     code_lines,
                     range_=Range.from_single_position(
@@ -98,7 +99,7 @@ def main() -> int:
         if result is None:
             print("Result is None")
         else:
-            print("\n".join(format_result(content.splitlines(), result)))
+            print(os.linesep.join(format_result(content.splitlines(), result)))
     return 0
 
 

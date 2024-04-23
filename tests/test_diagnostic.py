@@ -56,6 +56,6 @@ def test_diagnostic(file_snapshot: SnapshotAssertion, filename: str) -> None:
             code_lines=code_lines,
             format_result=format_result,
             rangewise_results=rangewise_diagnostics,
-        )
+        ).replace(os.linesep, "\n")
         == file_snapshot
     )

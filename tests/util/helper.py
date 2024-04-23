@@ -1,3 +1,5 @@
+import inspect
+import os
 from dataclasses import dataclass
 from typing import Any, Callable, Generic, List, Optional, TypeVar
 
@@ -5,6 +7,10 @@ from souffle_analyzer.ast import Position, Range
 from souffle_analyzer.printer import format_souffle_code, format_souffle_code_range
 
 T = TypeVar("T")
+
+
+def clean_multiline_string(s: str):
+    return inspect.cleandoc(s).replace("\n", os.linesep)
 
 
 @dataclass
@@ -27,10 +33,10 @@ def format_rangewise_results(
         out.extend(format_result(result.result))
         out.extend(["_____", ""])
 
-    return "\n\n=====\n\n".join(
+    return f"{os.linesep * 2}====={os.linesep * 2}".join(
         [
-            "\n".join(format_souffle_code(code_lines)),
-            "\n".join(out),
+            os.linesep.join(format_souffle_code(code_lines)),
+            os.linesep.join(out),
         ]
     )
 

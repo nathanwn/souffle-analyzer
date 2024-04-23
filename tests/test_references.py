@@ -86,6 +86,6 @@ def test_references(file_snapshot: SnapshotAssertion, filename: str) -> None:
             code_lines=code_lines,
             analyze=analyze_fn,
             format_result=format_result_fn,
-        )
+        ).replace(os.linesep, "\n")
         == file_snapshot
     )

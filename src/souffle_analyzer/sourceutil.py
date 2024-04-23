@@ -1,3 +1,4 @@
+import os
 import re
 from typing import List, Set
 
@@ -22,7 +23,7 @@ def get_consecutive_block_at_line(
     lines = []
     for line_no in range(start, end + 1):
         lines.append(code_lines[line_no])
-    return "\n".join(lines)
+    return os.linesep.join(lines)
 
 
 def get_words_in_consecutive_block_at_line(code: str, line_no: int) -> Set[str]:

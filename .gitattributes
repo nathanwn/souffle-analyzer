@@ -1,0 +1,3 @@
+# This is to ensure all snapshot tests run correctly.
+*.dl text eol=lf
+*.snapshot text eol=lf

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 import re
 from abc import abstractmethod
 from dataclasses import dataclass, field
@@ -664,7 +665,7 @@ class RelationDeclaration(ValidNode):
             doc_lines.append("")
         doc_lines.extend(attribute_doc_lines)
 
-        return "\n".join(doc_lines)
+        return os.linesep.join(doc_lines)
 
 
 @dataclass
@@ -727,7 +728,7 @@ class Attribute(ValidNode):
         doc_lines.append("```")
         if self.doc_text is not None:
             doc_lines.extend(self.doc_text)
-        return "\n".join(doc_lines)
+        return os.linesep.join(doc_lines)
 
 
 @dataclass

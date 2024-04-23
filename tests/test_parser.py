@@ -33,8 +33,8 @@ def test_parser(file_snapshot: SnapshotAssertion, filename: str) -> None:
     parser = Parser()
     file = parser.parse(code)
 
-    res = "\n".join(format_souffle_ast(file))
-    assert res == file_snapshot
+    res = os.linesep.join(format_souffle_ast(file))
+    assert res.replace(os.linesep, "\n") == file_snapshot
 
 
 @pytest.mark.parametrize(
@@ -71,19 +71,19 @@ def test_parser_on_incomplete_files(
 
     for i in range(len(all_positions)):
         prev = None
-        new_code_buf = bytearray()
+        new_code_buf = []
         for j in range(i + 1, len(all_positions)):
             cur = all_positions[j]
             if prev is not None and prev.line != cur.line:
-                new_code_buf.extend(b"\n")
-            new_code_buf.extend(code_lines[cur.line][cur.character].encode())
+                new_code_buf.append(os.linesep)
+            new_code_buf.append(code_lines[cur.line][cur.character])
             prev = cur
-            new_code = bytes(new_code_buf)
+            new_code = "".join(new_code_buf).encode()
             try:
                 parser.parse(new_code)
             except BaseException as err:
                 pytest.fail(
-                    "\n".join(
+                    os.linesep.join(
                         [
                             str(f"Unexpected error: {err}"),
                             *format_souffle_code(new_code.decode().splitlines()),

@@ -46,6 +46,6 @@ def test_hover(file_snapshot: SnapshotAssertion, filename: str) -> None:
             code_lines=code_lines,
             analyze=analyze,
             format_result=format_result,
-        )
+        ).replace(os.linesep, "\n")
         == file_snapshot
     )

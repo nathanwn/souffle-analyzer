@@ -1,4 +1,3 @@
-import inspect
 from typing import Set
 
 import pytest
@@ -7,6 +6,7 @@ from souffle_analyzer.sourceutil import (
     get_consecutive_block_at_line,
     get_words_in_consecutive_block_at_line,
 )
+from tests.util.helper import clean_multiline_string
 
 
 @pytest.mark.parametrize(
@@ -63,8 +63,8 @@ def test_get_consecutive_block_at_line(
     line_no: int,
     block: str,
 ) -> None:
-    code = inspect.cleandoc(code)
-    block = inspect.cleandoc(block)
+    code = clean_multiline_string(code)
+    block = clean_multiline_string(block)
     assert get_consecutive_block_at_line(code, line_no) == block
 
 
@@ -113,5 +113,5 @@ def test_get_words_in_consecutive_block_at_line(
     line_no: int,
     words: Set[str],
 ) -> None:
-    code = inspect.cleandoc(code)
+    code = clean_multiline_string(code)
     assert get_words_in_consecutive_block_at_line(code, line_no) == words

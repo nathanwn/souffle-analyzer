@@ -20,5 +20,5 @@ def test_printer(file_snapshot: SnapshotAssertion, filename: str) -> None:
     test_data_file = os.path.join(test_data_dir, filename)
     with open(test_data_file) as f:
         code = f.read()
-    res = "\n".join(format_souffle_code(code.splitlines()))
-    assert res == file_snapshot
+    res = os.linesep.join(format_souffle_code(code.splitlines()))
+    assert res.replace(os.linesep, "\n") == file_snapshot
