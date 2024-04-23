@@ -41,7 +41,7 @@ class HoverVisitor(Visitor[T]):
         if matching_relation_declaration is None:
             return None
         return (
-            matching_relation_declaration.get_hover_result() or "",
+            matching_relation_declaration.get_doc() or "",
             relation_reference_name.range_,
         )
 

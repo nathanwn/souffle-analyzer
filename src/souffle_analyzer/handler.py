@@ -2,6 +2,7 @@ from importlib import metadata as importlib_metadata
 
 from lsprotocol.types import (
     CodeAction,
+    CompletionOptions,
     DiagnosticOptions,
     Hover,
     InitializeRequest,
@@ -15,6 +16,8 @@ from lsprotocol.types import (
     ServerCapabilities,
     TextDocumentCodeActionRequest,
     TextDocumentCodeActionResponse,
+    TextDocumentCompletionRequest,
+    TextDocumentCompletionResponse,
     TextDocumentDefinitionRequest,
     TextDocumentDefinitionResponse,
     TextDocumentDidChangeNotification,
@@ -57,6 +60,9 @@ def handle_initialize_request(request: InitializeRequest) -> InitializeResponse:
                 type_definition_provider=True,
                 references_provider=True,
                 code_action_provider=True,
+                completion_provider=CompletionOptions(
+                    trigger_characters=["."],
+                ),
                 diagnostic_provider=DiagnosticOptions(
                     # TODO: update this once the server support these capabilities.
                     inter_file_dependencies=False,
@@ -168,6 +174,21 @@ def handle_text_document_type_definition_request(
     return TextDocumentTypeDefinitionResponse(
         id=request.id,
         result=type_definition_result,
+    )
+
+
+def handle_text_document_completion_request(
+    request: TextDocumentCompletionRequest,
+    ctx: AnalysisContext,
+) -> TextDocumentCompletionResponse:
+    uri = request.params.text_document.uri
+    position = request.params.position
+    context = request.params.context
+    logger.debug(request)
+    result = ctx.get_completion_items(uri, position, context)
+    return TextDocumentCompletionResponse(
+        id=request.id,
+        result=result,
     )
 
 

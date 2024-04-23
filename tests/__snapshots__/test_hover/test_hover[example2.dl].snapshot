@@ -51,9 +51,8 @@ directed_edge(u: number, v: number)
 
 There exists an edge between two nodes `u` and `v`.
 
-`u`:  the initial node
-
-`v`:  the terminal node
+* `u`:  the initial node
+* `v`:  the terminal node
 _____
 
 -- Cursor range --
@@ -95,9 +94,8 @@ directed_edge(u: number, v: number)
 
 There exists an edge between two nodes `u` and `v`.
 
-`u`:  the initial node
-
-`v`:  the terminal node
+* `u`:  the initial node
+* `v`:  the terminal node
 _____
 
 -- Cursor range --
@@ -139,9 +137,8 @@ directed_edge(u: number, v: number)
 
 There exists an edge between two nodes `u` and `v`.
 
-`u`:  the initial node
-
-`v`:  the terminal node
+* `u`:  the initial node
+* `v`:  the terminal node
 _____
 
 -- Cursor range --
@@ -183,9 +180,8 @@ directed_edge(u: number, v: number)
 
 There exists an edge between two nodes `u` and `v`.
 
-`u`:  the initial node
-
-`v`:  the terminal node
+* `u`:  the initial node
+* `v`:  the terminal node
 _____
 
 -- Cursor range --
@@ -247,9 +243,8 @@ path(u: number, v: number)
 
 There exists a path from node `u` to node `v`.
 
-`u`:  the source node
-
-`v`:  the sink node
+* `u`:  the source node
+* `v`:  the sink node
 _____
 
 -- Cursor range --
@@ -291,9 +286,8 @@ directed_edge(u: number, v: number)
 
 There exists an edge between two nodes `u` and `v`.
 
-`u`:  the initial node
-
-`v`:  the terminal node
+* `u`:  the initial node
+* `v`:  the terminal node
 _____
 
 -- Cursor range --
@@ -335,9 +329,8 @@ path(u: number, v: number)
 
 There exists a path from node `u` to node `v`.
 
-`u`:  the source node
-
-`v`:  the sink node
+* `u`:  the source node
+* `v`:  the sink node
 _____
 
 -- Cursor range --
@@ -379,9 +372,8 @@ directed_edge(u: number, v: number)
 
 There exists an edge between two nodes `u` and `v`.
 
-`u`:  the initial node
-
-`v`:  the terminal node
+* `u`:  the initial node
+* `v`:  the terminal node
 _____
 
 -- Cursor range --
@@ -423,9 +415,8 @@ directed_edge(u: number, v: number)
 
 There exists an edge between two nodes `u` and `v`.
 
-`u`:  the initial node
-
-`v`:  the terminal node
+* `u`:  the initial node
+* `v`:  the terminal node
 _____
 
 -- Cursor range --

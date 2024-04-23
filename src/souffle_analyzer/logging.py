@@ -42,7 +42,7 @@ def gen_logging_config(log_file_path: str, verbose: bool) -> Dict:
                 "level": "DEBUG" if verbose else "INFO",
                 "formatter": "detailed",
                 "filename": log_file_path,
-                "maxBytes": 10 * 1024,
+                "maxBytes": 1024 * 1024,
                 "backupCount": 3,
             },
         },

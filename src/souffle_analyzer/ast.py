@@ -145,7 +145,6 @@ class SyntaxIssue:
 @dataclass
 class Node:
     range_: Range
-    # syntax_issues: list[SyntaxIssue] = field(repr=False)
 
     @property
     def children_sorted_by_range(self) -> list[Node]:
@@ -217,7 +216,7 @@ class Atom(ValidNode):
 
 @dataclass
 class File(ValidNode):
-    code: bytes
+    code: str
     relation_declarations: list[RelationDeclaration]
     type_declarations: list[TypeDeclaration]
     facts: list[ResultNode[Fact]]
@@ -635,7 +634,7 @@ class RelationDeclaration(ValidNode):
                         raise AssertionError("unreachable")
                     current_attribute.doc_text.append(line)
 
-    def get_hover_result(self) -> str | None:
+    def get_doc(self) -> str | None:
         if isinstance(self.name.inner, ErrorNode):
             return None
 
@@ -652,19 +651,14 @@ class RelationDeclaration(ValidNode):
 
         attribute_doc_lines = []
 
-        for attribute_idx, attribute in enumerate(self.attributes):
+        for attribute in self.attributes:
             if isinstance(attribute.name.inner, ErrorNode):
                 return None
             attribute_name = attribute.name.inner.val
-
             if attribute.doc_text:
-                for i, line in enumerate(attribute.doc_text):
-                    if i == 0:
-                        attribute_doc_lines.append(f"`{attribute_name}`: {line}")
-                    else:
-                        attribute_doc_lines.append(line)
-                if attribute_idx < len(self.attributes) - 1:
-                    attribute_doc_lines.append("")
+                attribute_doc_lines.append(
+                    f"* `{attribute_name}`: {' '.join(attribute.doc_text)}"
+                )
 
         if len(attribute_doc_lines) > 0:
             doc_lines.append("")

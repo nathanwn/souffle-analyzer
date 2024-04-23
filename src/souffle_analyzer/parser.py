@@ -155,9 +155,8 @@ class Parser:
                     relation_declaration.parse_doc_comment(comment)
 
         return File(
-            code=code,
+            code=code.decode(),
             range_=self.get_range(node),
-            # syntax_issues=self.collect_syntax_issues(node),
             relation_declarations=relation_declarations,
             type_declarations=type_declarations,
             facts=facts,
@@ -165,6 +164,7 @@ class Parser:
             directives=directives,
             preprocessor_directives=preprocessor_directives,
             comments=comments,
+            # syntax_issues=self.collect_syntax_issues(node),
         )
 
     def parse_relation_declaration(self, node: ts.Node) -> RelationDeclaration:
@@ -685,9 +685,9 @@ class Parser:
             range_=self.get_range(node),
             inner=atom_type(
                 range_=self.get_range(node),
-                # syntax_issues=self.collect_syntax_issues(node),
                 name=name,
                 arguments=arguments,
+                # syntax_issues=self.collect_syntax_issues(node),
             ),
         )
 
