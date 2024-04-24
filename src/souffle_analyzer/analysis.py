@@ -164,7 +164,8 @@ class AnalysisContext:
                 # See the property of the get_bracket_scores function.
                 bracket_scores[position.line][position.character] == 0
                 and (
-                    before_token.endswith(",")
+                    before_token in [".input", ".output"]
+                    or before_token.endswith(",")
                     or before_token.endswith(":-")
                     or before_token.endswith(".")
                     or before_token.endswith(")")
