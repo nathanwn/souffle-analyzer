@@ -1,4 +1,3 @@
-import inspect
 import os
 from dataclasses import dataclass
 from typing import Any, Callable, Generic, List, Optional, TypeVar
@@ -10,7 +9,30 @@ T = TypeVar("T")
 
 
 def clean_multiline_string(s: str):
-    return inspect.cleandoc(s).replace("\n", os.linesep)
+    def is_empty_line(line: str):
+        return len(line.strip()) == 0
+
+    lines = s.splitlines()
+    start_line = 0
+    while start_line < len(lines) and is_empty_line(lines[start_line]):
+        start_line += 1
+    end_line = len(lines) - 1
+    while end_line > -1 and is_empty_line(lines[end_line]):
+        end_line -= 1
+    min_leading_whitespaces = int(1e9)
+    for line_no in range(start_line, end_line + 1):
+        line = lines[line_no]
+        if is_empty_line(line):
+            continue
+        i = 0
+        while i < len(line) and line[i] == " ":
+            i += 1
+        min_leading_whitespaces = min(min_leading_whitespaces, i)
+    new_lines = []
+    for line_no in range(start_line, end_line + 1):
+        line = lines[line_no]
+        new_lines.append(line[min_leading_whitespaces:])
+    return os.linesep.join(new_lines)
 
 
 @dataclass
