@@ -47,18 +47,37 @@ jobs:
       - name: Test executable
         run: |
           ./dist/${{ matrix.asset_name }} --version
-
       - name: Upload executable
-        run: |
-          ./dist/${{ matrix.asset_name }} --version
-
-      - uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.asset_name }}
-          path: ./dist/{{ matrix.asset_name }}
+          path: ./dist/${{ matrix.asset_name }}
+          if-no-files-found: error
+
+  build_vscode_extension:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+    defaults:
+      run:
+        working-directory: vscode
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - run: npm install
+      - name: Create vsix file for package
+        run: npx vsce package -o souffle-analyzer.vsix
+      - name: Upload vscode package
+        uses: actions/upload-artifact@v4
+        with:
+          name: souffle-analyzer.vsix
+          path: ./vscode/souffle-analyzer.vsix
+          if-no-files-found: error
 
   publish:
-    needs: [build_binaries]
+    needs: [build_binaries, build_vscode_extension]
     runs-on: ubuntu-latest
     env:
       GH_REPO: ${{ github.repository }}
@@ -68,7 +87,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
-      - run: ls -R
       - if: github.event_name == 'workflow_dispatch'
         run: echo "TAG_NAME=${{ github.event.inputs.tag_name }}" >> "$GITHUB_ENV"
       - if: github.event_name == 'push'
@@ -88,52 +106,62 @@ jobs:
           git push origin :stable || true
       - name: Generate SHA256 checksum for souffle-analyzer-linux64
         run: |
-          EXEC="souffle-analyzer-linux64"
-          cd "./$EXEC"
-          CHECKSUM=$(sha256sum "$EXEC")
-          echo "$CHECKSUM" > "$EXEC.sha256sum"
-          echo "CHECKSUM_LINUX_64=$(echo $CHECKSUM)" >> "$GITHUB_ENV"
+          ARTIFACT="souffle-analyzer-linux64"
+          cd "./$ARTIFACT"
+          CHECKSUM=$(sha256sum "$ARTIFACT")
+          echo "$CHECKSUM" > "$ARTIFACT.sha256sum"
+          echo "CHECKSUM_LINUX_64=$CHECKSUM" >> "$GITHUB_ENV"
       - name: Generate SHA256 checksum for souffle-analyzer-win64.exe
         run: |
-          EXEC="souffle-analyzer-win64.exe"
-          cd "./$EXEC"
-          CHECKSUM=$(sha256sum "$EXEC")
-          echo "$CHECKSUM" > "$EXEC.sha256sum"
-          echo "CHECKSUM_WIN_64=$(echo $CHECKSUM)" >> "$GITHUB_ENV"
+          ARTIFACT="souffle-analyzer-win64.exe"
+          cd "./$ARTIFACT"
+          CHECKSUM=$(sha256sum "$ARTIFACT")
+          echo "$CHECKSUM" > "$ARTIFACT.sha256sum"
+          echo "CHECKSUM_WIN_64=$CHECKSUM" >> "$GITHUB_ENV"
       - name: Generate SHA256 checksum for souffle-analyzer-macos-x86-64
         run: |
-          EXEC="souffle-analyzer-macos-x86-64"
-          cd "./$EXEC"
-          CHECKSUM=$(sha256sum "$EXEC")
-          echo "$CHECKSUM" > "$EXEC.sha256sum"
-          echo "CHECKSUM_MACOS_86_64=$(echo $CHECKSUM)" >> "$GITHUB_ENV"
+          ARTIFACT="souffle-analyzer-macos-x86-64"
+          cd "./$ARTIFACT"
+          CHECKSUM=$(sha256sum "$ARTIFACT")
+          echo "$CHECKSUM" > "$ARTIFACT.sha256sum"
+          echo "CHECKSUM_MACOS_86_64=$CHECKSUM" >> "$GITHUB_ENV"
       - name: Generate SHA256 checksum for souffle-analyzer-macos-x86-64
         run: |
-          EXEC="souffle-analyzer-macos-arm64"
-          cd "./$EXEC"
-          CHECKSUM=$(sha256sum "$EXEC")
-          echo "$CHECKSUM" > "$EXEC.sha256sum"
-          echo "CHECKSUM_MACOS_ARM64=$(echo $CHECKSUM)" >> "$GITHUB_ENV"
+          ARTIFACT="souffle-analyzer-macos-arm64"
+          cd "./$ARTIFACT"
+          CHECKSUM=$(sha256sum "$ARTIFACT")
+          echo "$CHECKSUM" > "$ARTIFACT.sha256sum"
+          echo "CHECKSUM_MACOS_ARM64=$CHECKSUM" >> "$GITHUB_ENV"
+      - name: Generate SHA256 checksum for souffle-analyzer.vsix
+        run: |
+          ARTIFACT="souffle-analyzer.vsix"
+          cd "./$ARTIFACT"
+          CHECKSUM=$(sha256sum "$ARTIFACT")
+          echo "$CHECKSUM" > "$ARTIFACT.sha256sum"
+          echo "CHECKSUM_VSIX=$CHECKSUM" >> "$GITHUB_ENV"
       - name: Publish release
         run: |
+          ls -R
           envsubst < "$GITHUB_WORKSPACE/.github/release_template.md" > "$RUNNER_TEMP/release_template.md"
           if [ "$TAG_NAME" == "nightly" ]; then
             gh release create nightly \
               --prerelease \
               --notes-file "$RUNNER_TEMP/release_template.md" \
               --title "$RELEASE_TITLE" \
-              --target $GITHUB_SHA \
+              --target "$GITHUB_SHA" \
               souffle-analyzer-linux64/* \
-              souffle-analyzer-win64/* \
+              souffle-analyzer-win64.exe/* \
               souffle-analyzer-macos-x86-64/* \
-              souffle-analyzer-macos-arm64/*
+              souffle-analyzer-macos-arm64/* \
+              souffle-analyzer.vsix/*
           else
             gh release create stable \
               --notes-file "$RUNNER_TEMP/release_template.md" \
               --title "$RELEASE_TITLE" \
-              --target $GITHUB_SHA \
+              --target "$GITHUB_SHA" \
               souffle-analyzer-linux64/* \
-              souffle-analyzer-win64/* \
+              souffle-analyzer-win64.exe/* \
               souffle-analyzer-macos-x86-64/* \
-              souffle-analyzer-macos-arm64/*
+              souffle-analyzer-macos-arm64/* \
+              souffle-analyzer.vsix/*
           fi
