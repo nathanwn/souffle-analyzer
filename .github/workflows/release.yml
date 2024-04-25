@@ -1,0 +1,139 @@
+name: release
+on:
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: 'Tag for release'
+        required: false
+        default: nightly
+  push:
+    tags:
+      - v[0-9]+.[0-9]+.[0-9]+
+
+# Build on the oldest supported images, so we have broader compatibility
+# Build with gcc-10 to prevent triggering #14150 (default is still gcc-9 on 20.04)
+jobs:
+  build_binaries:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        # Try to build on the oldest images possible to maximize compatibility.
+        os: [ubuntu-20.04, windows-2019, macos-12, macos-14]
+        include:
+          - os: ubuntu-20.04
+            asset_name: souffle-analyzer-linux64
+          - os: windows-2019
+            asset_name: souffle-analyzer-win64.exe
+          - os: macos-12
+            asset_name: souffle-analyzer-macos-x86-64
+          - os: macos-14
+            asset_name: souffle-analyzer-macos-arm64
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: |
+          python -m pip install --upgrade pip wheel
+          python -m pip install pyinstaller
+          python -m pip install .
+      - name: Build executable
+        run: >
+          python -m PyInstaller -F --name ${{ matrix.asset_name }}
+          --copy-metadata souffle-analyzer
+          src/souffle_analyzer/__main__.py
+      - name: Test executable
+        run: |
+          ./dist/${{ matrix.asset_name }} --version
+
+      - name: Upload executable
+        run: |
+          ./dist/${{ matrix.asset_name }} --version
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.asset_name }}
+          path: ./dist/{{ matrix.asset_name }}
+
+  publish:
+    needs: [build_binaries]
+    runs-on: ubuntu-latest
+    env:
+      GH_REPO: ${{ github.repository }}
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+      - run: ls -R
+      - if: github.event_name == 'workflow_dispatch'
+        run: echo "TAG_NAME=${{ github.event.inputs.tag_name }}" >> "$GITHUB_ENV"
+      - if: github.event_name == 'push'
+        run: |
+          TAG_NAME=${{ github.ref }}
+          echo "TAG_NAME=${TAG_NAME#refs/tags/}" >> "$GITHUB_ENV"
+      - if: env.TAG_NAME == 'nightly'
+        run: |
+          echo 'RELEASE_TITLE=Souffle Analyzer pre-release build' >> "$GITHUB_ENV"
+          gh release delete nightly --yes || true
+          git push origin :nightly || true
+      - if: env.TAG_NAME != 'nightly'
+        run: |
+          (echo 'RELEASE_TITLE=Souffle Analyzer release build';
+           echo 'PRERELEASE=') >> "$GITHUB_ENV"
+          gh release delete stable --yes || true
+          git push origin :stable || true
+      - name: Generate SHA256 checksum for souffle-analyzer-linux64
+        run: |
+          EXEC="souffle-analyzer-linux64"
+          cd "./$EXEC"
+          CHECKSUM=$(sha256sum "$EXEC")
+          echo "$CHECKSUM" > "$EXEC.sha256sum"
+          echo "CHECKSUM_LINUX_64=$(echo $CHECKSUM)" >> "$GITHUB_ENV"
+      - name: Generate SHA256 checksum for souffle-analyzer-win64.exe
+        run: |
+          EXEC="souffle-analyzer-win64.exe"
+          cd "./$EXEC"
+          CHECKSUM=$(sha256sum "$EXEC")
+          echo "$CHECKSUM" > "$EXEC.sha256sum"
+          echo "CHECKSUM_WIN_64=$(echo $CHECKSUM)" >> "$GITHUB_ENV"
+      - name: Generate SHA256 checksum for souffle-analyzer-macos-x86-64
+        run: |
+          EXEC="souffle-analyzer-macos-x86-64"
+          cd "./$EXEC"
+          CHECKSUM=$(sha256sum "$EXEC")
+          echo "$CHECKSUM" > "$EXEC.sha256sum"
+          echo "CHECKSUM_MACOS_86_64=$(echo $CHECKSUM)" >> "$GITHUB_ENV"
+      - name: Generate SHA256 checksum for souffle-analyzer-macos-x86-64
+        run: |
+          EXEC="souffle-analyzer-macos-arm64"
+          cd "./$EXEC"
+          CHECKSUM=$(sha256sum "$EXEC")
+          echo "$CHECKSUM" > "$EXEC.sha256sum"
+          echo "CHECKSUM_MACOS_ARM64=$(echo $CHECKSUM)" >> "$GITHUB_ENV"
+      - name: Publish release
+        run: |
+          envsubst < "$GITHUB_WORKSPACE/.github/release_template.md" > "$RUNNER_TEMP/release_template.md"
+          if [ "$TAG_NAME" == "nightly" ]; then
+            gh release create nightly \
+              --prerelease \
+              --notes-file "$RUNNER_TEMP/release_template.md" \
+              --title "$RELEASE_TITLE" \
+              --target $GITHUB_SHA \
+              souffle-analyzer-linux64/* \
+              souffle-analyzer-win64/* \
+              souffle-analyzer-macos-x86-64/* \
+              souffle-analyzer-macos-arm64/*
+          else
+            gh release create stable \
+              --notes-file "$RUNNER_TEMP/release_template.md" \
+              --title "$RELEASE_TITLE" \
+              --target $GITHUB_SHA \
+              souffle-analyzer-linux64/* \
+              souffle-analyzer-win64/* \
+              souffle-analyzer-macos-x86-64/* \
+              souffle-analyzer-macos-arm64/*
+          fi
