@@ -16,7 +16,9 @@ jobs:
   test:
     uses: nathanwn/workflows/.github/workflows/tox.yml@3654b0bc8b591f0b6ef0deae901a8645ed9330c7  # v0.5.0
     with:
-      os: '["ubuntu-latest", "windows-latest", "macos-latest"]'
+      # Use macos-12 instead of macos-14/macos-latest due to:
+      # https://github.com/actions/setup-python/issues/825#issuecomment-2012392172
+      os: '["ubuntu-latest", "windows-latest", "macos-12"]'
       env: '["py38", "py39", "py310", "py311", "py312"]'
 
   test-vscode-extension:

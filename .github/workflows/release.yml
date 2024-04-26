@@ -141,7 +141,6 @@ jobs:
           echo "CHECKSUM_VSIX=$CHECKSUM" >> "$GITHUB_ENV"
       - name: Publish release
         run: |
-          ls -R
           envsubst < "$GITHUB_WORKSPACE/.github/release_template.md" > "$RUNNER_TEMP/release_template.md"
           if [ "$TAG_NAME" == "nightly" ]; then
             gh release create nightly \
