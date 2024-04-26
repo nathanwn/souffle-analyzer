@@ -39,16 +39,20 @@ from souffle_analyzer.logging import logger
 from souffle_analyzer.metadata import PROG
 
 
-def handle_initialize_request(request: InitializeRequest) -> InitializeResponse:
+def handle_initialize_request(
+    request: InitializeRequest, ctx: AnalysisContext
+) -> InitializeResponse:
     client_info = request.params.client_info
     log_msg = ["Connecting to client"]
-
     if client_info is not None:
         log_msg.append(client_info.name)
         if client_info.version is not None:
             log_msg.extend(["version", client_info.version])
-
     logger.info(" ".join(log_msg))
+    root_uri = request.params.root_uri
+    if root_uri is not None:
+        logger.info("root_uri: %s", root_uri)
+        ctx.root_uri = root_uri
 
     return InitializeResponse(
         id=request.id,

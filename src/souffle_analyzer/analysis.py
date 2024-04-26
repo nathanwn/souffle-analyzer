@@ -28,6 +28,7 @@ from souffle_analyzer.visitor.type_definition_visitor import TypeDefinitionVisit
 @dataclass
 class AnalysisContext:
     documents: Dict[str, File] = field(default_factory=dict)
+    root_uri: Optional[str] = field(default=None)
 
     def load_document(self, uri: str, text: str) -> List[lsptypes.Diagnostic]:
         for line in text.splitlines():

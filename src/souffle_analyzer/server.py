@@ -42,7 +42,7 @@ class LanguageServer(JsonRpcNode):
         request = self.converter.structure(message, request_type)
 
         if isinstance(request, InitializeRequest):
-            response = handler.handle_initialize_request(request)
+            response = handler.handle_initialize_request(request, self.ctx)
             self.write_server_response(response)
         elif isinstance(request, InitializedNotification):
             logger.info("Connection established successfully.")
