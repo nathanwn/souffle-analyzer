@@ -341,6 +341,7 @@ File(
   )
   Directive(
     range_=[15:0-15:8]
+    DirectiveQualifier(range_=[15:0-15:6], keyword='.input')
     RelationReferenceName(
       range_=[15:7-15:8]
       Identifier(range_=[15:7-15:8], val='A')
@@ -348,6 +349,7 @@ File(
   )
   Directive(
     range_=[16:0-16:9]
+    DirectiveQualifier(range_=[16:0-16:7], keyword='.output')
     RelationReferenceName(
       range_=[16:8-16:9]
       Identifier(range_=[16:8-16:9], val='C')

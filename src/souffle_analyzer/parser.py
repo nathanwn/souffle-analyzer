@@ -23,6 +23,7 @@ from souffle_analyzer.ast import (
     Conjunction,
     Constant,
     Directive,
+    DirectiveQualifier,
     Disjunction,
     ErrorNode,
     Fact,
@@ -164,7 +165,6 @@ class Parser:
             directives=directives,
             preprocessor_directives=preprocessor_directives,
             comments=comments,
-            # syntax_issues=self.collect_syntax_issues(node),
         )
 
     def parse_relation_declaration(self, node: ts.Node) -> RelationDeclaration:
@@ -187,7 +187,6 @@ class Parser:
 
         return RelationDeclaration(
             range_=self.get_range(node),
-            # syntax_issues=self.collect_syntax_issues(node),
             name=name,
             attributes=attributes,
         )
@@ -224,7 +223,6 @@ class Parser:
                     range_=self.get_range(op_node),
                     inner=TypeDeclarationOp(
                         range_=self.get_range(op_node),
-                        # syntax_issues=[],
                         op=TypeRelationOpKind.SUBTYPE,
                     ),
                 )
@@ -246,7 +244,6 @@ class Parser:
 
             return TypeDeclaration(
                 range_=self.get_range(node),
-                # syntax_issues=self.collect_syntax_issues(node),
                 name=name,
                 op=op,
                 expression=type_name,
@@ -266,7 +263,6 @@ class Parser:
                     range_=self.get_range(op_node),
                     inner=TypeDeclarationOp(
                         range_=self.get_range(op_node),
-                        # syntax_issues=[],
                         op=TypeRelationOpKind.EQUIVALENT_TYPE,
                     ),
                 )
@@ -310,7 +306,6 @@ class Parser:
                 )
             return TypeDeclaration(
                 range_=self.get_range(node),
-                # syntax_issues=self.collect_syntax_issues(node),
                 name=name,
                 op=op,
                 expression=type_expression,
@@ -335,6 +330,9 @@ class Parser:
         )
 
     def parse_directive(self, node: ts.Node) -> Directive:
+        qualifier_node = self.get_child_of_type(node, "directive_qualifier")
+        if qualifier_node is None:
+            raise ParserError()  # should not happen
         relation_name_nodes = self.get_children_of_type(node, "qualified_name")
         relation_names = [
             self.parse_qualified_name(_, RelationReferenceName)
@@ -342,15 +340,21 @@ class Parser:
         ]
         return Directive(
             range_=self.get_range(node),
-            # syntax_issues=self.collect_syntax_issues(node),
+            qualifier=self.parse_directive_qualifier(qualifier_node),
             relation_names=relation_names,
+        )
+
+    def parse_directive_qualifier(self, node: ts.Node) -> DirectiveQualifier:
+        keyword = self.get_text(node)
+        return DirectiveQualifier(
+            range_=self.get_range(node),
+            keyword=keyword,
         )
 
     def parse_union_type_expression(self, node: ts.Node) -> UnionTypeExpression:
         type_reference_nodes = self.get_children_of_type(node, "type_name")
         return UnionTypeExpression(
             range_=self.get_range(node),
-            # syntax_issues=self.collect_syntax_issues(node),
             types=[self.parse_type_reference(_) for _ in type_reference_nodes],
         )
 
@@ -358,7 +362,6 @@ class Parser:
         attribute_nodes = self.get_children_of_type(node, "attribute")
         return RecordTypeExpression(
             range_=self.get_range(node),
-            # syntax_issues=self.collect_syntax_issues(node),
             attributes=[self.parse_attribute(_) for _ in attribute_nodes],
         )
 
@@ -368,7 +371,6 @@ class Parser:
         branch_nodes = self.get_children_of_type(node, "adt_branch")
         return AbstractDataTypeExpression(
             range_=self.get_range(node),
-            # syntax_issues=self.collect_syntax_issues(node),
             branches=[self.parse_abstract_data_type_branch(_) for _ in branch_nodes],
         )
 
@@ -390,7 +392,6 @@ class Parser:
         attribute_nodes = self.get_children_of_type(node, "attribute")
         return AbstractDataTypeBranch(
             range_=self.get_range(node),
-            # syntax_issues=self.collect_syntax_issues(node),
             name=name,
             attributes=[self.parse_attribute(_) for _ in attribute_nodes],
         )
@@ -433,7 +434,6 @@ class Parser:
 
         return Rule(
             range_=self.get_range(node),
-            # syntax_issues=self.collect_syntax_issues(node),
             heads=heads,
             body=body,
         )
@@ -443,7 +443,6 @@ class Parser:
         conjunctions = [self.parse_conjunction(_) for _ in conjunction_nodes]
         return Disjunction(
             range_=self.get_range(node),
-            # syntax_issues=self.collect_syntax_issues(node),
             conjunctions=conjunctions,
         )
 
@@ -454,13 +453,11 @@ class Parser:
         elif len(self.get_text(neg_node)) % 2 == 0:
             neg = NegOp(
                 range_=self.get_range(neg_node),
-                # syntax_issues=self.collect_syntax_issues(neg_node),
                 is_neg=False,
             )
         else:
             neg = NegOp(
                 range_=self.get_range(neg_node),
-                # syntax_issues=self.collect_syntax_issues(neg_node),
                 is_neg=True,
             )
         clause_nodes = self.get_children_of_type(node, "conjunction_clause")
@@ -469,7 +466,6 @@ class Parser:
         )
         return Conjunction(
             range_=self.get_range(node),
-            # syntax_issues=self.collect_syntax_issues(node),
             neg=neg,
             clauses=clauses,
         )
@@ -506,7 +502,6 @@ class Parser:
             relation_reference = self.parse_atom(atom_node, RelationReference)
         return RelationReferenceClause(
             range_=self.get_range(node),
-            # syntax_issues=self.collect_syntax_issues(node),
             relation_reference=relation_reference,
         )
 
@@ -594,7 +589,6 @@ class Parser:
                 )
         return BinaryConstraint(
             range_=self.get_range(node),
-            # syntax_issues=self.collect_syntax_issues(node),
             lhs=lhs,
             op=op,
             rhs=rhs,
@@ -603,7 +597,6 @@ class Parser:
     def parse_binary_constraint_op(self, node: ts.Node) -> BinaryConstraintOp:
         return BinaryConstraintOp(
             range_=self.get_range(node),
-            # syntax_issues=self.collect_syntax_issues(node),
             op=self.get_text(node),
         )
 
@@ -614,7 +607,6 @@ class Parser:
         ]
         return RuleHead(
             range_=self.get_range(node),
-            # syntax_issues=self.collect_syntax_issues(node),
             relation_references=relation_references,
         )
 
@@ -625,7 +617,6 @@ class Parser:
             raise ParserError()
         return SubsumptionHead(
             range_=self.get_range(node),
-            # syntax_issues=self.collect_syntax_issues(node),
             first=self.parse_atom(first_node, RelationReference),
             second=self.parse_atom(second_node, RelationReference),
         )
@@ -653,7 +644,6 @@ class Parser:
             )
         return PreprocInclude(
             range_=self.get_range(node),
-            # syntax_issues=self.collect_syntax_issues(node),
             path=path,
         )
 
@@ -687,7 +677,6 @@ class Parser:
                 range_=self.get_range(node),
                 name=name,
                 arguments=arguments,
-                # syntax_issues=self.collect_syntax_issues(node),
             ),
         )
 
@@ -720,7 +709,6 @@ class Parser:
     def parse_variable(self, node: ts.Node) -> Variable:
         return Variable(
             range_=self.get_range(node),
-            # syntax_issues=self.collect_syntax_issues(node),
             name=self.get_text(node),
             ty=UnresolvedType(),
         )
@@ -744,7 +732,6 @@ class Parser:
         arguments = list(filter(None, (self.parse_argument(_) for _ in arg_nodes)))
         return BranchInit(
             range_=self.get_range(node),
-            # syntax_issues=self.collect_syntax_issues(node),
             name=name,
             arguments=arguments,
             ty=UnresolvedType(),
@@ -819,7 +806,6 @@ class Parser:
 
         return BinaryOperation(
             range_=self.get_range(node),
-            # syntax_issues=self.collect_syntax_issues(node),
             lhs=lhs,
             op=op,
             rhs=rhs,
@@ -829,14 +815,12 @@ class Parser:
     def parse_binary_operator(self, node: ts.Node) -> BinaryOperator:
         return BinaryOperator(
             range_=self.get_range(node),
-            # syntax_issues=self.collect_syntax_issues(node),
             op=self.get_text(node),
         )
 
     def parse_decimal(self, node: ts.Node) -> NumberConstant:
         return NumberConstant(
             range_=self.get_range(node),
-            # syntax_issues=self.collect_syntax_issues(node),
             val=int(self.get_text(node)),
             ty=UnresolvedType(),
         )
@@ -844,7 +828,6 @@ class Parser:
     def parse_string_literal(self, node: ts.Node) -> StringConstant:
         return StringConstant(
             range_=self.get_range(node),
-            # syntax_issues=self.collect_syntax_issues(node),
             val=self.get_text(node),
             ty=UnresolvedType(),
         )
@@ -859,14 +842,12 @@ class Parser:
         identifier_nodes = self.get_children_of_type(node, "identifier")
         return qualified_name_type(
             range_=self.get_range(node),
-            # syntax_issues=self.collect_syntax_issues(node),
             parts=[self.parse_identifier(_) for _ in identifier_nodes],
         )
 
     def parse_identifier(self, node: ts.Node) -> Identifier:
         return Identifier(
             range_=self.get_range(node),
-            # syntax_issues=self.collect_syntax_issues(node),
             val=self.get_text(node),
         )
 
@@ -901,7 +882,6 @@ class Parser:
             )
         return Attribute(
             range_=self.get_range(node),
-            # syntax_issues=self.collect_syntax_issues(node),
             name=name,
             type_=type_,
         )
@@ -929,19 +909,16 @@ class Parser:
             )
         return TypeReference(
             range_=self.get_range(node),
-            # syntax_issues=self.collect_syntax_issues(node),
             name=type_reference_name,
         )
 
     def parse_primitive_type_node(self, node: ts.Node) -> TypeReference:
         return TypeReference(
             range_=self.get_range(node),
-            # syntax_issues=self.collect_syntax_issues(node),
             name=ResultNode(
                 range_=self.get_range(node),
                 inner=TypeReferenceName(
                     range_=self.get_range(node),
-                    # syntax_issues=[],
                     parts=[self.parse_identifier(node)],
                 ),
             ),
@@ -950,14 +927,12 @@ class Parser:
     def parse_block_comment(self, node: ts.Node) -> BlockComment:
         return BlockComment(
             range_=self.get_range(node),
-            # syntax_issues=self.collect_syntax_issues(node),
             content=self.get_text(node),
         )
 
     def parse_line_comment(self, node: ts.Node) -> LineComment:
         return LineComment(
             range_=self.get_range(node),
-            # syntax_issues=self.collect_syntax_issues(node),
             content=[self.get_text(node)],
         )
 

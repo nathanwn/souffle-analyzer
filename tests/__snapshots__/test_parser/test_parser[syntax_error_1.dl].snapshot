@@ -64,6 +64,7 @@ File(
   )
   Directive(
     range_=[5:0-5:9]
+    DirectiveQualifier(range_=[5:0-5:7], keyword='.output')
     RelationReferenceName(
       range_=[5:8-5:9]
       Identifier(range_=[5:8-5:9], val='A')

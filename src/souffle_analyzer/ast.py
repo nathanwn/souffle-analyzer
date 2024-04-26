@@ -675,12 +675,22 @@ class Fact(Atom):
 
 
 @dataclass
+class DirectiveQualifier(ValidNode):
+    keyword: str
+
+    def accept(self, visitor: Visitor):
+        return visitor.visit_directive_qualifier(self)
+
+
+@dataclass
 class Directive(ValidNode):
+    qualifier: DirectiveQualifier
     relation_names: list[RelationReferenceName]
 
     @property
     def children(self) -> list[Node]:
         return [
+            self.qualifier,
             *self.relation_names,
         ]
 

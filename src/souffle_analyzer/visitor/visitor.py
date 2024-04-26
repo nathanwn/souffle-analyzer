@@ -17,6 +17,7 @@ from souffle_analyzer.ast import (
     Conjunction,
     Constant,
     Directive,
+    DirectiveQualifier,
     Disjunction,
     ErrorNode,
     Fact,
@@ -158,6 +159,9 @@ class Visitor(Generic[T]):
 
     def visit_directive(self, directive: Directive) -> T:
         return self.generic_visit(directive)
+
+    def visit_directive_qualifier(self, directive_qualifier: DirectiveQualifier) -> T:
+        return self.generic_visit(directive_qualifier)
 
     def visit_relation_reference_clause(
         self,
