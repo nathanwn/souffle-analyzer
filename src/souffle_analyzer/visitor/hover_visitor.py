@@ -2,13 +2,11 @@ from typing import Optional, Tuple
 
 from souffle_analyzer.ast import (
     BUILTIN_TYPES,
-    ErrorNode,
-    Fact,
+    BranchInitName,
     File,
     Node,
     Position,
     Range,
-    RelationReference,
     RelationReferenceName,
     TypeReferenceName,
 )
@@ -45,48 +43,16 @@ class HoverVisitor(Visitor[T]):
             relation_reference_name.range_,
         )
 
-    def visit_relation_reference(self, relation_reference: RelationReference) -> T:
-        if relation_reference.name.covers_position(self.position):
-            return relation_reference.name.accept(self)
-        arguments = relation_reference.arguments
-
-        relation_reference_name = relation_reference.name.inner
-        if isinstance(relation_reference_name, ErrorNode):
+    def visit_branch_init_name(self, branch_init_name: BranchInitName) -> T:
+        matching_branch_init_declaration = self.file.get_adt_branch_with_name(
+            branch_init_name
+        )
+        if matching_branch_init_declaration is None:
             return None
-
-        declaration = relation_reference_name.declaration
-
-        if declaration is None:
-            return None
-
-        for i, argument in enumerate(arguments):
-            if argument.covers_position(self.position):
-                return (
-                    declaration.get_attribute_hover_text(i) or "",
-                    argument.range_,
-                )
-        return None
-
-    def visit_fact(self, fact: Fact) -> T:
-        fact_name = fact.name.inner
-        if isinstance(fact_name, ErrorNode):
-            return None
-
-        relation_declaration = self.file.get_relation_declaration_with_name(fact_name)
-        if relation_declaration is None:
-            return None
-
-        if fact.name.covers_position(self.position):
-            return fact.name.accept(self)
-
-        for i, argument in enumerate(fact.arguments):
-            if argument.covers_position(self.position):
-                return (
-                    relation_declaration.get_attribute_hover_text(i) or "",
-                    argument.range_,
-                )
-
-        return None
+        return (
+            matching_branch_init_declaration.get_doc() or "",
+            branch_init_name.range_,
+        )
 
     def generic_visit(self, node: Node) -> T:
         for child in node.children_sorted_by_range:

@@ -15,6 +15,7 @@ from tests.util.helper import format_cursorwise_results
     [
         ("example1.dl"),
         ("example2.dl"),
+        ("types2.dl"),
     ],
 )
 def test_hover(file_snapshot: SnapshotAssertion, filename: str) -> None:

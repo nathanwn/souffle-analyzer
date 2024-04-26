@@ -74,30 +74,6 @@ _____
 
 -- Cursor range --
  9 | B(x, y) :- A(x, y).
-   |   ~
--- Hover range --
- 9 | B(x, y) :- A(x, y).
-   |   ~
---   Message   --
-```
-x: number
-```
-_____
-
--- Cursor range --
- 9 | B(x, y) :- A(x, y).
-   |      ~
--- Hover range --
- 9 | B(x, y) :- A(x, y).
-   |      ~
---   Message   --
-```
-y: number
-```
-_____
-
--- Cursor range --
- 9 | B(x, y) :- A(x, y).
    |            ~
 -- Hover range --
  9 | B(x, y) :- A(x, y).
@@ -108,30 +84,6 @@ A(x: number, y: number)
 ```
 
 A is a relation.
-_____
-
--- Cursor range --
- 9 | B(x, y) :- A(x, y).
-   |              ~
--- Hover range --
- 9 | B(x, y) :- A(x, y).
-   |              ~
---   Message   --
-```
-x: number
-```
-_____
-
--- Cursor range --
- 9 | B(x, y) :- A(x, y).
-   |                 ~
--- Hover range --
- 9 | B(x, y) :- A(x, y).
-   |                 ~
---   Message   --
-```
-y: number
-```
 _____
 
 -- Cursor range --
@@ -150,30 +102,6 @@ _____
 
 -- Cursor range --
 10 | B(x, z) :- A(x, y), B(y, z).
-   |   ~
--- Hover range --
-10 | B(x, z) :- A(x, y), B(y, z).
-   |   ~
---   Message   --
-```
-x: number
-```
-_____
-
--- Cursor range --
-10 | B(x, z) :- A(x, y), B(y, z).
-   |      ~
--- Hover range --
-10 | B(x, z) :- A(x, y), B(y, z).
-   |      ~
---   Message   --
-```
-y: number
-```
-_____
-
--- Cursor range --
-10 | B(x, z) :- A(x, y), B(y, z).
    |            ~
 -- Hover range --
 10 | B(x, z) :- A(x, y), B(y, z).
@@ -188,30 +116,6 @@ _____
 
 -- Cursor range --
 10 | B(x, z) :- A(x, y), B(y, z).
-   |              ~
--- Hover range --
-10 | B(x, z) :- A(x, y), B(y, z).
-   |              ~
---   Message   --
-```
-x: number
-```
-_____
-
--- Cursor range --
-10 | B(x, z) :- A(x, y), B(y, z).
-   |                 ~
--- Hover range --
-10 | B(x, z) :- A(x, y), B(y, z).
-   |                 ~
---   Message   --
-```
-y: number
-```
-_____
-
--- Cursor range --
-10 | B(x, z) :- A(x, y), B(y, z).
    |                     ~
 -- Hover range --
 10 | B(x, z) :- A(x, y), B(y, z).
@@ -222,30 +126,6 @@ B(x: number, y: number)
 ```
 
 B is another relation.
-_____
-
--- Cursor range --
-10 | B(x, z) :- A(x, y), B(y, z).
-   |                       ~
--- Hover range --
-10 | B(x, z) :- A(x, y), B(y, z).
-   |                       ~
---   Message   --
-```
-x: number
-```
-_____
-
--- Cursor range --
-10 | B(x, z) :- A(x, y), B(y, z).
-   |                          ~
--- Hover range --
-10 | B(x, z) :- A(x, y), B(y, z).
-   |                          ~
---   Message   --
-```
-y: number
-```
 _____
 
 -- Cursor range --
@@ -282,30 +162,6 @@ _____
 
 -- Cursor range --
 13 | C(x, y) :- A(x, y), !B(x, y).
-   |   ~
--- Hover range --
-13 | C(x, y) :- A(x, y), !B(x, y).
-   |   ~
---   Message   --
-```
-x: number
-```
-_____
-
--- Cursor range --
-13 | C(x, y) :- A(x, y), !B(x, y).
-   |      ~
--- Hover range --
-13 | C(x, y) :- A(x, y), !B(x, y).
-   |      ~
---   Message   --
-```
-y: number
-```
-_____
-
--- Cursor range --
-13 | C(x, y) :- A(x, y), !B(x, y).
    |            ~
 -- Hover range --
 13 | C(x, y) :- A(x, y), !B(x, y).
@@ -320,30 +176,6 @@ _____
 
 -- Cursor range --
 13 | C(x, y) :- A(x, y), !B(x, y).
-   |              ~
--- Hover range --
-13 | C(x, y) :- A(x, y), !B(x, y).
-   |              ~
---   Message   --
-```
-x: number
-```
-_____
-
--- Cursor range --
-13 | C(x, y) :- A(x, y), !B(x, y).
-   |                 ~
--- Hover range --
-13 | C(x, y) :- A(x, y), !B(x, y).
-   |                 ~
---   Message   --
-```
-y: number
-```
-_____
-
--- Cursor range --
-13 | C(x, y) :- A(x, y), !B(x, y).
    |                      ~
 -- Hover range --
 13 | C(x, y) :- A(x, y), !B(x, y).
@@ -354,30 +186,6 @@ B(x: number, y: number)
 ```
 
 B is another relation.
-_____
-
--- Cursor range --
-13 | C(x, y) :- A(x, y), !B(x, y).
-   |                        ~
--- Hover range --
-13 | C(x, y) :- A(x, y), !B(x, y).
-   |                        ~
---   Message   --
-```
-x: number
-```
-_____
-
--- Cursor range --
-13 | C(x, y) :- A(x, y), !B(x, y).
-   |                           ~
--- Hover range --
-13 | C(x, y) :- A(x, y), !B(x, y).
-   |                           ~
---   Message   --
-```
-y: number
-```
 _____
 
 -- Cursor range --

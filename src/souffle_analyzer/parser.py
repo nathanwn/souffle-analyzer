@@ -725,7 +725,7 @@ class Parser:
             )
         else:
             name = ResultNode(
-                range_=self.get_range(node),
+                range_=self.get_range(name_node),
                 inner=self.parse_qualified_name(name_node, BranchInitName),
             )
         arg_nodes = self.get_children_of_type(node, "argument")

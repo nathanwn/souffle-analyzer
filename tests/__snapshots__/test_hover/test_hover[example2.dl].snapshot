@@ -56,32 +56,6 @@ There exists an edge between two nodes `u` and `v`.
 _____
 
 -- Cursor range --
- 5 | directed_edge(1, 2).
-   |               ~
--- Hover range --
- 5 | directed_edge(1, 2).
-   |               ~
---   Message   --
-```
-u: number
-```
- the initial node
-_____
-
--- Cursor range --
- 5 | directed_edge(1, 2).
-   |                  ~
--- Hover range --
- 5 | directed_edge(1, 2).
-   |                  ~
---   Message   --
-```
-v: number
-```
- the terminal node
-_____
-
--- Cursor range --
  6 | directed_edge(1, 3).
    | ~~~~~~~~~~~~~
 -- Hover range --
@@ -96,32 +70,6 @@ There exists an edge between two nodes `u` and `v`.
 
 * `u`:  the initial node
 * `v`:  the terminal node
-_____
-
--- Cursor range --
- 6 | directed_edge(1, 3).
-   |               ~
--- Hover range --
- 6 | directed_edge(1, 3).
-   |               ~
---   Message   --
-```
-u: number
-```
- the initial node
-_____
-
--- Cursor range --
- 6 | directed_edge(1, 3).
-   |                  ~
--- Hover range --
- 6 | directed_edge(1, 3).
-   |                  ~
---   Message   --
-```
-v: number
-```
- the terminal node
 _____
 
 -- Cursor range --
@@ -142,32 +90,6 @@ There exists an edge between two nodes `u` and `v`.
 _____
 
 -- Cursor range --
- 7 | directed_edge(2, 4).
-   |               ~
--- Hover range --
- 7 | directed_edge(2, 4).
-   |               ~
---   Message   --
-```
-u: number
-```
- the initial node
-_____
-
--- Cursor range --
- 7 | directed_edge(2, 4).
-   |                  ~
--- Hover range --
- 7 | directed_edge(2, 4).
-   |                  ~
---   Message   --
-```
-v: number
-```
- the terminal node
-_____
-
--- Cursor range --
  8 | directed_edge(3, 5).
    | ~~~~~~~~~~~~~
 -- Hover range --
@@ -182,32 +104,6 @@ There exists an edge between two nodes `u` and `v`.
 
 * `u`:  the initial node
 * `v`:  the terminal node
-_____
-
--- Cursor range --
- 8 | directed_edge(3, 5).
-   |               ~
--- Hover range --
- 8 | directed_edge(3, 5).
-   |               ~
---   Message   --
-```
-u: number
-```
- the initial node
-_____
-
--- Cursor range --
- 8 | directed_edge(3, 5).
-   |                  ~
--- Hover range --
- 8 | directed_edge(3, 5).
-   |                  ~
---   Message   --
-```
-v: number
-```
- the terminal node
 _____
 
 -- Cursor range --
@@ -249,32 +145,6 @@ _____
 
 -- Cursor range --
 15 | path(u, v) :- directed_edge(u, v).
-   |      ~
--- Hover range --
-15 | path(u, v) :- directed_edge(u, v).
-   |      ~
---   Message   --
-```
-u: number
-```
- the source node
-_____
-
--- Cursor range --
-15 | path(u, v) :- directed_edge(u, v).
-   |         ~
--- Hover range --
-15 | path(u, v) :- directed_edge(u, v).
-   |         ~
---   Message   --
-```
-v: number
-```
- the sink node
-_____
-
--- Cursor range --
-15 | path(u, v) :- directed_edge(u, v).
    |               ~~~~~~~~~~~~~
 -- Hover range --
 15 | path(u, v) :- directed_edge(u, v).
@@ -288,32 +158,6 @@ There exists an edge between two nodes `u` and `v`.
 
 * `u`:  the initial node
 * `v`:  the terminal node
-_____
-
--- Cursor range --
-15 | path(u, v) :- directed_edge(u, v).
-   |                             ~
--- Hover range --
-15 | path(u, v) :- directed_edge(u, v).
-   |                             ~
---   Message   --
-```
-u: number
-```
- the initial node
-_____
-
--- Cursor range --
-15 | path(u, v) :- directed_edge(u, v).
-   |                                ~
--- Hover range --
-15 | path(u, v) :- directed_edge(u, v).
-   |                                ~
---   Message   --
-```
-v: number
-```
- the terminal node
 _____
 
 -- Cursor range --
@@ -335,32 +179,6 @@ _____
 
 -- Cursor range --
 16 | path(u, v) :- directed_edge(u, i), directed_edge(i, v)
-   |      ~
--- Hover range --
-16 | path(u, v) :- directed_edge(u, i), directed_edge(i, v)
-   |      ~
---   Message   --
-```
-u: number
-```
- the source node
-_____
-
--- Cursor range --
-16 | path(u, v) :- directed_edge(u, i), directed_edge(i, v)
-   |         ~
--- Hover range --
-16 | path(u, v) :- directed_edge(u, i), directed_edge(i, v)
-   |         ~
---   Message   --
-```
-v: number
-```
- the sink node
-_____
-
--- Cursor range --
-16 | path(u, v) :- directed_edge(u, i), directed_edge(i, v)
    |               ~~~~~~~~~~~~~
 -- Hover range --
 16 | path(u, v) :- directed_edge(u, i), directed_edge(i, v)
@@ -378,32 +196,6 @@ _____
 
 -- Cursor range --
 16 | path(u, v) :- directed_edge(u, i), directed_edge(i, v)
-   |                             ~
--- Hover range --
-16 | path(u, v) :- directed_edge(u, i), directed_edge(i, v)
-   |                             ~
---   Message   --
-```
-u: number
-```
- the initial node
-_____
-
--- Cursor range --
-16 | path(u, v) :- directed_edge(u, i), directed_edge(i, v)
-   |                                ~
--- Hover range --
-16 | path(u, v) :- directed_edge(u, i), directed_edge(i, v)
-   |                                ~
---   Message   --
-```
-v: number
-```
- the terminal node
-_____
-
--- Cursor range --
-16 | path(u, v) :- directed_edge(u, i), directed_edge(i, v)
    |                                    ~~~~~~~~~~~~~
 -- Hover range --
 16 | path(u, v) :- directed_edge(u, i), directed_edge(i, v)
@@ -417,30 +209,4 @@ There exists an edge between two nodes `u` and `v`.
 
 * `u`:  the initial node
 * `v`:  the terminal node
-_____
-
--- Cursor range --
-16 | path(u, v) :- directed_edge(u, i), directed_edge(i, v)
-   |                                                  ~
--- Hover range --
-16 | path(u, v) :- directed_edge(u, i), directed_edge(i, v)
-   |                                                  ~
---   Message   --
-```
-u: number
-```
- the initial node
-_____
-
--- Cursor range --
-16 | path(u, v) :- directed_edge(u, i), directed_edge(i, v)
-   |                                                     ~
--- Hover range --
-16 | path(u, v) :- directed_edge(u, i), directed_edge(i, v)
-   |                                                     ~
---   Message   --
-```
-v: number
-```
- the terminal node
 _____

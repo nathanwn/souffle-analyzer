@@ -398,6 +398,34 @@ class AbstractDataTypeBranch(ValidNode):
             return None
         return self.name.inner.range_
 
+    def get_signature(self) -> str | None:
+        builder: list[str] = []
+        if isinstance(self.name.inner, ErrorNode):
+            return None
+        name = self.name.inner
+        attributes: list[Attribute] = []
+        for attribute in self.attributes:
+            attributes.append(attribute)
+
+        builder.append(name.val)
+        builder.append(" {")
+        for i, attribute in enumerate(attributes):
+            if i != 0:
+                builder.append(", ")
+            signature = attribute.get_signature()
+            if signature is None:
+                return None
+            builder.append(signature)
+        builder.append("}")
+        return "".join(builder)
+
+    def get_doc(self) -> str | None:
+        signature = self.get_signature()
+        if signature is None:
+            return None
+        doc_lines = ["```", signature, "```"]
+        return os.linesep.join(doc_lines)
+
 
 @dataclass
 class TypeDeclarationOp(ValidNode):
@@ -646,8 +674,9 @@ class RelationDeclaration(ValidNode):
         doc_lines.append("```")
         doc_lines.append(signature)
         doc_lines.append("```")
-        doc_lines.append("")
+
         if self.doc_text is not None:
+            doc_lines.append("")
             doc_lines.extend(self.doc_text)
 
         attribute_doc_lines = []

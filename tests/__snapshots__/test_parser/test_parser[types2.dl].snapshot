@@ -160,7 +160,7 @@ File(
         range_=[6:9-6:18]
         ty=UnresolvedType()
         ResultNode(
-          range_=[6:9-6:18]
+          range_=[6:10-6:15]
           BranchInitName(
             range_=[6:10-6:15]
             Identifier(range_=[6:10-6:15], val='Const')
@@ -185,7 +185,7 @@ File(
         range_=[7:9-7:18]
         ty=UnresolvedType()
         ResultNode(
-          range_=[7:9-7:18]
+          range_=[7:10-7:13]
           BranchInitName(
             range_=[7:10-7:13]
             Identifier(range_=[7:10-7:13], val='Var')
@@ -210,7 +210,7 @@ File(
         range_=[8:9-8:35]
         ty=UnresolvedType()
         ResultNode(
-          range_=[8:9-8:35]
+          range_=[8:10-8:13]
           BranchInitName(
             range_=[8:10-8:13]
             Identifier(range_=[8:10-8:13], val='Add')
@@ -220,7 +220,7 @@ File(
           range_=[8:14-8:23]
           ty=UnresolvedType()
           ResultNode(
-            range_=[8:14-8:23]
+            range_=[8:15-8:20]
             BranchInitName(
               range_=[8:15-8:20]
               Identifier(range_=[8:15-8:20], val='Const')
@@ -232,7 +232,7 @@ File(
           range_=[8:25-8:34]
           ty=UnresolvedType()
           ResultNode(
-            range_=[8:25-8:34]
+            range_=[8:26-8:31]
             BranchInitName(
               range_=[8:26-8:31]
               Identifier(range_=[8:26-8:31], val='Const')
@@ -314,7 +314,7 @@ File(
                     range_=[12:32-12:43]
                     ty=UnresolvedType()
                     ResultNode(
-                      range_=[12:32-12:43]
+                      range_=[12:33-12:38]
                       BranchInitName(
                         range_=[12:33-12:38]
                         Identifier(range_=[12:33-12:38], val='Const')
@@ -374,7 +374,7 @@ File(
                     range_=[13:32-13:60]
                     ty=UnresolvedType()
                     ResultNode(
-                      range_=[13:32-13:60]
+                      range_=[13:33-13:36]
                       BranchInitName(
                         range_=[13:33-13:36]
                         Identifier(range_=[13:33-13:36], val='Add')
@@ -384,7 +384,7 @@ File(
                       range_=[13:37-13:47]
                       ty=UnresolvedType()
                       ResultNode(
-                        range_=[13:37-13:47]
+                        range_=[13:38-13:43]
                         BranchInitName(
                           range_=[13:38-13:43]
                           Identifier(range_=[13:38-13:43], val='Const')
@@ -396,7 +396,7 @@ File(
                       range_=[13:49-13:59]
                       ty=UnresolvedType()
                       ResultNode(
-                        range_=[13:49-13:59]
+                        range_=[13:50-13:55]
                         BranchInitName(
                           range_=[13:50-13:55]
                           Identifier(range_=[13:50-13:55], val='Const')
