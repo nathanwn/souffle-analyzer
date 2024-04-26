@@ -13,7 +13,7 @@ from souffle_analyzer.ast import (
 from souffle_analyzer.visitor.visitor import Visitor
 
 
-class CollectReferencesVisitor(Visitor[None]):
+class CollectDeclarationReferencesVisitor(Visitor[None]):
     def __init__(self, file: File, declaration: IsDeclarationNode) -> None:
         self.declaration = declaration
         self.references: List[Range] = []

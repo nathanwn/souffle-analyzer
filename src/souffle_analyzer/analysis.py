@@ -13,7 +13,9 @@ from souffle_analyzer.sourceutil import (
 )
 from souffle_analyzer.visitor.code_action_visitor import CodeActionVisitor
 from souffle_analyzer.visitor.definition_visitor import DefinitionVisitor
-from souffle_analyzer.visitor.find_references_visitor import FindReferencesVisitor
+from souffle_analyzer.visitor.find_references_visitor import (
+    FindDeclarationReferencesVisitor,
+)
 from souffle_analyzer.visitor.hover_visitor import HoverVisitor
 from souffle_analyzer.visitor.resolve_declaration_visitor import (
     ResolveDeclarationVisitor,
@@ -88,7 +90,7 @@ class AnalysisContext:
     def get_references(
         self, uri: str, position: lsptypes.Position
     ) -> List[lsptypes.Location]:
-        find_references_visitor = FindReferencesVisitor(
+        find_references_visitor = FindDeclarationReferencesVisitor(
             file=self.documents[uri],
             position=Position.from_lsp_type(position),
         )

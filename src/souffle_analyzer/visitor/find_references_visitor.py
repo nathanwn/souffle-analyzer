@@ -13,13 +13,15 @@ from souffle_analyzer.ast import (
     TypeDeclaration,
     TypeReferenceName,
 )
-from souffle_analyzer.visitor.collect_references_visitor import CollectReferencesVisitor
+from souffle_analyzer.visitor.collect_declaration_references_visitor import (
+    CollectDeclarationReferencesVisitor,
+)
 from souffle_analyzer.visitor.visitor import Visitor
 
 T = Optional[IsDeclarationNode]
 
 
-class FindReferencesVisitor(Visitor[T]):
+class FindDeclarationReferencesVisitor(Visitor[T]):
     def __init__(self, file: File, position: Position) -> None:
         self.position = position
         super().__init__(file)
@@ -32,7 +34,7 @@ class FindReferencesVisitor(Visitor[T]):
             if declaration_name_range is not None:
                 references.append(declaration_name_range)
             references.extend(
-                CollectReferencesVisitor(
+                CollectDeclarationReferencesVisitor(
                     file=self.file, declaration=declaration
                 ).process()
             )
