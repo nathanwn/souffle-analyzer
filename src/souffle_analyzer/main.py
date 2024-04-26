@@ -6,7 +6,7 @@ import sys
 from importlib import metadata as importlib_metadata
 from typing import Sequence
 
-from souffle_analyzer.logging import configure_logging, logger
+from souffle_analyzer.logging import configure_logging, get_default_log_location, logger
 from souffle_analyzer.metadata import PROG
 from souffle_analyzer.server import LanguageServer
 
@@ -27,7 +27,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     server_parser.add_argument(
         "--log-file",
         type=str,
-        default="tmp.log",
+        default=get_default_log_location(),
         help="Path to the log file. This creates a new file if it does not exist.",
     )
     server_parser.add_argument(

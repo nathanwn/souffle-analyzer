@@ -31,7 +31,7 @@
                     "default": "souffle-analyzer",
                     "description": "The command to run souffle-analyzer"
                 },
-                "souffleAnalyzer.logPath": {
+                "souffleAnalyzer.logFile": {
                     "scope": "application",
                     "type": "string",
                     "default": ".souffle-analyzer.log",

@@ -9,11 +9,22 @@ import {
 let client: LanguageClient;
 
 export function activate(context: ExtensionContext) {
-    const command: string = workspace.getConfiguration("souffleAnalyzer").get("command");
-    const logPath: string = workspace.getConfiguration("souffleAnalyzer").get("logPath");
+    let command = workspace
+        .getConfiguration('souffleAnalyzer')
+        .get<string>('command');
+    const logFile = workspace
+        .getConfiguration('souffleAnalyzer')
+        .get<string>('logFile');
+    const args = ['server', '--verbose'];
+    if (command === undefined) {
+        command = 'souffle-analyzer';
+    }
+    if (typeof logFile === 'string') {
+        args.push('--log-file', logFile);
+    }
     const serverOptions: ServerOptions = {
         command: command,
-        args: ['server', '--verbose', '--log-file', logPath],
+        args: args
     };
 
     // Options to control the language client

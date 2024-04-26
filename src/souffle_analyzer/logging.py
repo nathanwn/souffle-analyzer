@@ -1,9 +1,17 @@
 import logging
 import logging.config
 import os
+import sys
 from typing import Dict
 
 from souffle_analyzer.metadata import PROG
+
+
+def get_default_log_location() -> str:
+    if sys.platform == "win32":
+        return os.path.join(os.environ["APPDATA"], PROG, f"{PROG}.log")
+    else:
+        return os.path.join(os.environ["HOME"], ".local", "share", PROG, f"{PROG}.log")
 
 
 def configure_logging(log_file: str, verbose: bool) -> None:
@@ -27,7 +35,7 @@ def gen_logging_config(log_file_path: str, verbose: bool) -> Dict:
                     "[%(levelname)s|%(module)s|L%(lineno)d] %(asctime)s: %(message)s"
                 ),
                 # use "%Y-%m-%dT%H:%M:%S%z" for more standard use cases
-                "datefmt": "%H:%M:%S",
+                "datefmt": "%Y-%m-%dT%H:%M:%S",
             },
         },
         "handlers": {
