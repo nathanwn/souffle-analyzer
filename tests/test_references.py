@@ -11,35 +11,6 @@ from souffle_analyzer.printer import format_souffle_code_range
 from tests.util.helper import format_cursorwise_results
 
 
-def analyze(
-    ctx: AnalysisContext,
-    filename: str,
-    position: Position,
-) -> Optional[List[lsptypes.Location]]:
-    result = ctx.get_references(filename, position.to_lsp_type())
-    # Hide empty reference lists from test output
-    if len(result) == 0:
-        return None
-    return result
-
-
-def format_result(
-    code_lines: List[str],
-    result: List[lsptypes.Location],
-) -> List[str]:
-    out = []
-    out.append("-- References --")
-    for loc in result:
-        out.extend(
-            format_souffle_code_range(
-                code_lines,
-                Range.from_lsp_type(loc.range),
-            )
-        )
-        out.append("")
-    return out
-
-
 @pytest.mark.parametrize(
     ("filename"),
     [
@@ -61,14 +32,14 @@ def test_references(file_snapshot: SnapshotAssertion, filename: str) -> None:
     ctx.open_document(filename, code)
     code_lines = code.splitlines()
 
-    def analyze_fn(position: Position) -> Optional[List[lsptypes.Location]]:
+    def analyze(position: Position) -> Optional[List[lsptypes.Location]]:
         result = ctx.get_references(filename, position.to_lsp_type())
         # Hide empty reference lists from test output
         if len(result) == 0:
             return None
         return result
 
-    def format_result_fn(result: List[lsptypes.Location]) -> List[str]:
+    def format_result(result: List[lsptypes.Location]) -> List[str]:
         out = []
         out.append("-- References --")
         for loc in result:
@@ -84,8 +55,8 @@ def test_references(file_snapshot: SnapshotAssertion, filename: str) -> None:
     assert (
         format_cursorwise_results(
             code_lines=code_lines,
-            analyze=analyze_fn,
-            format_result=format_result_fn,
-        ).replace(os.linesep, "\n")
+            analyze=analyze,
+            format_result=format_result,
+        )
         == file_snapshot
     )

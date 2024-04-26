@@ -55,10 +55,10 @@ def format_rangewise_results(
         out.extend(format_result(result.result))
         out.extend(["_____", ""])
 
-    return f"{os.linesep * 2}====={os.linesep * 2}".join(
+    return "\n\n=====\n\n".join(
         [
-            os.linesep.join(format_souffle_code(code_lines)),
-            os.linesep.join(out),
+            "\n".join(format_souffle_code(code_lines)),
+            "\n".join(out),
         ]
     )
 
