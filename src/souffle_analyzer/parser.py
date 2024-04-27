@@ -36,6 +36,7 @@ from souffle_analyzer.ast import (
     PreprocInclude,
     QualifiedName,
     Range,
+    RecordInit,
     RecordTypeExpression,
     RelationDeclaration,
     RelationReference,
@@ -687,6 +688,9 @@ class Parser:
         variable_node = self.get_child_of_type(node, "variable")
         if variable_node:
             return self.parse_variable(variable_node)
+        record_init_node = self.get_child_of_type(node, "record_init")
+        if record_init_node:
+            return self.parse_record_init(record_init_node)
         branch_init_node = self.get_child_of_type(node, "branch_init")
         if branch_init_node:
             return self.parse_branch_init(branch_init_node)
@@ -710,6 +714,16 @@ class Parser:
         return Variable(
             range_=self.get_range(node),
             name=self.get_text(node),
+            ty=UnresolvedType(),
+            # parent=None,
+        )
+
+    def parse_record_init(self, node: ts.Node) -> RecordInit:
+        arg_nodes = self.get_children_of_type(node, "argument")
+        arguments = list(filter(None, (self.parse_argument(_) for _ in arg_nodes)))
+        return RecordInit(
+            range_=self.get_range(node),
+            arguments=arguments,
             ty=UnresolvedType(),
         )
 
@@ -735,6 +749,7 @@ class Parser:
             name=name,
             arguments=arguments,
             ty=UnresolvedType(),
+            # parent=None,
         )
 
     def parse_binary_operation(self, node: ts.Node) -> BinaryOperation:
@@ -810,6 +825,7 @@ class Parser:
             op=op,
             rhs=rhs,
             ty=UnresolvedType(),
+            # parent=None,
         )
 
     def parse_binary_operator(self, node: ts.Node) -> BinaryOperator:
@@ -823,6 +839,7 @@ class Parser:
             range_=self.get_range(node),
             val=int(self.get_text(node)),
             ty=UnresolvedType(),
+            # parent=None,
         )
 
     def parse_string_literal(self, node: ts.Node) -> StringConstant:
@@ -830,6 +847,7 @@ class Parser:
             range_=self.get_range(node),
             val=self.get_text(node),
             ty=UnresolvedType(),
+            # parent=None,
         )
 
     QualifiedNameT = TypeVar("QualifiedNameT", bound=QualifiedName)

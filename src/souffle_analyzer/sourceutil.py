@@ -1,6 +1,6 @@
 import os
 import re
-from typing import List, Set
+from typing import List, Set, Tuple
 
 
 def get_consecutive_block_at_line(
@@ -33,7 +33,7 @@ def get_words_in_consecutive_block_at_line(code: str, line_no: int) -> Set[str]:
     return res
 
 
-def get_bracket_scores(code: str) -> List[List[int]]:
+def get_pair_symbol_score(code: str, symbol_pair: Tuple[str, str]) -> List[List[int]]:
     # On each line, there is always at least a value marking the
     # bracket score at the "beginning" of the line before
     # any character appears.
@@ -44,9 +44,9 @@ def get_bracket_scores(code: str) -> List[List[int]]:
     for line in range(len(code_lines)):
         scores.append([cur])
         for character in range(len(code_lines[line])):
-            if code_lines[line][character] == "(":
+            if code_lines[line][character] == symbol_pair[0]:
                 cur += 1
-            elif code_lines[line][character] == ")":
+            elif code_lines[line][character] == symbol_pair[1]:
                 cur -= 1
             scores[line].append(cur)
     return scores

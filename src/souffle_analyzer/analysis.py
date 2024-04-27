@@ -8,7 +8,7 @@ from souffle_analyzer.logging import logger
 from souffle_analyzer.parser import Parser
 from souffle_analyzer.sourceutil import (
     get_before_token,
-    get_bracket_scores,
+    get_pair_symbol_score,
     get_words_in_consecutive_block_at_line,
 )
 from souffle_analyzer.visitor.code_action_visitor import CodeActionVisitor
@@ -154,7 +154,9 @@ class AnalysisContext:
             else:
                 return []
         else:
-            bracket_scores = get_bracket_scores(code)
+            paren_scores = get_pair_symbol_score(code, ("(", ")"))
+            curly_bracket_scores = get_pair_symbol_score(code, ("{", "}"))
+            square_bracket_scores = get_pair_symbol_score(code, ("{", "}"))
             before_token = get_before_token(
                 code,
                 position.line,
@@ -165,9 +167,11 @@ class AnalysisContext:
             elif (
                 # This is essentially the score on the position before this.
                 # See the property of the get_bracket_scores function.
-                bracket_scores[position.line][position.character] == 0
+                paren_scores[position.line][position.character] == 0
+                and curly_bracket_scores[position.line][position.character] == 0
+                and square_bracket_scores[position.line][position.character] == 0
                 and (
-                    before_token in [".input", ".output"]
+                    before_token in [".input", ".output", ".printsize"]
                     or before_token.endswith(",")
                     or before_token.endswith(":-")
                     or before_token.endswith(".")

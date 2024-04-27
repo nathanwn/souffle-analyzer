@@ -138,6 +138,19 @@ class Range:
 
 
 @dataclass
+class Location:
+    uri: str
+    range_: Range
+
+    @classmethod
+    def from_lsp_type(cls, loc: lsptypes.Location) -> Location:
+        return cls(uri=loc.uri, range_=Range.from_lsp_type(loc.range))
+
+    def to_lsp_type(self) -> lsptypes.Location:
+        return lsptypes.Location(uri=self.uri, range=self.range_.to_lsp_type())
+
+
+@dataclass
 class SyntaxIssue:
     range_: Range
     message: str | None
@@ -834,6 +847,7 @@ class Identifier(ValidNode):
 @dataclass
 class Argument(ValidNode):
     ty: SouffleType
+    # parent: ValidNode | None
 
 
 @dataclass
@@ -851,10 +865,24 @@ class Variable(Argument):
 
 
 @dataclass
+class RecordInit(Argument):
+    arguments: list[Argument]
+    definition: TypeDeclaration | None = field(default=None)
+
+    @property
+    def children(self) -> list[Node]:
+        return [
+            *self.arguments,
+        ]
+
+    def accept(self, visitor: Visitor[T]) -> T:
+        return visitor.visit_record_init(self)
+
+
+@dataclass
 class BranchInit(Argument):
     name: ResultNode[BranchInitName]
     arguments: list[Argument]
-    definition: ResultNode[AbstractDataTypeBranch] | None = field(default=None)
 
     @property
     def children(self) -> list[Node]:

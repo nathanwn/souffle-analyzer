@@ -28,6 +28,7 @@ from souffle_analyzer.ast import (
     Node,
     PreprocInclude,
     QualifiedName,
+    RecordInit,
     RecordTypeExpression,
     RelationDeclaration,
     RelationReference,
@@ -135,6 +136,9 @@ class Visitor(Generic[T]):
 
     def visit_branch_init(self, branch_init: BranchInit) -> T:
         return self.generic_visit(branch_init)
+
+    def visit_record_init(self, record_init: RecordInit) -> T:
+        return self.generic_visit(record_init)
 
     def visit_binary_operation(self, binary_operation: BinaryOperation) -> T:
         return self.generic_visit(binary_operation)

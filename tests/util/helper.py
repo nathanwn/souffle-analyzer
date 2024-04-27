@@ -1,11 +1,29 @@
 import os
 from dataclasses import dataclass
-from typing import Any, Callable, Generic, List, Optional, TypeVar
+from typing import Any, Callable, Generic, List, Optional, Tuple, TypeVar
 
 from souffle_analyzer.ast import Position, Range
 from souffle_analyzer.printer import format_souffle_code, format_souffle_code_range
 
 T = TypeVar("T")
+
+
+def parse_code_with_cursor_position(code_with_cursor: str) -> Tuple[str, Position]:
+    code_with_cursor = clean_multiline_string(code_with_cursor)
+    lines = code_with_cursor.splitlines()
+    cursor_line = -1
+    for i, line in enumerate(lines):
+        if line.strip() == "^":
+            cursor_line = i
+            break
+    assert cursor_line != -1
+    code_lines = []
+    for i, line in enumerate(lines):
+        if i == cursor_line:
+            continue
+        code_lines.append(line)
+    cursor_pos = Position(line=cursor_line - 1, character=lines[cursor_line].find("^"))
+    return os.linesep.join(code_lines), cursor_pos
 
 
 def clean_multiline_string(s: str):
