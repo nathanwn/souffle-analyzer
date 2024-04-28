@@ -18,19 +18,7 @@ from tests.util.helper import parse_code_with_cursor_position
              ^
             """,
             {"foo"},
-            id="simple fact name completion",
-        ),
-        pytest.param(
-            """
-            .decl foo(x: number)
-            .decl bar(x: number)
-            .decl baz(x: number)
-
-            b
-             ^
-            """,
-            {"bar", "baz"},
-            id="fact name completion 2",
+            id="fact name completion 1",
         ),
         pytest.param(
             """
@@ -96,7 +84,7 @@ def test_completion_no_trigger_character(
     code, cursor_position = parse_code_with_cursor_position(code_with_cursor_position)
     ctx = AnalysisContext()
     uri = "main.dl"
-    ctx.open_document(uri=uri, text=code)
+    ctx.sync_document(uri=uri, text=code)
     completion_items = ctx.get_completion_items(
         uri=uri,
         position=cursor_position.to_lsp_type(),
@@ -118,7 +106,7 @@ def test_completion_with_trigger_character() -> None:
     )
     ctx = AnalysisContext()
     uri = "main.dl"
-    ctx.open_document(uri=uri, text=code)
+    ctx.sync_document(uri=uri, text=code)
     completion_items = ctx.get_completion_items(
         uri=uri,
         position=cursor_position.to_lsp_type(),

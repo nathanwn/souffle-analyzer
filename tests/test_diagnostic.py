@@ -28,7 +28,7 @@ def test_diagnostic(file_snapshot: SnapshotAssertion, filename: str) -> None:
 
     ctx = AnalysisContext()
     code_lines = code.splitlines()
-    diagnostics = ctx.open_document(test_data_file, code)
+    diagnostics = ctx.sync_document(test_data_file, code)
     rangewise_diagnostics = []
 
     for diagnostic in diagnostics:
@@ -44,6 +44,7 @@ def test_diagnostic(file_snapshot: SnapshotAssertion, filename: str) -> None:
         out.extend(
             format_souffle_code_range(
                 code_lines,
+                filename,
                 Range.from_lsp_type(result.range),
             )
         )
@@ -54,6 +55,7 @@ def test_diagnostic(file_snapshot: SnapshotAssertion, filename: str) -> None:
     assert (
         format_rangewise_results(
             code_lines=code_lines,
+            uri=filename,
             format_result=format_result,
             rangewise_results=rangewise_diagnostics,
         )

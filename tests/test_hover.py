@@ -28,7 +28,7 @@ def test_hover(file_snapshot: SnapshotAssertion, filename: str) -> None:
         code = f.read()
 
     ctx = AnalysisContext()
-    ctx.open_document(filename, code)
+    ctx.sync_document(filename, code)
     code_lines = code.splitlines()
 
     def analyze(position: Position) -> Optional[Tuple[str, Range]]:
@@ -37,7 +37,7 @@ def test_hover(file_snapshot: SnapshotAssertion, filename: str) -> None:
     def format_result(result: Tuple[str, Range]) -> List[str]:
         out = []
         out.append("-- Hover range --")
-        out.extend(format_souffle_code_range(code_lines, result[1]))
+        out.extend(format_souffle_code_range(code_lines, filename, result[1]))
         out.append("--   Message   --")
         out.extend(result[0].splitlines())
         return out
@@ -45,6 +45,7 @@ def test_hover(file_snapshot: SnapshotAssertion, filename: str) -> None:
     assert (
         format_cursorwise_results(
             code_lines=code_lines,
+            uri=filename,
             analyze=analyze,
             format_result=format_result,
         )

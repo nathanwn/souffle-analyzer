@@ -1,3 +1,4 @@
+example3.dl
 0 | .decl directed_edge(
 1 |     u: number,
 2 |     v: number
@@ -11,6 +12,7 @@
 =====
 
 -- Cursor range --
+example3.dl
 0 | .decl directed_edge(
   | ~~~~~~~~~~~~~~~~~~~~
 1 |     u: number,
@@ -20,6 +22,7 @@
 3 | )
   | ~
 -- Insertion point --
+example3.dl
 0 | .decl directed_edge(
   | ^
 --  Text  --
@@ -29,6 +32,7 @@
 _____
 
 -- Cursor range --
+example3.dl
 5 | .decl path(
   | ~~~~~~~~~~~
 6 |     u: number,
@@ -38,6 +42,7 @@ _____
 8 | )
   | ~
 -- Insertion point --
+example3.dl
 5 | .decl path(
   | ^
 --  Text  --

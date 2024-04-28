@@ -25,11 +25,12 @@ from souffle_analyzer.ast import (
     Directive,
     DirectiveQualifier,
     Disjunction,
+    Document,
     ErrorNode,
     Fact,
-    File,
     Identifier,
     LineComment,
+    Location,
     NegOp,
     NumberConstant,
     Position,
@@ -63,29 +64,34 @@ from souffle_analyzer.logging import logger
 
 
 class Parser:
-    def __init__(self):
+    def __init__(self, uri: str, code: bytes):
         self.parser = ts.Parser()
         souffle_language = ts.Language(tree_sitter_souffle.language(), "souffle")
         self.parser.set_language(souffle_language)
+        self.uri = uri
+        self.code = code
 
-    def parse(self, code: bytes) -> File:
-        tree = self.parser.parse(code)
-        file = self.parse_file(tree.root_node, code)
-        return file
+    def parse(self) -> Document:
+        tree = self.parser.parse(self.code)
+        document = self.parse_document(tree.root_node, self.code)
+        return document
 
     def get_text(self, node: ts.Node) -> str:
         return node.text.decode()
 
-    def get_range(self, node: ts.Node) -> Range:
-        return Range(
-            start=Position(
-                line=node.start_point[0],
-                character=node.start_point[1],
-            ),
-            end=Position(
-                line=node.end_point[0],
-                # Tree-sitter range-end character on a line is always exclusive.
-                character=node.end_point[1],
+    def get_location(self, node: ts.Node) -> Location:
+        return Location(
+            uri=self.uri,
+            range_=Range(
+                start=Position(
+                    line=node.start_point[0],
+                    character=node.start_point[1],
+                ),
+                end=Position(
+                    line=node.end_point[0],
+                    # Tree-sitter range-end character on a line is always exclusive.
+                    character=node.end_point[1],
+                ),
             ),
         )
 
@@ -106,13 +112,13 @@ class Parser:
             if child.grammar_name == "ERROR":
                 syntax_errors.append(
                     SyntaxIssue(
-                        range_=self.get_range(node),
+                        location=self.get_location(node),
                         message=message,
                     )
                 )
         return syntax_errors
 
-    def parse_file(self, node: ts.Node, code: bytes) -> File:
+    def parse_document(self, node: ts.Node, code: bytes) -> Document:
         relation_declarations = [
             self.parse_relation_declaration(_)
             for _ in self.get_children_of_type(node, "relation_decl")
@@ -156,9 +162,9 @@ class Parser:
                 ):
                     relation_declaration.parse_doc_comment(comment)
 
-        return File(
+        return Document(
             code=code.decode(),
-            range_=self.get_range(node),
+            location=self.get_location(node),
             relation_declarations=relation_declarations,
             type_declarations=type_declarations,
             facts=facts,
@@ -172,22 +178,22 @@ class Parser:
         name_node = node.child_by_field_name("name")
         if not name_node:
             name: ResultNode[Identifier] = ResultNode(
-                range_=self.get_range(node),
+                location=self.get_location(node),
                 inner=ErrorNode(
-                    range_=self.get_range(node),
+                    location=self.get_location(node),
                     msg="Missing name",
                 ),
             )
         else:
             name = ResultNode(
-                range_=self.get_range(name_node),
+                location=self.get_location(name_node),
                 inner=self.parse_identifier(name_node),
             )
         attribute_nodes = [_ for _ in node.named_children if _.type == "attribute"]
         attributes = [self.parse_attribute(_) for _ in attribute_nodes]
 
         return RelationDeclaration(
-            range_=self.get_range(node),
+            location=self.get_location(node),
             name=name,
             attributes=attributes,
         )
@@ -196,15 +202,15 @@ class Parser:
         name_node = self.get_child_of_type(node, "identifier")
         if not name_node:
             name: ResultNode[Identifier] = ResultNode(
-                range_=self.get_range(node),
+                location=self.get_location(node),
                 inner=ErrorNode(
-                    range_=self.get_range(node),
+                    location=self.get_location(node),
                     msg="Missing type name",
                 ),
             )
         else:
             name = ResultNode(
-                range_=self.get_range(name_node),
+                location=self.get_location(name_node),
                 inner=self.parse_identifier(name_node),
             )
         subtype_node = self.get_child_of_type(node, "subtype_decl")
@@ -213,17 +219,17 @@ class Parser:
             op_node = subtype_node.child_by_field_name("type_relation_op")
             if op_node is None:
                 op: ResultNode[TypeDeclarationOp] = ResultNode(
-                    range_=self.get_range(node),
+                    location=self.get_location(node),
                     inner=ErrorNode(
-                        range_=self.get_range(node),
+                        location=self.get_location(node),
                         msg="Missing type declaration operator",
                     ),
                 )
             else:
                 op = ResultNode(
-                    range_=self.get_range(op_node),
+                    location=self.get_location(op_node),
                     inner=TypeDeclarationOp(
-                        range_=self.get_range(op_node),
+                        location=self.get_location(op_node),
                         op=TypeRelationOpKind.SUBTYPE,
                     ),
                 )
@@ -231,20 +237,20 @@ class Parser:
             type_name_node = self.get_child_of_type(subtype_node, "type_name")
             if type_name_node is None:
                 type_name: ResultNode[TypeReference] = ResultNode(
-                    range_=self.get_range(node),
+                    location=self.get_location(node),
                     inner=ErrorNode(
-                        range_=self.get_range(node),
+                        location=self.get_location(node),
                         msg="Missing type declaration operator",
                     ),
                 )
             else:
                 type_name = ResultNode(
-                    range_=self.get_range(type_name_node),
+                    location=self.get_location(type_name_node),
                     inner=self.parse_type_reference(type_name_node),
                 )
 
             return TypeDeclaration(
-                range_=self.get_range(node),
+                location=self.get_location(node),
                 name=name,
                 op=op,
                 expression=type_name,
@@ -253,17 +259,17 @@ class Parser:
             op_node = eq_type_node.child_by_field_name("type_relation_op")
             if op_node is None:
                 op = ResultNode(
-                    range_=self.get_range(node),
+                    location=self.get_location(node),
                     inner=ErrorNode(
-                        range_=self.get_range(node),
+                        location=self.get_location(node),
                         msg="Missing type declaration operator",
                     ),
                 )
             else:
                 op = ResultNode(
-                    range_=self.get_range(op_node),
+                    location=self.get_location(op_node),
                     inner=TypeDeclarationOp(
-                        range_=self.get_range(op_node),
+                        location=self.get_location(op_node),
                         op=TypeRelationOpKind.EQUIVALENT_TYPE,
                     ),
                 )
@@ -277,54 +283,54 @@ class Parser:
 
             if union_type_node is not None:
                 type_expression: ResultNode[TypeExpression] = ResultNode(
-                    range_=self.get_range(union_type_node),
+                    location=self.get_location(union_type_node),
                     inner=self.parse_union_type_expression(union_type_node),
                 )
             elif type_name_node is not None:
                 type_expression = ResultNode(
-                    range_=self.get_range(type_name_node),
+                    location=self.get_location(type_name_node),
                     inner=self.parse_type_reference(type_name_node),
                 )
             elif record_type_node is not None:
                 type_expression = ResultNode(
-                    range_=self.get_range(record_type_node),
+                    location=self.get_location(record_type_node),
                     inner=self.parse_record_type_expression(record_type_node),
                 )
             elif abstract_data_type_node is not None:
                 type_expression = ResultNode(
-                    range_=self.get_range(abstract_data_type_node),
+                    location=self.get_location(abstract_data_type_node),
                     inner=self.parse_abstract_data_type_expression(
                         abstract_data_type_node
                     ),
                 )
             else:
                 type_expression = ResultNode(
-                    range_=self.get_range(node),
+                    location=self.get_location(node),
                     inner=ErrorNode(
-                        range_=self.get_range(node),
+                        location=self.get_location(node),
                         msg="Missing type expression",
                     ),
                 )
             return TypeDeclaration(
-                range_=self.get_range(node),
+                location=self.get_location(node),
                 name=name,
                 op=op,
                 expression=type_expression,
             )
         return TypeDeclaration(
-            range_=self.get_range(node),
+            location=self.get_location(node),
             name=name,
             op=ResultNode(
-                range_=self.get_range(node),
+                location=self.get_location(node),
                 inner=ErrorNode(
-                    range_=self.get_range(node),
+                    location=self.get_location(node),
                     msg="Missing type declaration operator",
                 ),
             ),
             expression=ResultNode(
-                range_=self.get_range(node),
+                location=self.get_location(node),
                 inner=ErrorNode(
-                    range_=self.get_range(node),
+                    location=self.get_location(node),
                     msg="Missing type declaration expression",
                 ),
             ),
@@ -340,7 +346,7 @@ class Parser:
             for _ in relation_name_nodes
         ]
         return Directive(
-            range_=self.get_range(node),
+            location=self.get_location(node),
             qualifier=self.parse_directive_qualifier(qualifier_node),
             relation_names=relation_names,
         )
@@ -348,21 +354,21 @@ class Parser:
     def parse_directive_qualifier(self, node: ts.Node) -> DirectiveQualifier:
         keyword = self.get_text(node)
         return DirectiveQualifier(
-            range_=self.get_range(node),
+            location=self.get_location(node),
             keyword=keyword,
         )
 
     def parse_union_type_expression(self, node: ts.Node) -> UnionTypeExpression:
         type_reference_nodes = self.get_children_of_type(node, "type_name")
         return UnionTypeExpression(
-            range_=self.get_range(node),
+            location=self.get_location(node),
             types=[self.parse_type_reference(_) for _ in type_reference_nodes],
         )
 
     def parse_record_type_expression(self, node: ts.Node) -> RecordTypeExpression:
         attribute_nodes = self.get_children_of_type(node, "attribute")
         return RecordTypeExpression(
-            range_=self.get_range(node),
+            location=self.get_location(node),
             attributes=[self.parse_attribute(_) for _ in attribute_nodes],
         )
 
@@ -371,7 +377,7 @@ class Parser:
     ) -> AbstractDataTypeExpression:
         branch_nodes = self.get_children_of_type(node, "adt_branch")
         return AbstractDataTypeExpression(
-            range_=self.get_range(node),
+            location=self.get_location(node),
             branches=[self.parse_abstract_data_type_branch(_) for _ in branch_nodes],
         )
 
@@ -379,20 +385,20 @@ class Parser:
         name_node = self.get_child_of_type(node, "identifier")
         if name_node is None:
             name: ResultNode[Identifier] = ResultNode(
-                range_=self.get_range(node),
+                location=self.get_location(node),
                 inner=ErrorNode(
-                    range_=self.get_range(node),
+                    location=self.get_location(node),
                     msg="Missing name of branch",
                 ),
             )
         else:
             name = ResultNode(
-                range_=self.get_range(name_node),
+                location=self.get_location(name_node),
                 inner=self.parse_identifier(name_node),
             )
         attribute_nodes = self.get_children_of_type(node, "attribute")
         return AbstractDataTypeBranch(
-            range_=self.get_range(node),
+            location=self.get_location(node),
             name=name,
             attributes=[self.parse_attribute(_) for _ in attribute_nodes],
         )
@@ -401,9 +407,9 @@ class Parser:
         atom_node = self.get_child_of_type(node, "atom")
         if not atom_node:
             return ResultNode(
-                range_=self.get_range(node),
+                location=self.get_location(node),
                 inner=ErrorNode(
-                    range_=self.get_range(node),
+                    location=self.get_location(node),
                     msg="Fact expected",
                 ),
             )
@@ -421,20 +427,20 @@ class Parser:
         body_node = node.child_by_field_name("body")
         if not body_node:
             body: ResultNode[Disjunction] = ResultNode(
-                range_=self.get_range(node),
+                location=self.get_location(node),
                 inner=ErrorNode(
-                    range_=self.get_range(node),
+                    location=self.get_location(node),
                     msg="Missing rule body",
                 ),
             )
         else:
             body = ResultNode(
-                range_=self.get_range(body_node),
+                location=self.get_location(body_node),
                 inner=self.parse_disjunction(body_node),
             )
 
         return Rule(
-            range_=self.get_range(node),
+            location=self.get_location(node),
             heads=heads,
             body=body,
         )
@@ -443,7 +449,7 @@ class Parser:
         conjunction_nodes = self.get_children_of_type(node, "conjunction")
         conjunctions = [self.parse_conjunction(_) for _ in conjunction_nodes]
         return Disjunction(
-            range_=self.get_range(node),
+            location=self.get_location(node),
             conjunctions=conjunctions,
         )
 
@@ -453,12 +459,12 @@ class Parser:
             neg = None
         elif len(self.get_text(neg_node)) % 2 == 0:
             neg = NegOp(
-                range_=self.get_range(neg_node),
+                location=self.get_location(neg_node),
                 is_neg=False,
             )
         else:
             neg = NegOp(
-                range_=self.get_range(neg_node),
+                location=self.get_location(neg_node),
                 is_neg=True,
             )
         clause_nodes = self.get_children_of_type(node, "conjunction_clause")
@@ -466,7 +472,7 @@ class Parser:
             filter(None, [self.parse_conjunction_clause(_) for _ in clause_nodes])
         )
         return Conjunction(
-            range_=self.get_range(node),
+            location=self.get_location(node),
             neg=neg,
             clauses=clauses,
         )
@@ -475,7 +481,7 @@ class Parser:
         atom_node = self.get_child_of_type(node, "atom")
         if atom_node is not None:
             return ResultNode(
-                range_=self.get_range(node),
+                location=self.get_location(node),
                 inner=self.parse_relation_reference_clause(node),
             )
         constraint_node = self.get_child_of_type(node, "constraint")
@@ -484,7 +490,7 @@ class Parser:
         disjunction_node = self.get_child_of_type(node, "disjunction")
         if disjunction_node is not None:
             return ResultNode(
-                range_=self.get_range(node),
+                location=self.get_location(node),
                 inner=self.parse_disjunction(disjunction_node),
             )
         raise AssertionError("unreachable")
@@ -493,16 +499,16 @@ class Parser:
         atom_node = self.get_child_of_type(node, "atom")
         if not atom_node:
             relation_reference: ResultNode[RelationReference] = ResultNode(
-                range_=self.get_range(node),
+                location=self.get_location(node),
                 inner=ErrorNode(
-                    range_=self.get_range(node),
+                    location=self.get_location(node),
                     msg="Relation clause expected",
                 ),
             )
         else:
             relation_reference = self.parse_atom(atom_node, RelationReference)
         return RelationReferenceClause(
-            range_=self.get_range(node),
+            location=self.get_location(node),
             relation_reference=relation_reference,
         )
 
@@ -510,15 +516,15 @@ class Parser:
         binary_constraint_node = self.get_child_of_type(node, "binary_constraint")
         if binary_constraint_node:
             return ResultNode(
-                range_=self.get_range(node),
+                location=self.get_location(node),
                 inner=self.parse_binary_constraint(binary_constraint_node),
             )
         else:
             # TODO: add support for other constraint types.
             return ResultNode(
-                range_=self.get_range(node),
+                location=self.get_location(node),
                 inner=ErrorNode(
-                    range_=self.get_range(node),
+                    location=self.get_location(node),
                     msg="Invalid or unsupported constraint type",
                 ),
             )
@@ -529,9 +535,9 @@ class Parser:
         rhs_node = node.child_by_field_name("rhs")
         if lhs_node is None:
             lhs: ResultNode[Argument] = ResultNode(
-                range_=self.get_range(node),
+                location=self.get_location(node),
                 inner=ErrorNode(
-                    range_=self.get_range(node),
+                    location=self.get_location(node),
                     msg="Missing left-hand-side of binary constraint",
                 ),
             )
@@ -539,37 +545,37 @@ class Parser:
             left_argument = self.parse_argument(lhs_node)
             if left_argument is None:
                 lhs = ResultNode(
-                    range_=self.get_range(node),
+                    location=self.get_location(node),
                     inner=ErrorNode(
-                        range_=self.get_range(node),
+                        location=self.get_location(node),
                         msg="Missing left-hand-side of binary constraint",
                     ),
                 )
             else:
                 lhs = ResultNode(
-                    range_=self.get_range(node),
+                    location=self.get_location(node),
                     inner=left_argument,
                 )
 
         if op_node is None:
             op: ResultNode[BinaryConstraintOp] = ResultNode(
-                range_=self.get_range(node),
+                location=self.get_location(node),
                 inner=ErrorNode(
-                    range_=self.get_range(node),
+                    location=self.get_location(node),
                     msg="Missing binary constraint operator",
                 ),
             )
         else:
             op = ResultNode(
-                range_=self.get_range(node),
+                location=self.get_location(node),
                 inner=self.parse_binary_constraint_op(op_node),
             )
 
         if rhs_node is None:
             rhs: ResultNode[Argument] = ResultNode(
-                range_=self.get_range(node),
+                location=self.get_location(node),
                 inner=ErrorNode(
-                    range_=self.get_range(node),
+                    location=self.get_location(node),
                     msg="Missing right-hand-side of binary constraint",
                 ),
             )
@@ -577,19 +583,19 @@ class Parser:
             right_argument = self.parse_argument(rhs_node)
             if right_argument is None:
                 rhs = ResultNode(
-                    range_=self.get_range(node),
+                    location=self.get_location(node),
                     inner=ErrorNode(
-                        range_=self.get_range(node),
+                        location=self.get_location(node),
                         msg="Missing right-hand-side of binary constraint",
                     ),
                 )
             else:
                 rhs = ResultNode(
-                    range_=self.get_range(node),
+                    location=self.get_location(node),
                     inner=right_argument,
                 )
         return BinaryConstraint(
-            range_=self.get_range(node),
+            location=self.get_location(node),
             lhs=lhs,
             op=op,
             rhs=rhs,
@@ -597,7 +603,7 @@ class Parser:
 
     def parse_binary_constraint_op(self, node: ts.Node) -> BinaryConstraintOp:
         return BinaryConstraintOp(
-            range_=self.get_range(node),
+            location=self.get_location(node),
             op=self.get_text(node),
         )
 
@@ -607,7 +613,7 @@ class Parser:
             self.parse_atom(_, RelationReference) for _ in atom_nodes
         ]
         return RuleHead(
-            range_=self.get_range(node),
+            location=self.get_location(node),
             relation_references=relation_references,
         )
 
@@ -617,7 +623,7 @@ class Parser:
         if first_node is None or second_node is None:
             raise ParserError()
         return SubsumptionHead(
-            range_=self.get_range(node),
+            location=self.get_location(node),
             first=self.parse_atom(first_node, RelationReference),
             second=self.parse_atom(second_node, RelationReference),
         )
@@ -632,19 +638,19 @@ class Parser:
         path_node = self.get_child_of_type(node, "path_spec")
         if path_node is None:
             path: ResultNode[StringConstant] = ResultNode(
-                range_=self.get_range(node),
+                location=self.get_location(node),
                 inner=ErrorNode(
-                    range_=self.get_range(node),
+                    location=self.get_location(node),
                     msg="Missing path spec",
                 ),
             )
         else:
             path = ResultNode(
-                range_=self.get_range(node),
+                location=self.get_location(node),
                 inner=self.parse_string_literal(path_node),
             )
         return PreprocInclude(
-            range_=self.get_range(node),
+            location=self.get_location(node),
             path=path,
         )
 
@@ -654,15 +660,15 @@ class Parser:
         name_node = node.child_by_field_name("name")
         if not name_node:
             name: ResultNode[RelationReferenceName] = ResultNode(
-                range_=self.get_range(node),
+                location=self.get_location(node),
                 inner=ErrorNode(
-                    range_=self.get_range(node),
+                    location=self.get_location(node),
                     msg="Missing atom name",
                 ),
             )
         else:
             name = ResultNode(
-                range_=self.get_range(name_node),
+                location=self.get_location(name_node),
                 inner=self.parse_qualified_name(name_node, RelationReferenceName),
             )
         argument_nodes = self.get_children_of_type(node, "argument")
@@ -673,9 +679,9 @@ class Parser:
             )
         )
         return ResultNode(
-            range_=self.get_range(node),
+            location=self.get_location(node),
             inner=atom_type(
-                range_=self.get_range(node),
+                location=self.get_location(node),
                 name=name,
                 arguments=arguments,
             ),
@@ -697,22 +703,22 @@ class Parser:
         binary_operation_node = self.get_child_of_type(node, "binary_operation")
         if binary_operation_node:
             return self.parse_binary_operation(binary_operation_node)
-        logger.error("argument %s is not recognized", node)
+        logger.debug("argument %s is not recognized", node)
         return None  # TODO
 
-    def parse_constant(self, node: ts.Node) -> Constant:
+    def parse_constant(self, node: ts.Node) -> Constant | None:
         decimal_node = self.get_child_of_type(node, "decimal")
         if decimal_node is not None:
             return self.parse_decimal(decimal_node)
         string_literal_node = self.get_child_of_type(node, "string_literal")
         if string_literal_node is not None:
             return self.parse_string_literal(string_literal_node)
-        logger.error("constant %s is not recognized", node)
-        raise ParserError()
+        logger.debug("constant %s is not recognized", node)
+        return None
 
     def parse_variable(self, node: ts.Node) -> Variable:
         return Variable(
-            range_=self.get_range(node),
+            location=self.get_location(node),
             name=self.get_text(node),
             ty=UnresolvedType(),
             # parent=None,
@@ -722,7 +728,7 @@ class Parser:
         arg_nodes = self.get_children_of_type(node, "argument")
         arguments = list(filter(None, (self.parse_argument(_) for _ in arg_nodes)))
         return RecordInit(
-            range_=self.get_range(node),
+            location=self.get_location(node),
             arguments=arguments,
             ty=UnresolvedType(),
         )
@@ -731,21 +737,21 @@ class Parser:
         name_node = self.get_child_of_type(node, "qualified_name")
         if name_node is None:
             name: ResultNode[BranchInitName] = ResultNode(
-                range_=self.get_range(node),
+                location=self.get_location(node),
                 inner=ErrorNode(
-                    range_=self.get_range(node),
+                    location=self.get_location(node),
                     msg="Missing branch name",
                 ),
             )
         else:
             name = ResultNode(
-                range_=self.get_range(name_node),
+                location=self.get_location(name_node),
                 inner=self.parse_qualified_name(name_node, BranchInitName),
             )
         arg_nodes = self.get_children_of_type(node, "argument")
         arguments = list(filter(None, (self.parse_argument(_) for _ in arg_nodes)))
         return BranchInit(
-            range_=self.get_range(node),
+            location=self.get_location(node),
             name=name,
             arguments=arguments,
             ty=UnresolvedType(),
@@ -759,9 +765,9 @@ class Parser:
 
         if lhs_node is None:
             lhs: ResultNode[Argument] = ResultNode(
-                range_=self.get_range(node),
+                location=self.get_location(node),
                 inner=ErrorNode(
-                    range_=self.get_range(node),
+                    location=self.get_location(node),
                     msg="Missing left-hand-side of binary constraint",
                 ),
             )
@@ -769,37 +775,37 @@ class Parser:
             left_argument = self.parse_argument(lhs_node)
             if left_argument is None:
                 lhs = ResultNode(
-                    range_=self.get_range(node),
+                    location=self.get_location(node),
                     inner=ErrorNode(
-                        range_=self.get_range(node),
+                        location=self.get_location(node),
                         msg="Missing left-hand-side of binary constraint",
                     ),
                 )
             else:
                 lhs = ResultNode(
-                    range_=self.get_range(node),
+                    location=self.get_location(node),
                     inner=left_argument,
                 )
 
         if op_node is None:
             op: ResultNode[BinaryOperator] = ResultNode(
-                range_=self.get_range(node),
+                location=self.get_location(node),
                 inner=ErrorNode(
-                    range_=self.get_range(node),
+                    location=self.get_location(node),
                     msg="Missing binary operator",
                 ),
             )
         else:
             op = ResultNode(
-                range_=self.get_range(node),
+                location=self.get_location(node),
                 inner=self.parse_binary_operator(op_node),
             )
 
         if rhs_node is None:
             rhs: ResultNode[Argument] = ResultNode(
-                range_=self.get_range(node),
+                location=self.get_location(node),
                 inner=ErrorNode(
-                    range_=self.get_range(node),
+                    location=self.get_location(node),
                     msg="Missing right-hand-side of binary constraint",
                 ),
             )
@@ -807,20 +813,20 @@ class Parser:
             right_argument = self.parse_argument(rhs_node)
             if right_argument is None:
                 rhs = ResultNode(
-                    range_=self.get_range(node),
+                    location=self.get_location(node),
                     inner=ErrorNode(
-                        range_=self.get_range(node),
+                        location=self.get_location(node),
                         msg="Missing right-hand-side of binary constraint",
                     ),
                 )
             else:
                 rhs = ResultNode(
-                    range_=self.get_range(node),
+                    location=self.get_location(node),
                     inner=right_argument,
                 )
 
         return BinaryOperation(
-            range_=self.get_range(node),
+            location=self.get_location(node),
             lhs=lhs,
             op=op,
             rhs=rhs,
@@ -830,13 +836,13 @@ class Parser:
 
     def parse_binary_operator(self, node: ts.Node) -> BinaryOperator:
         return BinaryOperator(
-            range_=self.get_range(node),
+            location=self.get_location(node),
             op=self.get_text(node),
         )
 
     def parse_decimal(self, node: ts.Node) -> NumberConstant:
         return NumberConstant(
-            range_=self.get_range(node),
+            location=self.get_location(node),
             val=int(self.get_text(node)),
             ty=UnresolvedType(),
             # parent=None,
@@ -844,7 +850,7 @@ class Parser:
 
     def parse_string_literal(self, node: ts.Node) -> StringConstant:
         return StringConstant(
-            range_=self.get_range(node),
+            location=self.get_location(node),
             val=self.get_text(node),
             ty=UnresolvedType(),
             # parent=None,
@@ -859,13 +865,13 @@ class Parser:
     ) -> QualifiedNameT:
         identifier_nodes = self.get_children_of_type(node, "identifier")
         return qualified_name_type(
-            range_=self.get_range(node),
+            location=self.get_location(node),
             parts=[self.parse_identifier(_) for _ in identifier_nodes],
         )
 
     def parse_identifier(self, node: ts.Node) -> Identifier:
         return Identifier(
-            range_=self.get_range(node),
+            location=self.get_location(node),
             val=self.get_text(node),
         )
 
@@ -873,33 +879,33 @@ class Parser:
         name_node = node.child_by_field_name("name")
         if not name_node:
             name: ResultNode[Identifier] = ResultNode(
-                range_=self.get_range(node),
+                location=self.get_location(node),
                 inner=ErrorNode(
-                    range_=self.get_range(node),
+                    location=self.get_location(node),
                     msg="Missing name",
                 ),
             )
         else:
             name = ResultNode(
-                range_=self.get_range(name_node),
+                location=self.get_location(name_node),
                 inner=self.parse_identifier(name_node),
             )
         type_node = node.child_by_field_name("type")
         if not type_node:
             type_: ResultNode[TypeReference] = ResultNode(
-                range_=self.get_range(node),
+                location=self.get_location(node),
                 inner=ErrorNode(
-                    range_=self.get_range(node),
+                    location=self.get_location(node),
                     msg="Missing type",
                 ),
             )
         else:
             type_ = ResultNode(
-                range_=self.get_range(type_node),
+                location=self.get_location(type_node),
                 inner=self.parse_type_reference(type_node),
             )
         return Attribute(
-            range_=self.get_range(node),
+            location=self.get_location(node),
             name=name,
             type_=type_,
         )
@@ -911,32 +917,32 @@ class Parser:
         qualified_name_node = self.get_child_of_type(node, "user_defined_type_name")
         if qualified_name_node is None:
             type_reference_name: ResultNode[TypeReferenceName] = ResultNode(
-                range_=self.get_range(node),
+                location=self.get_location(node),
                 inner=ErrorNode(
-                    range_=self.get_range(node),
+                    location=self.get_location(node),
                     msg="Missing type name",
                 ),
             )
         else:
             type_reference_name = ResultNode(
-                range_=self.get_range(qualified_name_node),
+                location=self.get_location(qualified_name_node),
                 inner=self.parse_qualified_name(
                     qualified_name_node,
                     TypeReferenceName,
                 ),
             )
         return TypeReference(
-            range_=self.get_range(node),
+            location=self.get_location(node),
             name=type_reference_name,
         )
 
     def parse_primitive_type_node(self, node: ts.Node) -> TypeReference:
         return TypeReference(
-            range_=self.get_range(node),
+            location=self.get_location(node),
             name=ResultNode(
-                range_=self.get_range(node),
+                location=self.get_location(node),
                 inner=TypeReferenceName(
-                    range_=self.get_range(node),
+                    location=self.get_location(node),
                     parts=[self.parse_identifier(node)],
                 ),
             ),
@@ -944,13 +950,13 @@ class Parser:
 
     def parse_block_comment(self, node: ts.Node) -> BlockComment:
         return BlockComment(
-            range_=self.get_range(node),
+            location=self.get_location(node),
             content=self.get_text(node),
         )
 
     def parse_line_comment(self, node: ts.Node) -> LineComment:
         return LineComment(
-            range_=self.get_range(node),
+            location=self.get_location(node),
             content=[self.get_text(node)],
         )
 

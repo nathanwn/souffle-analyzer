@@ -3,24 +3,25 @@ from typing import List
 from souffle_analyzer.ast import (
     BranchInitName,
     ErrorNode,
-    File,
     IsDeclarationNode,
+    Location,
     Node,
-    Range,
     RelationReferenceName,
     TypeReferenceName,
+    Workspace,
 )
 from souffle_analyzer.visitor.visitor import Visitor
 
 
 class CollectDeclarationReferencesVisitor(Visitor[None]):
-    def __init__(self, file: File, declaration: IsDeclarationNode) -> None:
+    def __init__(self, workspace: Workspace, declaration: IsDeclarationNode) -> None:
         self.declaration = declaration
-        self.references: List[Range] = []
-        super().__init__(file)
+        self.references: List[Location] = []
+        super().__init__(workspace)
 
-    def process(self) -> List[Range]:
-        self.file.accept(self)
+    def process(self) -> List[Location]:
+        for document in self.workspace.documents.values():
+            document.accept(self)
         return self.references
 
     def visit_relation_reference_name(
@@ -33,7 +34,7 @@ class CollectDeclarationReferencesVisitor(Visitor[None]):
         if isinstance(relation_declaration_name, ErrorNode):
             return None
         if relation_reference_name.declaration == self.declaration:
-            self.references.append(relation_reference_name.range_)
+            self.references.append(relation_reference_name.location)
         return None
 
     def visit_type_reference_name(self, type_reference_name: TypeReferenceName) -> None:
@@ -44,7 +45,7 @@ class CollectDeclarationReferencesVisitor(Visitor[None]):
         if isinstance(type_declaration_name, ErrorNode):
             return None
         if type_reference_name.declaration == self.declaration:
-            self.references.append(type_reference_name.range_)
+            self.references.append(type_reference_name.location)
         return None
 
     def visit_branch_init_name(self, branch_init_name: BranchInitName) -> None:
@@ -54,7 +55,7 @@ class CollectDeclarationReferencesVisitor(Visitor[None]):
         if isinstance(branch_declaration_name, ErrorNode):
             return None
         if branch_init_name.declaration == self.declaration:
-            self.references.append(branch_init_name.range_)
+            self.references.append(branch_init_name.location)
         return None
 
     def generic_visit(self, node: Node) -> None:

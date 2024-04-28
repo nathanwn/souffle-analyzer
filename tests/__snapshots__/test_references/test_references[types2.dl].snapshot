@@ -1,3 +1,4 @@
+types2.dl
  0 | .type Exp = Const { val: number }
  1 |           | Var { id: symbol}
  2 |           | Add { e1: Exp, e2: Exp }
@@ -18,546 +19,702 @@
 =====
 
 -- Cursor range --
+types2.dl
  0 | .type Exp = Const { val: number }
    |       ~~~
 -- References --
+types2.dl
  0 | .type Exp = Const { val: number }
    |       ~~~
 
+types2.dl
  2 |           | Add { e1: Exp, e2: Exp }
    |                       ~~~
 
+types2.dl
  2 |           | Add { e1: Exp, e2: Exp }
    |                                ~~~
 
+types2.dl
  4 | .decl has_expr(exp: Exp)
    |                     ~~~
 
 _____
 
 -- Cursor range --
+types2.dl
  0 | .type Exp = Const { val: number }
    |             ~~~~~
 -- References --
+types2.dl
  0 | .type Exp = Const { val: number }
    |             ~~~~~
 
+types2.dl
  6 | has_expr($Const(1)).
    |           ~~~~~
 
+types2.dl
  8 | has_expr($Add($Const(2), $Const(3))).
    |                ~~~~~
 
+types2.dl
  8 | has_expr($Add($Const(2), $Const(3))).
    |                           ~~~~~
 
+types2.dl
 12 | produces_value(val) :- has_expr($Const(val)).
    |                                  ~~~~~
 
+types2.dl
 13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
    |                                       ~~~~~
 
+types2.dl
 13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
    |                                                   ~~~~~
 
 _____
 
 -- Cursor range --
+types2.dl
  1 |           | Var { id: symbol}
    |             ~~~
 -- References --
+types2.dl
  1 |           | Var { id: symbol}
    |             ~~~
 
+types2.dl
  7 | has_expr($Var("x")).
    |           ~~~
 
 _____
 
 -- Cursor range --
+types2.dl
  2 |           | Add { e1: Exp, e2: Exp }
    |             ~~~
 -- References --
+types2.dl
  2 |           | Add { e1: Exp, e2: Exp }
    |             ~~~
 
+types2.dl
  8 | has_expr($Add($Const(2), $Const(3))).
    |           ~~~
 
+types2.dl
 13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
    |                                  ~~~
 
 _____
 
 -- Cursor range --
+types2.dl
  2 |           | Add { e1: Exp, e2: Exp }
    |                       ~~~
 -- References --
+types2.dl
  0 | .type Exp = Const { val: number }
    |       ~~~
 
+types2.dl
  2 |           | Add { e1: Exp, e2: Exp }
    |                       ~~~
 
+types2.dl
  2 |           | Add { e1: Exp, e2: Exp }
    |                                ~~~
 
+types2.dl
  4 | .decl has_expr(exp: Exp)
    |                     ~~~
 
 _____
 
 -- Cursor range --
+types2.dl
  2 |           | Add { e1: Exp, e2: Exp }
    |                                ~~~
 -- References --
+types2.dl
  0 | .type Exp = Const { val: number }
    |       ~~~
 
+types2.dl
  2 |           | Add { e1: Exp, e2: Exp }
    |                       ~~~
 
+types2.dl
  2 |           | Add { e1: Exp, e2: Exp }
    |                                ~~~
 
+types2.dl
  4 | .decl has_expr(exp: Exp)
    |                     ~~~
 
 _____
 
 -- Cursor range --
+types2.dl
  4 | .decl has_expr(exp: Exp)
    |       ~~~~~~~~
 -- References --
+types2.dl
  4 | .decl has_expr(exp: Exp)
    |       ~~~~~~~~
 
+types2.dl
  6 | has_expr($Const(1)).
    | ~~~~~~~~
 
+types2.dl
  7 | has_expr($Var("x")).
    | ~~~~~~~~
 
+types2.dl
  8 | has_expr($Add($Const(2), $Const(3))).
    | ~~~~~~~~
 
+types2.dl
 12 | produces_value(val) :- has_expr($Const(val)).
    |                        ~~~~~~~~
 
+types2.dl
 13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
    |                        ~~~~~~~~
 
 _____
 
 -- Cursor range --
+types2.dl
  4 | .decl has_expr(exp: Exp)
    |                     ~~~
 -- References --
+types2.dl
  0 | .type Exp = Const { val: number }
    |       ~~~
 
+types2.dl
  2 |           | Add { e1: Exp, e2: Exp }
    |                       ~~~
 
+types2.dl
  2 |           | Add { e1: Exp, e2: Exp }
    |                                ~~~
 
+types2.dl
  4 | .decl has_expr(exp: Exp)
    |                     ~~~
 
 _____
 
 -- Cursor range --
+types2.dl
  6 | has_expr($Const(1)).
    | ~~~~~~~~
 -- References --
+types2.dl
  4 | .decl has_expr(exp: Exp)
    |       ~~~~~~~~
 
+types2.dl
  6 | has_expr($Const(1)).
    | ~~~~~~~~
 
+types2.dl
  7 | has_expr($Var("x")).
    | ~~~~~~~~
 
+types2.dl
  8 | has_expr($Add($Const(2), $Const(3))).
    | ~~~~~~~~
 
+types2.dl
 12 | produces_value(val) :- has_expr($Const(val)).
    |                        ~~~~~~~~
 
+types2.dl
 13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
    |                        ~~~~~~~~
 
 _____
 
 -- Cursor range --
+types2.dl
  6 | has_expr($Const(1)).
    |           ~~~~~
 -- References --
+types2.dl
  0 | .type Exp = Const { val: number }
    |             ~~~~~
 
+types2.dl
  6 | has_expr($Const(1)).
    |           ~~~~~
 
+types2.dl
  8 | has_expr($Add($Const(2), $Const(3))).
    |                ~~~~~
 
+types2.dl
  8 | has_expr($Add($Const(2), $Const(3))).
    |                           ~~~~~
 
+types2.dl
 12 | produces_value(val) :- has_expr($Const(val)).
    |                                  ~~~~~
 
+types2.dl
 13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
    |                                       ~~~~~
 
+types2.dl
 13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
    |                                                   ~~~~~
 
 _____
 
 -- Cursor range --
+types2.dl
  7 | has_expr($Var("x")).
    | ~~~~~~~~
 -- References --
+types2.dl
  4 | .decl has_expr(exp: Exp)
    |       ~~~~~~~~
 
+types2.dl
  6 | has_expr($Const(1)).
    | ~~~~~~~~
 
+types2.dl
  7 | has_expr($Var("x")).
    | ~~~~~~~~
 
+types2.dl
  8 | has_expr($Add($Const(2), $Const(3))).
    | ~~~~~~~~
 
+types2.dl
 12 | produces_value(val) :- has_expr($Const(val)).
    |                        ~~~~~~~~
 
+types2.dl
 13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
    |                        ~~~~~~~~
 
 _____
 
 -- Cursor range --
+types2.dl
  7 | has_expr($Var("x")).
    |           ~~~
 -- References --
+types2.dl
  1 |           | Var { id: symbol}
    |             ~~~
 
+types2.dl
  7 | has_expr($Var("x")).
    |           ~~~
 
 _____
 
 -- Cursor range --
+types2.dl
  8 | has_expr($Add($Const(2), $Const(3))).
    | ~~~~~~~~
 -- References --
+types2.dl
  4 | .decl has_expr(exp: Exp)
    |       ~~~~~~~~
 
+types2.dl
  6 | has_expr($Const(1)).
    | ~~~~~~~~
 
+types2.dl
  7 | has_expr($Var("x")).
    | ~~~~~~~~
 
+types2.dl
  8 | has_expr($Add($Const(2), $Const(3))).
    | ~~~~~~~~
 
+types2.dl
 12 | produces_value(val) :- has_expr($Const(val)).
    |                        ~~~~~~~~
 
+types2.dl
 13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
    |                        ~~~~~~~~
 
 _____
 
 -- Cursor range --
+types2.dl
  8 | has_expr($Add($Const(2), $Const(3))).
    |           ~~~
 -- References --
+types2.dl
  2 |           | Add { e1: Exp, e2: Exp }
    |             ~~~
 
+types2.dl
  8 | has_expr($Add($Const(2), $Const(3))).
    |           ~~~
 
+types2.dl
 13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
    |                                  ~~~
 
 _____
 
 -- Cursor range --
+types2.dl
  8 | has_expr($Add($Const(2), $Const(3))).
    |                ~~~~~
 -- References --
+types2.dl
  0 | .type Exp = Const { val: number }
    |             ~~~~~
 
+types2.dl
  6 | has_expr($Const(1)).
    |           ~~~~~
 
+types2.dl
  8 | has_expr($Add($Const(2), $Const(3))).
    |                ~~~~~
 
+types2.dl
  8 | has_expr($Add($Const(2), $Const(3))).
    |                           ~~~~~
 
+types2.dl
 12 | produces_value(val) :- has_expr($Const(val)).
    |                                  ~~~~~
 
+types2.dl
 13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
    |                                       ~~~~~
 
+types2.dl
 13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
    |                                                   ~~~~~
 
 _____
 
 -- Cursor range --
+types2.dl
  8 | has_expr($Add($Const(2), $Const(3))).
    |                           ~~~~~
 -- References --
+types2.dl
  0 | .type Exp = Const { val: number }
    |             ~~~~~
 
+types2.dl
  6 | has_expr($Const(1)).
    |           ~~~~~
 
+types2.dl
  8 | has_expr($Add($Const(2), $Const(3))).
    |                ~~~~~
 
+types2.dl
  8 | has_expr($Add($Const(2), $Const(3))).
    |                           ~~~~~
 
+types2.dl
 12 | produces_value(val) :- has_expr($Const(val)).
    |                                  ~~~~~
 
+types2.dl
 13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
    |                                       ~~~~~
 
+types2.dl
 13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
    |                                                   ~~~~~
 
 _____
 
 -- Cursor range --
+types2.dl
 10 | .decl produces_value(val: number)
    |       ~~~~~~~~~~~~~~
 -- References --
+types2.dl
 10 | .decl produces_value(val: number)
    |       ~~~~~~~~~~~~~~
 
+types2.dl
 12 | produces_value(val) :- has_expr($Const(val)).
    | ~~~~~~~~~~~~~~
 
+types2.dl
 13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
    | ~~~~~~~~~~~~~~
 
+types2.dl
 15 | .output produces_value
    |         ~~~~~~~~~~~~~~
 
 _____
 
 -- Cursor range --
+types2.dl
 12 | produces_value(val) :- has_expr($Const(val)).
    | ~~~~~~~~~~~~~~
 -- References --
+types2.dl
 10 | .decl produces_value(val: number)
    |       ~~~~~~~~~~~~~~
 
+types2.dl
 12 | produces_value(val) :- has_expr($Const(val)).
    | ~~~~~~~~~~~~~~
 
+types2.dl
 13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
    | ~~~~~~~~~~~~~~
 
+types2.dl
 15 | .output produces_value
    |         ~~~~~~~~~~~~~~
 
 _____
 
 -- Cursor range --
+types2.dl
 12 | produces_value(val) :- has_expr($Const(val)).
    |                        ~~~~~~~~
 -- References --
+types2.dl
  4 | .decl has_expr(exp: Exp)
    |       ~~~~~~~~
 
+types2.dl
  6 | has_expr($Const(1)).
    | ~~~~~~~~
 
+types2.dl
  7 | has_expr($Var("x")).
    | ~~~~~~~~
 
+types2.dl
  8 | has_expr($Add($Const(2), $Const(3))).
    | ~~~~~~~~
 
+types2.dl
 12 | produces_value(val) :- has_expr($Const(val)).
    |                        ~~~~~~~~
 
+types2.dl
 13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
    |                        ~~~~~~~~
 
 _____
 
 -- Cursor range --
+types2.dl
 12 | produces_value(val) :- has_expr($Const(val)).
    |                                  ~~~~~
 -- References --
+types2.dl
  0 | .type Exp = Const { val: number }
    |             ~~~~~
 
+types2.dl
  6 | has_expr($Const(1)).
    |           ~~~~~
 
+types2.dl
  8 | has_expr($Add($Const(2), $Const(3))).
    |                ~~~~~
 
+types2.dl
  8 | has_expr($Add($Const(2), $Const(3))).
    |                           ~~~~~
 
+types2.dl
 12 | produces_value(val) :- has_expr($Const(val)).
    |                                  ~~~~~
 
+types2.dl
 13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
    |                                       ~~~~~
 
+types2.dl
 13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
    |                                                   ~~~~~
 
 _____
 
 -- Cursor range --
+types2.dl
 13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
    | ~~~~~~~~~~~~~~
 -- References --
+types2.dl
 10 | .decl produces_value(val: number)
    |       ~~~~~~~~~~~~~~
 
+types2.dl
 12 | produces_value(val) :- has_expr($Const(val)).
    | ~~~~~~~~~~~~~~
 
+types2.dl
 13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
    | ~~~~~~~~~~~~~~
 
+types2.dl
 15 | .output produces_value
    |         ~~~~~~~~~~~~~~
 
 _____
 
 -- Cursor range --
+types2.dl
 13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
    |                        ~~~~~~~~
 -- References --
+types2.dl
  4 | .decl has_expr(exp: Exp)
    |       ~~~~~~~~
 
+types2.dl
  6 | has_expr($Const(1)).
    | ~~~~~~~~
 
+types2.dl
  7 | has_expr($Var("x")).
    | ~~~~~~~~
 
+types2.dl
  8 | has_expr($Add($Const(2), $Const(3))).
    | ~~~~~~~~
 
+types2.dl
 12 | produces_value(val) :- has_expr($Const(val)).
    |                        ~~~~~~~~
 
+types2.dl
 13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
    |                        ~~~~~~~~
 
 _____
 
 -- Cursor range --
+types2.dl
 13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
    |                                  ~~~
 -- References --
+types2.dl
  2 |           | Add { e1: Exp, e2: Exp }
    |             ~~~
 
+types2.dl
  8 | has_expr($Add($Const(2), $Const(3))).
    |           ~~~
 
+types2.dl
 13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
    |                                  ~~~
 
 _____
 
 -- Cursor range --
+types2.dl
 13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
    |                                       ~~~~~
 -- References --
+types2.dl
  0 | .type Exp = Const { val: number }
    |             ~~~~~
 
+types2.dl
  6 | has_expr($Const(1)).
    |           ~~~~~
 
+types2.dl
  8 | has_expr($Add($Const(2), $Const(3))).
    |                ~~~~~
 
+types2.dl
  8 | has_expr($Add($Const(2), $Const(3))).
    |                           ~~~~~
 
+types2.dl
 12 | produces_value(val) :- has_expr($Const(val)).
    |                                  ~~~~~
 
+types2.dl
 13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
    |                                       ~~~~~
 
+types2.dl
 13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
    |                                                   ~~~~~
 
 _____
 
 -- Cursor range --
+types2.dl
 13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
    |                                                   ~~~~~
 -- References --
+types2.dl
  0 | .type Exp = Const { val: number }
    |             ~~~~~
 
+types2.dl
  6 | has_expr($Const(1)).
    |           ~~~~~
 
+types2.dl
  8 | has_expr($Add($Const(2), $Const(3))).
    |                ~~~~~
 
+types2.dl
  8 | has_expr($Add($Const(2), $Const(3))).
    |                           ~~~~~
 
+types2.dl
 12 | produces_value(val) :- has_expr($Const(val)).
    |                                  ~~~~~
 
+types2.dl
 13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
    |                                       ~~~~~
 
+types2.dl
 13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
    |                                                   ~~~~~
 
 _____
 
 -- Cursor range --
+types2.dl
 15 | .output produces_value
    |         ~~~~~~~~~~~~~~
 -- References --
+types2.dl
 10 | .decl produces_value(val: number)
    |       ~~~~~~~~~~~~~~
 
+types2.dl
 12 | produces_value(val) :- has_expr($Const(val)).
    | ~~~~~~~~~~~~~~
 
+types2.dl
 13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
    | ~~~~~~~~~~~~~~
 
+types2.dl
 15 | .output produces_value
    |         ~~~~~~~~~~~~~~
 

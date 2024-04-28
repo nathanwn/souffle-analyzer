@@ -1,3 +1,4 @@
+types2.dl
  0 | .type Exp = Const { val: number }
  1 |           | Var { id: symbol}
  2 |           | Add { e1: Exp, e2: Exp }

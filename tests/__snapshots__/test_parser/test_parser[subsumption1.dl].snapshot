@@ -1,46 +1,46 @@
-File(
-  range_=[0:0-11:0]
+Document(
+  range_=0:0-11:0
   RelationDeclaration(
-    range_=[0:0-0:29]
+    range_=0:0-0:29
     ResultNode(
-      range_=[0:6-0:7]
-      Identifier(range_=[0:6-0:7], val='A')
+      range_=0:6-0:7
+      Identifier(location='subsumption1.dl#0:6-0:7', val='A')
     )
     Attribute(
-      range_=[0:8-0:17]
+      range_=0:8-0:17
       ResultNode(
-        range_=[0:8-0:9]
-        Identifier(range_=[0:8-0:9], val='x')
+        range_=0:8-0:9
+        Identifier(location='subsumption1.dl#0:8-0:9', val='x')
       )
       ResultNode(
-        range_=[0:11-0:17]
+        range_=0:11-0:17
         TypeReference(
-          range_=[0:11-0:17]
+          range_=0:11-0:17
           ResultNode(
-            range_=[0:11-0:17]
+            range_=0:11-0:17
             TypeReferenceName(
-              range_=[0:11-0:17]
-              Identifier(range_=[0:11-0:17], val='number')
+              range_=0:11-0:17
+              Identifier(location='subsumption1.dl#0:11-0:17', val='number')
             )
           )
         )
       )
     )
     Attribute(
-      range_=[0:19-0:28]
+      range_=0:19-0:28
       ResultNode(
-        range_=[0:19-0:20]
-        Identifier(range_=[0:19-0:20], val='y')
+        range_=0:19-0:20
+        Identifier(location='subsumption1.dl#0:19-0:20', val='y')
       )
       ResultNode(
-        range_=[0:22-0:28]
+        range_=0:22-0:28
         TypeReference(
-          range_=[0:22-0:28]
+          range_=0:22-0:28
           ResultNode(
-            range_=[0:22-0:28]
+            range_=0:22-0:28
             TypeReferenceName(
-              range_=[0:22-0:28]
-              Identifier(range_=[0:22-0:28], val='number')
+              range_=0:22-0:28
+              Identifier(location='subsumption1.dl#0:22-0:28', val='number')
             )
           )
         )
@@ -48,136 +48,136 @@ File(
     )
   )
   ResultNode(
-    range_=[2:0-2:7]
+    range_=2:0-2:7
     Fact(
-      range_=[2:0-2:7]
+      range_=2:0-2:7
       ResultNode(
-        range_=[2:0-2:1]
+        range_=2:0-2:1
         RelationReferenceName(
-          range_=[2:0-2:1]
-          Identifier(range_=[2:0-2:1], val='A')
+          range_=2:0-2:1
+          Identifier(location='subsumption1.dl#2:0-2:1', val='A')
         )
       )
-      NumberConstant(range_=[2:2-2:3], ty=UnresolvedType(), val=1)
-      NumberConstant(range_=[2:5-2:6], ty=UnresolvedType(), val=2)
+      NumberConstant(location='subsumption1.dl#2:2-2:3', ty=UnresolvedType(), val=1)
+      NumberConstant(location='subsumption1.dl#2:5-2:6', ty=UnresolvedType(), val=2)
     )
   )
   ResultNode(
-    range_=[3:0-3:7]
+    range_=3:0-3:7
     Fact(
-      range_=[3:0-3:7]
+      range_=3:0-3:7
       ResultNode(
-        range_=[3:0-3:1]
+        range_=3:0-3:1
         RelationReferenceName(
-          range_=[3:0-3:1]
-          Identifier(range_=[3:0-3:1], val='A')
+          range_=3:0-3:1
+          Identifier(location='subsumption1.dl#3:0-3:1', val='A')
         )
       )
-      NumberConstant(range_=[3:2-3:3], ty=UnresolvedType(), val=1)
-      NumberConstant(range_=[3:5-3:6], ty=UnresolvedType(), val=3)
+      NumberConstant(location='subsumption1.dl#3:2-3:3', ty=UnresolvedType(), val=1)
+      NumberConstant(location='subsumption1.dl#3:5-3:6', ty=UnresolvedType(), val=3)
     )
   )
   ResultNode(
-    range_=[4:0-4:7]
+    range_=4:0-4:7
     Fact(
-      range_=[4:0-4:7]
+      range_=4:0-4:7
       ResultNode(
-        range_=[4:0-4:1]
+        range_=4:0-4:1
         RelationReferenceName(
-          range_=[4:0-4:1]
-          Identifier(range_=[4:0-4:1], val='A')
+          range_=4:0-4:1
+          Identifier(location='subsumption1.dl#4:0-4:1', val='A')
         )
       )
-      NumberConstant(range_=[4:2-4:3], ty=UnresolvedType(), val=1)
-      NumberConstant(range_=[4:5-4:6], ty=UnresolvedType(), val=4)
+      NumberConstant(location='subsumption1.dl#4:2-4:3', ty=UnresolvedType(), val=1)
+      NumberConstant(location='subsumption1.dl#4:5-4:6', ty=UnresolvedType(), val=4)
     )
   )
   ResultNode(
-    range_=[5:0-5:7]
+    range_=5:0-5:7
     Fact(
-      range_=[5:0-5:7]
+      range_=5:0-5:7
       ResultNode(
-        range_=[5:0-5:1]
+        range_=5:0-5:1
         RelationReferenceName(
-          range_=[5:0-5:1]
-          Identifier(range_=[5:0-5:1], val='A')
+          range_=5:0-5:1
+          Identifier(location='subsumption1.dl#5:0-5:1', val='A')
         )
       )
-      NumberConstant(range_=[5:2-5:3], ty=UnresolvedType(), val=2)
-      NumberConstant(range_=[5:5-5:6], ty=UnresolvedType(), val=1)
+      NumberConstant(location='subsumption1.dl#5:2-5:3', ty=UnresolvedType(), val=2)
+      NumberConstant(location='subsumption1.dl#5:5-5:6', ty=UnresolvedType(), val=1)
     )
   )
   ResultNode(
-    range_=[6:0-6:7]
+    range_=6:0-6:7
     Fact(
-      range_=[6:0-6:7]
+      range_=6:0-6:7
       ResultNode(
-        range_=[6:0-6:1]
+        range_=6:0-6:1
         RelationReferenceName(
-          range_=[6:0-6:1]
-          Identifier(range_=[6:0-6:1], val='A')
+          range_=6:0-6:1
+          Identifier(location='subsumption1.dl#6:0-6:1', val='A')
         )
       )
-      NumberConstant(range_=[6:2-6:3], ty=UnresolvedType(), val=2)
-      NumberConstant(range_=[6:5-6:6], ty=UnresolvedType(), val=5)
+      NumberConstant(location='subsumption1.dl#6:2-6:3', ty=UnresolvedType(), val=2)
+      NumberConstant(location='subsumption1.dl#6:5-6:6', ty=UnresolvedType(), val=5)
     )
   )
   Rule(
-    range_=[8:0-8:28]
+    range_=8:0-8:28
     SubsumptionHead(
-      range_=[8:0-8:18]
+      range_=8:0-8:18
       ResultNode(
-        range_=[8:0-8:7]
+        range_=8:0-8:7
         RelationReference(
-          range_=[8:0-8:7]
+          range_=8:0-8:7
           ResultNode(
-            range_=[8:0-8:1]
+            range_=8:0-8:1
             RelationReferenceName(
-              range_=[8:0-8:1]
-              Identifier(range_=[8:0-8:1], val='A')
+              range_=8:0-8:1
+              Identifier(location='subsumption1.dl#8:0-8:1', val='A')
             )
           )
-          Variable(range_=[8:2-8:3], ty=UnresolvedType(), name='x')
-          Variable(range_=[8:5-8:6], ty=UnresolvedType(), name='y')
+          Variable(location='subsumption1.dl#8:2-8:3', ty=UnresolvedType(), name='x')
+          Variable(location='subsumption1.dl#8:5-8:6', ty=UnresolvedType(), name='y')
         )
       )
       ResultNode(
-        range_=[8:11-8:18]
+        range_=8:11-8:18
         RelationReference(
-          range_=[8:11-8:18]
+          range_=8:11-8:18
           ResultNode(
-            range_=[8:11-8:12]
+            range_=8:11-8:12
             RelationReferenceName(
-              range_=[8:11-8:12]
-              Identifier(range_=[8:11-8:12], val='A')
+              range_=8:11-8:12
+              Identifier(location='subsumption1.dl#8:11-8:12', val='A')
             )
           )
-          Variable(range_=[8:13-8:14], ty=UnresolvedType(), name='x')
-          Variable(range_=[8:16-8:17], ty=UnresolvedType(), name='z')
+          Variable(location='subsumption1.dl#8:13-8:14', ty=UnresolvedType(), name='x')
+          Variable(location='subsumption1.dl#8:16-8:17', ty=UnresolvedType(), name='z')
         )
       )
     )
     ResultNode(
-      range_=[8:22-8:27]
+      range_=8:22-8:27
       Disjunction(
-        range_=[8:22-8:27]
+        range_=8:22-8:27
         Conjunction(
-          range_=[8:22-8:27]
+          range_=8:22-8:27
           ResultNode(
-            range_=[8:22-8:27]
+            range_=8:22-8:27
             BinaryConstraint(
-              range_=[8:22-8:27]
+              range_=8:22-8:27
               ResultNode(
-                range_=[8:22-8:27]
-                Variable(range_=[8:22-8:23], ty=UnresolvedType(), name='y')
+                range_=8:22-8:27
+                Variable(location='subsumption1.dl#8:22-8:23', ty=UnresolvedType(), name='y')
               )
               ResultNode(
-                range_=[8:22-8:27]
-                BinaryConstraintOp(range_=[8:24-8:25], op='<')
+                range_=8:22-8:27
+                BinaryConstraintOp(location='subsumption1.dl#8:24-8:25', op='<')
               )
               ResultNode(
-                range_=[8:22-8:27]
-                Variable(range_=[8:26-8:27], ty=UnresolvedType(), name='z')
+                range_=8:22-8:27
+                Variable(location='subsumption1.dl#8:26-8:27', ty=UnresolvedType(), name='z')
               )
             )
           )
@@ -186,11 +186,11 @@ File(
     )
   )
   Directive(
-    range_=[10:0-10:9]
-    DirectiveQualifier(range_=[10:0-10:7], keyword='.output')
+    range_=10:0-10:9
+    DirectiveQualifier(location='subsumption1.dl#10:0-10:7', keyword='.output')
     RelationReferenceName(
-      range_=[10:8-10:9]
-      Identifier(range_=[10:8-10:9], val='A')
+      range_=10:8-10:9
+      Identifier(location='subsumption1.dl#10:8-10:9', val='A')
     )
   )
 )

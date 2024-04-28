@@ -29,7 +29,7 @@ def test_references(file_snapshot: SnapshotAssertion, filename: str) -> None:
         code = f.read()
 
     ctx = AnalysisContext()
-    ctx.open_document(filename, code)
+    ctx.sync_document(filename, code)
     code_lines = code.splitlines()
 
     def analyze(position: Position) -> Optional[List[lsptypes.Location]]:
@@ -46,6 +46,7 @@ def test_references(file_snapshot: SnapshotAssertion, filename: str) -> None:
             out.extend(
                 format_souffle_code_range(
                     code_lines,
+                    filename,
                     Range.from_lsp_type(loc.range),
                 )
             )
@@ -55,6 +56,7 @@ def test_references(file_snapshot: SnapshotAssertion, filename: str) -> None:
     assert (
         format_cursorwise_results(
             code_lines=code_lines,
+            uri=filename,
             analyze=analyze,
             format_result=format_result,
         )

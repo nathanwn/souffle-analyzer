@@ -1,47 +1,47 @@
-File(
-  range_=[0:0-17:0]
-  LineComment(range_=[0:0-2:35], content=['/// There exists an edge between two nodes `u` and `v`.', '/// @attribute u  the initial node', '/// @attribute v  the terminal node'])
+Document(
+  range_=0:0-17:0
+  LineComment(location='example2.dl#0:0-2:35', content=['/// There exists an edge between two nodes `u` and `v`.', '/// @attribute u  the initial node', '/// @attribute v  the terminal node'])
   RelationDeclaration(
-    range_=[3:0-3:41]
+    range_=3:0-3:41
     ResultNode(
-      range_=[3:6-3:19]
-      Identifier(range_=[3:6-3:19], val='directed_edge')
+      range_=3:6-3:19
+      Identifier(location='example2.dl#3:6-3:19', val='directed_edge')
     )
     Attribute(
-      range_=[3:20-3:29]
+      range_=3:20-3:29
       ResultNode(
-        range_=[3:20-3:21]
-        Identifier(range_=[3:20-3:21], val='u')
+        range_=3:20-3:21
+        Identifier(location='example2.dl#3:20-3:21', val='u')
       )
       ResultNode(
-        range_=[3:23-3:29]
+        range_=3:23-3:29
         TypeReference(
-          range_=[3:23-3:29]
+          range_=3:23-3:29
           ResultNode(
-            range_=[3:23-3:29]
+            range_=3:23-3:29
             TypeReferenceName(
-              range_=[3:23-3:29]
-              Identifier(range_=[3:23-3:29], val='number')
+              range_=3:23-3:29
+              Identifier(location='example2.dl#3:23-3:29', val='number')
             )
           )
         )
       )
     )
     Attribute(
-      range_=[3:31-3:40]
+      range_=3:31-3:40
       ResultNode(
-        range_=[3:31-3:32]
-        Identifier(range_=[3:31-3:32], val='v')
+        range_=3:31-3:32
+        Identifier(location='example2.dl#3:31-3:32', val='v')
       )
       ResultNode(
-        range_=[3:34-3:40]
+        range_=3:34-3:40
         TypeReference(
-          range_=[3:34-3:40]
+          range_=3:34-3:40
           ResultNode(
-            range_=[3:34-3:40]
+            range_=3:34-3:40
             TypeReferenceName(
-              range_=[3:34-3:40]
-              Identifier(range_=[3:34-3:40], val='number')
+              range_=3:34-3:40
+              Identifier(location='example2.dl#3:34-3:40', val='number')
             )
           )
         )
@@ -49,107 +49,107 @@ File(
     )
   )
   ResultNode(
-    range_=[5:0-5:19]
+    range_=5:0-5:19
     Fact(
-      range_=[5:0-5:19]
+      range_=5:0-5:19
       ResultNode(
-        range_=[5:0-5:13]
+        range_=5:0-5:13
         RelationReferenceName(
-          range_=[5:0-5:13]
-          Identifier(range_=[5:0-5:13], val='directed_edge')
+          range_=5:0-5:13
+          Identifier(location='example2.dl#5:0-5:13', val='directed_edge')
         )
       )
-      NumberConstant(range_=[5:14-5:15], ty=UnresolvedType(), val=1)
-      NumberConstant(range_=[5:17-5:18], ty=UnresolvedType(), val=2)
+      NumberConstant(location='example2.dl#5:14-5:15', ty=UnresolvedType(), val=1)
+      NumberConstant(location='example2.dl#5:17-5:18', ty=UnresolvedType(), val=2)
     )
   )
   ResultNode(
-    range_=[6:0-6:19]
+    range_=6:0-6:19
     Fact(
-      range_=[6:0-6:19]
+      range_=6:0-6:19
       ResultNode(
-        range_=[6:0-6:13]
+        range_=6:0-6:13
         RelationReferenceName(
-          range_=[6:0-6:13]
-          Identifier(range_=[6:0-6:13], val='directed_edge')
+          range_=6:0-6:13
+          Identifier(location='example2.dl#6:0-6:13', val='directed_edge')
         )
       )
-      NumberConstant(range_=[6:14-6:15], ty=UnresolvedType(), val=1)
-      NumberConstant(range_=[6:17-6:18], ty=UnresolvedType(), val=3)
+      NumberConstant(location='example2.dl#6:14-6:15', ty=UnresolvedType(), val=1)
+      NumberConstant(location='example2.dl#6:17-6:18', ty=UnresolvedType(), val=3)
     )
   )
   ResultNode(
-    range_=[7:0-7:19]
+    range_=7:0-7:19
     Fact(
-      range_=[7:0-7:19]
+      range_=7:0-7:19
       ResultNode(
-        range_=[7:0-7:13]
+        range_=7:0-7:13
         RelationReferenceName(
-          range_=[7:0-7:13]
-          Identifier(range_=[7:0-7:13], val='directed_edge')
+          range_=7:0-7:13
+          Identifier(location='example2.dl#7:0-7:13', val='directed_edge')
         )
       )
-      NumberConstant(range_=[7:14-7:15], ty=UnresolvedType(), val=2)
-      NumberConstant(range_=[7:17-7:18], ty=UnresolvedType(), val=4)
+      NumberConstant(location='example2.dl#7:14-7:15', ty=UnresolvedType(), val=2)
+      NumberConstant(location='example2.dl#7:17-7:18', ty=UnresolvedType(), val=4)
     )
   )
   ResultNode(
-    range_=[8:0-8:19]
+    range_=8:0-8:19
     Fact(
-      range_=[8:0-8:19]
+      range_=8:0-8:19
       ResultNode(
-        range_=[8:0-8:13]
+        range_=8:0-8:13
         RelationReferenceName(
-          range_=[8:0-8:13]
-          Identifier(range_=[8:0-8:13], val='directed_edge')
+          range_=8:0-8:13
+          Identifier(location='example2.dl#8:0-8:13', val='directed_edge')
         )
       )
-      NumberConstant(range_=[8:14-8:15], ty=UnresolvedType(), val=3)
-      NumberConstant(range_=[8:17-8:18], ty=UnresolvedType(), val=5)
+      NumberConstant(location='example2.dl#8:14-8:15', ty=UnresolvedType(), val=3)
+      NumberConstant(location='example2.dl#8:17-8:18', ty=UnresolvedType(), val=5)
     )
   )
-  LineComment(range_=[10:0-12:31], content=['/// There exists a path from node `u` to node `v`.', '/// @attribute u  the source node', '/// @attribute v  the sink node'])
+  LineComment(location='example2.dl#10:0-12:31', content=['/// There exists a path from node `u` to node `v`.', '/// @attribute u  the source node', '/// @attribute v  the sink node'])
   RelationDeclaration(
-    range_=[13:0-13:32]
+    range_=13:0-13:32
     ResultNode(
-      range_=[13:6-13:10]
-      Identifier(range_=[13:6-13:10], val='path')
+      range_=13:6-13:10
+      Identifier(location='example2.dl#13:6-13:10', val='path')
     )
     Attribute(
-      range_=[13:11-13:20]
+      range_=13:11-13:20
       ResultNode(
-        range_=[13:11-13:12]
-        Identifier(range_=[13:11-13:12], val='u')
+        range_=13:11-13:12
+        Identifier(location='example2.dl#13:11-13:12', val='u')
       )
       ResultNode(
-        range_=[13:14-13:20]
+        range_=13:14-13:20
         TypeReference(
-          range_=[13:14-13:20]
+          range_=13:14-13:20
           ResultNode(
-            range_=[13:14-13:20]
+            range_=13:14-13:20
             TypeReferenceName(
-              range_=[13:14-13:20]
-              Identifier(range_=[13:14-13:20], val='number')
+              range_=13:14-13:20
+              Identifier(location='example2.dl#13:14-13:20', val='number')
             )
           )
         )
       )
     )
     Attribute(
-      range_=[13:22-13:31]
+      range_=13:22-13:31
       ResultNode(
-        range_=[13:22-13:23]
-        Identifier(range_=[13:22-13:23], val='v')
+        range_=13:22-13:23
+        Identifier(location='example2.dl#13:22-13:23', val='v')
       )
       ResultNode(
-        range_=[13:25-13:31]
+        range_=13:25-13:31
         TypeReference(
-          range_=[13:25-13:31]
+          range_=13:25-13:31
           ResultNode(
-            range_=[13:25-13:31]
+            range_=13:25-13:31
             TypeReferenceName(
-              range_=[13:25-13:31]
-              Identifier(range_=[13:25-13:31], val='number')
+              range_=13:25-13:31
+              Identifier(location='example2.dl#13:25-13:31', val='number')
             )
           )
         )
@@ -157,48 +157,48 @@ File(
     )
   )
   Rule(
-    range_=[15:0-15:34]
+    range_=15:0-15:34
     RuleHead(
-      range_=[15:0-15:10]
+      range_=15:0-15:10
       ResultNode(
-        range_=[15:0-15:10]
+        range_=15:0-15:10
         RelationReference(
-          range_=[15:0-15:10]
+          range_=15:0-15:10
           ResultNode(
-            range_=[15:0-15:4]
+            range_=15:0-15:4
             RelationReferenceName(
-              range_=[15:0-15:4]
-              Identifier(range_=[15:0-15:4], val='path')
+              range_=15:0-15:4
+              Identifier(location='example2.dl#15:0-15:4', val='path')
             )
           )
-          Variable(range_=[15:5-15:6], ty=UnresolvedType(), name='u')
-          Variable(range_=[15:8-15:9], ty=UnresolvedType(), name='v')
+          Variable(location='example2.dl#15:5-15:6', ty=UnresolvedType(), name='u')
+          Variable(location='example2.dl#15:8-15:9', ty=UnresolvedType(), name='v')
         )
       )
     )
     ResultNode(
-      range_=[15:14-15:33]
+      range_=15:14-15:33
       Disjunction(
-        range_=[15:14-15:33]
+        range_=15:14-15:33
         Conjunction(
-          range_=[15:14-15:33]
+          range_=15:14-15:33
           ResultNode(
-            range_=[15:14-15:33]
+            range_=15:14-15:33
             RelationReferenceClause(
-              range_=[15:14-15:33]
+              range_=15:14-15:33
               ResultNode(
-                range_=[15:14-15:33]
+                range_=15:14-15:33
                 RelationReference(
-                  range_=[15:14-15:33]
+                  range_=15:14-15:33
                   ResultNode(
-                    range_=[15:14-15:27]
+                    range_=15:14-15:27
                     RelationReferenceName(
-                      range_=[15:14-15:27]
-                      Identifier(range_=[15:14-15:27], val='directed_edge')
+                      range_=15:14-15:27
+                      Identifier(location='example2.dl#15:14-15:27', val='directed_edge')
                     )
                   )
-                  Variable(range_=[15:28-15:29], ty=UnresolvedType(), name='u')
-                  Variable(range_=[15:31-15:32], ty=UnresolvedType(), name='v')
+                  Variable(location='example2.dl#15:28-15:29', ty=UnresolvedType(), name='u')
+                  Variable(location='example2.dl#15:31-15:32', ty=UnresolvedType(), name='v')
                 )
               )
             )
@@ -208,69 +208,69 @@ File(
     )
   )
   Rule(
-    range_=[16:0-16:54]
+    range_=16:0-16:54
     RuleHead(
-      range_=[16:0-16:10]
+      range_=16:0-16:10
       ResultNode(
-        range_=[16:0-16:10]
+        range_=16:0-16:10
         RelationReference(
-          range_=[16:0-16:10]
+          range_=16:0-16:10
           ResultNode(
-            range_=[16:0-16:4]
+            range_=16:0-16:4
             RelationReferenceName(
-              range_=[16:0-16:4]
-              Identifier(range_=[16:0-16:4], val='path')
+              range_=16:0-16:4
+              Identifier(location='example2.dl#16:0-16:4', val='path')
             )
           )
-          Variable(range_=[16:5-16:6], ty=UnresolvedType(), name='u')
-          Variable(range_=[16:8-16:9], ty=UnresolvedType(), name='v')
+          Variable(location='example2.dl#16:5-16:6', ty=UnresolvedType(), name='u')
+          Variable(location='example2.dl#16:8-16:9', ty=UnresolvedType(), name='v')
         )
       )
     )
     ResultNode(
-      range_=[16:14-16:54]
+      range_=16:14-16:54
       Disjunction(
-        range_=[16:14-16:54]
+        range_=16:14-16:54
         Conjunction(
-          range_=[16:14-16:54]
+          range_=16:14-16:54
           ResultNode(
-            range_=[16:14-16:33]
+            range_=16:14-16:33
             RelationReferenceClause(
-              range_=[16:14-16:33]
+              range_=16:14-16:33
               ResultNode(
-                range_=[16:14-16:33]
+                range_=16:14-16:33
                 RelationReference(
-                  range_=[16:14-16:33]
+                  range_=16:14-16:33
                   ResultNode(
-                    range_=[16:14-16:27]
+                    range_=16:14-16:27
                     RelationReferenceName(
-                      range_=[16:14-16:27]
-                      Identifier(range_=[16:14-16:27], val='directed_edge')
+                      range_=16:14-16:27
+                      Identifier(location='example2.dl#16:14-16:27', val='directed_edge')
                     )
                   )
-                  Variable(range_=[16:28-16:29], ty=UnresolvedType(), name='u')
-                  Variable(range_=[16:31-16:32], ty=UnresolvedType(), name='i')
+                  Variable(location='example2.dl#16:28-16:29', ty=UnresolvedType(), name='u')
+                  Variable(location='example2.dl#16:31-16:32', ty=UnresolvedType(), name='i')
                 )
               )
             )
           )
           ResultNode(
-            range_=[16:35-16:54]
+            range_=16:35-16:54
             RelationReferenceClause(
-              range_=[16:35-16:54]
+              range_=16:35-16:54
               ResultNode(
-                range_=[16:35-16:54]
+                range_=16:35-16:54
                 RelationReference(
-                  range_=[16:35-16:54]
+                  range_=16:35-16:54
                   ResultNode(
-                    range_=[16:35-16:48]
+                    range_=16:35-16:48
                     RelationReferenceName(
-                      range_=[16:35-16:48]
-                      Identifier(range_=[16:35-16:48], val='directed_edge')
+                      range_=16:35-16:48
+                      Identifier(location='example2.dl#16:35-16:48', val='directed_edge')
                     )
                   )
-                  Variable(range_=[16:49-16:50], ty=UnresolvedType(), name='i')
-                  Variable(range_=[16:52-16:53], ty=UnresolvedType(), name='v')
+                  Variable(location='example2.dl#16:49-16:50', ty=UnresolvedType(), name='i')
+                  Variable(location='example2.dl#16:52-16:53', ty=UnresolvedType(), name='v')
                 )
               )
             )

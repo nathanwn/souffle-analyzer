@@ -28,7 +28,7 @@ def test_hover(file_snapshot: SnapshotAssertion, filename: str) -> None:
         code = f.read()
 
     ctx = AnalysisContext()
-    ctx.open_document(filename, code)
+    ctx.sync_document(filename, code)
     code_lines = code.splitlines()
 
     def analyze(position: Position) -> Optional[List[lsptypes.TextEdit]]:
@@ -38,7 +38,11 @@ def test_hover(file_snapshot: SnapshotAssertion, filename: str) -> None:
         out = []
         out.append("-- Insertion point --")
         out.extend(
-            format_souffle_code_range(code_lines, Range.from_lsp_type(result[0].range))
+            format_souffle_code_range(
+                code_lines,
+                uri=filename,
+                range_=Range.from_lsp_type(result[0].range),
+            )
         )
         out.append("--  Text  --")
         out.extend(result[0].new_text.splitlines())
@@ -47,6 +51,7 @@ def test_hover(file_snapshot: SnapshotAssertion, filename: str) -> None:
     assert (
         format_cursorwise_results(
             code_lines=code_lines,
+            uri=filename,
             analyze=analyze,
             format_result=format_result,
         )

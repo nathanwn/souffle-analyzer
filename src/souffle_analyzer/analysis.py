@@ -1,9 +1,12 @@
+import os
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional, Tuple
+from pathlib import Path
+from typing import List, Optional, Tuple
+from urllib.parse import urlsplit
 
 import lsprotocol.types as lsptypes
 
-from souffle_analyzer.ast import BUILTIN_TYPES, ErrorNode, File, Position, Range
+from souffle_analyzer.ast import BUILTIN_TYPES, ErrorNode, Position, Range, Workspace
 from souffle_analyzer.logging import logger
 from souffle_analyzer.parser import Parser
 from souffle_analyzer.sourceutil import (
@@ -29,24 +32,47 @@ from souffle_analyzer.visitor.type_definition_visitor import TypeDefinitionVisit
 
 @dataclass
 class AnalysisContext:
-    documents: Dict[str, File] = field(default_factory=dict)
+    workspace: Workspace = field(default_factory=lambda: Workspace())
     root_uri: Optional[str] = field(default=None)
 
-    def load_document(self, uri: str, text: str) -> List[lsptypes.Diagnostic]:
-        for line in text.splitlines():
-            logger.debug(line)
-        parser = Parser()
-        file = parser.parse(text.encode())
-        resolve_reference_visitor = ResolveDeclarationVisitor(file)
+    def load_workspace(self, root_uri: str) -> None:
+        self.root_uri = root_uri
+        logger.info("Root URI provided: %s. Started loading workspace.", self.root_uri)
+        if self.root_uri is None:
+            return
+        root_path = urlsplit(self.root_uri).path
+        for path in Path(root_path).rglob("*.dl"):
+            uri = Path(os.path.abspath(path)).as_uri()
+            with open(path, encoding="utf-8") as f:
+                text = f.read()
+            self.load_document(uri, text)
+        resolve_reference_visitor = ResolveDeclarationVisitor(self.workspace)
         resolve_reference_visitor.transform()
-        simple_semantic_check_visitor = SimpleSemanticCheckVisitor(file)
+
+    def sync_workspace(self) -> None:
+        resolve_reference_visitor = ResolveDeclarationVisitor(self.workspace)
+        resolve_reference_visitor.transform()
+        type_check_visitor = TypeInferVisitor(self.workspace)
+        type_check_visitor.process()
+
+    def load_document(self, uri: str, text: str) -> None:
+        logger.debug("loading document %s", uri)
+        parser = Parser(uri=uri, code=text.encode())
+        document = parser.parse()
+        self.workspace.documents[uri] = document
+
+    def sync_document(self, uri, text: str) -> List[lsptypes.Diagnostic]:
+        self.load_document(uri, text)
+        self.sync_workspace()
+        simple_semantic_check_visitor = SimpleSemanticCheckVisitor(
+            self.workspace,
+            uri,
+        )
         diagnostics = simple_semantic_check_visitor.process()
-        self.documents[uri] = file
         return diagnostics
 
     def open_document(self, uri: str, text: str) -> List[lsptypes.Diagnostic]:
-        logger.debug("open document")
-        return self.load_document(uri, text)
+        return self.sync_document(uri, text)
 
     def update_document(
         self, uri: str, changes: List[lsptypes.TextDocumentContentChangeEvent]
@@ -57,14 +83,15 @@ class AnalysisContext:
                 pass
             if isinstance(change, lsptypes.TextDocumentContentChangeEvent_Type2):
                 logger.debug("update document")
-                self.load_document(uri, change.text)
+                diagnostics.extend(self.sync_document(uri, change.text))
         return diagnostics
 
     def hover(
         self, uri: str, position: lsptypes.Position
     ) -> Optional[Tuple[str, Range]]:
         hover_visitor = HoverVisitor(
-            file=self.documents[uri],
+            workspace=self.workspace,
+            uri=uri,
             position=Position(
                 line=position.line,
                 character=position.character,
@@ -76,47 +103,43 @@ class AnalysisContext:
         self, uri: str, position: lsptypes.Position
     ) -> Optional[lsptypes.Location]:
         definition_visitor = DefinitionVisitor(
-            file=self.documents[uri],
+            workspace=self.workspace,
+            uri=uri,
             position=Position(
                 line=position.line,
                 character=position.character,
             ),
         )
-        range_ = definition_visitor.process()
-        if range_ is None:
+        location = definition_visitor.process()
+        if location is None:
             return None
-        return lsptypes.Location(uri=uri, range=range_.to_lsp_type())
+        return location.to_lsp_type()
 
     def get_references(
         self, uri: str, position: lsptypes.Position
     ) -> List[lsptypes.Location]:
         find_references_visitor = FindDeclarationReferencesVisitor(
-            file=self.documents[uri],
+            workspace=self.workspace,
+            uri=uri,
             position=Position.from_lsp_type(position),
         )
-        ranges = find_references_visitor.process()
-        locations = []
-        for range_ in ranges:
-            locations.append(lsptypes.Location(uri=uri, range=range_.to_lsp_type()))
-        return locations
+        return [_.to_lsp_type() for _ in find_references_visitor.process()]
 
     def get_type_definition(
         self, uri: str, position: lsptypes.Position
     ) -> Optional[lsptypes.Location]:
-        file = self.documents[uri]
-        type_check_visitor = TypeInferVisitor(file=file)
-        type_check_visitor.process()
         type_definition_visitor = TypeDefinitionVisitor(
-            file=file,
+            workspace=self.workspace,
+            uri=uri,
             position=Position(
                 line=position.line,
                 character=position.character,
             ),
         )
-        range_ = type_definition_visitor.process()
-        if range_ is None:
+        location = type_definition_visitor.process()
+        if location is None:
             return None
-        return lsptypes.Location(uri=uri, range=range_.to_lsp_type())
+        return location.to_lsp_type()
 
     def get_completion_items(
         self,
@@ -124,7 +147,7 @@ class AnalysisContext:
         position: lsptypes.Position,
         context: Optional[lsptypes.CompletionContext],
     ) -> List[lsptypes.CompletionItem]:
-        code = self.documents[uri].code
+        code = self.workspace.documents[uri].code
         code_lines = code.splitlines()
         if context is None:
             return []
@@ -204,7 +227,7 @@ class AnalysisContext:
                     documentation=builtin_type.doc,
                 ),
             )
-        for type_declaration in self.documents[uri].type_declarations:
+        for type_declaration in self.workspace.documents[uri].type_declarations:
             type_name = type_declaration.name.inner
             if isinstance(type_name, ErrorNode):
                 continue
@@ -221,7 +244,7 @@ class AnalysisContext:
         self, uri: str
     ) -> List[lsptypes.CompletionItem]:
         completions = []
-        for relation_declaration in self.documents[uri].relation_declarations:
+        for relation_declaration in self.workspace.documents[uri].relation_declarations:
             relation_name = relation_declaration.name.inner
             if isinstance(relation_name, ErrorNode):
                 continue
@@ -239,7 +262,8 @@ class AnalysisContext:
         self, uri: str, position: lsptypes.Position
     ) -> Optional[List[lsptypes.TextEdit]]:
         code_actions_visitor = CodeActionVisitor(
-            file=self.documents[uri],
+            workspace=self.workspace,
+            uri=uri,
             position=Position(
                 line=position.line,
                 character=position.character,

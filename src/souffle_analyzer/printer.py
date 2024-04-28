@@ -22,8 +22,8 @@ def get_positions_in_range(range_: Range, code_lines: List[str]) -> List[Positio
     return res
 
 
-def format_souffle_code(lines: List[str]) -> List[str]:
-    printed_lines = []
+def format_souffle_code(lines: List[str], uri: str) -> List[str]:
+    printed_lines = [uri]
     max_line_no = len(lines) - 1
     for line_no, line in enumerate(lines):
         sidebar = str(line_no).rjust(len(str(max_line_no)))
@@ -34,10 +34,10 @@ def format_souffle_code(lines: List[str]) -> List[str]:
     return printed_lines
 
 
-def format_souffle_code_range(lines: List[str], range_: Range) -> List[str]:
-    printed_lines = []
+def format_souffle_code_range(lines: List[str], uri: str, range_: Range) -> List[str]:
     max_line_no = len(lines) - 1
     sidebar_size = len(str(max_line_no))
+    printed_lines = [uri]
 
     for line_no in range(range_.start.line, range_.end.line + 1):
         marker_line_chars = [" " for _ in range(len(lines[line_no]))]

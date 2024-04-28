@@ -61,6 +61,7 @@ class RangewiseResult(Generic[T]):
 
 def format_rangewise_results(
     code_lines: List[str],
+    uri: str,
     format_result: Callable[[Any], List[str]],
     rangewise_results: Any,
 ) -> str:
@@ -69,13 +70,13 @@ def format_rangewise_results(
     for result in rangewise_results:
         assert result is not None
         out.append("-- Cursor range --")
-        out.extend(format_souffle_code_range(code_lines, result.cursor_range))
+        out.extend(format_souffle_code_range(code_lines, uri, result.cursor_range))
         out.extend(format_result(result.result))
         out.extend(["_____", ""])
 
     return "\n\n=====\n\n".join(
         [
-            "\n".join(format_souffle_code(code_lines)),
+            "\n".join(format_souffle_code(code_lines, uri=uri)),
             "\n".join(out),
         ]
     )
@@ -83,6 +84,7 @@ def format_rangewise_results(
 
 def format_cursorwise_results(
     code_lines: List[str],
+    uri: str,
     analyze: Callable[[Position], Optional[Any]],
     format_result: Callable[[Any], List[str]],
 ) -> str:
@@ -129,4 +131,4 @@ def format_cursorwise_results(
             )
         )
 
-    return format_rangewise_results(code_lines, format_result, rangewise_results)
+    return format_rangewise_results(code_lines, uri, format_result, rangewise_results)

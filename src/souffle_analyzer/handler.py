@@ -51,8 +51,7 @@ def handle_initialize_request(
     logger.info(" ".join(log_msg))
     root_uri = request.params.root_uri
     if root_uri is not None:
-        logger.info("root_uri: %s", root_uri)
-        ctx.root_uri = root_uri
+        ctx.load_workspace(root_uri)
 
     return InitializeResponse(
         id=request.id,

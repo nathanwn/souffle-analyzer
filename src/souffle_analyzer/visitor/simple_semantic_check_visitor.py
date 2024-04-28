@@ -2,17 +2,25 @@ from typing import List
 
 from lsprotocol.types import Diagnostic
 
-from souffle_analyzer.ast import Atom, ErrorNode, Fact, File, Node, RelationReference
+from souffle_analyzer.ast import (
+    Atom,
+    ErrorNode,
+    Fact,
+    Node,
+    RelationReference,
+    Workspace,
+)
 from souffle_analyzer.visitor.visitor import Visitor
 
 
 class SimpleSemanticCheckVisitor(Visitor[None]):
-    def __init__(self, file: File) -> None:
-        self.file = file
+    def __init__(self, workspace: Workspace, uri: str) -> None:
+        self.uri = uri
         self.diagnostics: List[Diagnostic] = []
+        super().__init__(workspace)
 
     def process(self) -> List[Diagnostic]:
-        self.file.accept(self)
+        self.workspace.documents[self.uri].accept(self)
         return self.diagnostics
 
     def visit_fact(self, fact: Fact) -> None:
@@ -25,7 +33,7 @@ class SimpleSemanticCheckVisitor(Visitor[None]):
         relation_name = atom.name.inner
         if isinstance(relation_name, ErrorNode):
             return
-        relation = self.file.get_relation_declaration_with_name(relation_name)
+        relation = self.workspace.get_relation_declaration_with_name(relation_name)
         if not relation:
             return
         if len(relation.attributes) != len(atom.arguments):

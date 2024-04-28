@@ -1,70 +1,70 @@
-File(
-  range_=[0:0-12:0]
+Document(
+  range_=0:0-12:0
   TypeDeclaration(
-    range_=[0:0-0:20]
+    range_=0:0-0:20
     ResultNode(
-      range_=[0:6-0:10]
-      Identifier(range_=[0:6-0:10], val='Name')
+      range_=0:6-0:10
+      Identifier(location='types3.dl#0:6-0:10', val='Name')
     )
     ResultNode(
-      range_=[0:11-0:13]
-      TypeDeclarationOp(range_=[0:11-0:13], op=SUBTYPE(<:))
+      range_=0:11-0:13
+      TypeDeclarationOp(location='types3.dl#0:11-0:13', op=SUBTYPE(<:))
     )
     ResultNode(
-      range_=[0:14-0:20]
+      range_=0:14-0:20
       TypeReference(
-        range_=[0:14-0:20]
+        range_=0:14-0:20
         ResultNode(
-          range_=[0:14-0:20]
+          range_=0:14-0:20
           TypeReferenceName(
-            range_=[0:14-0:20]
-            Identifier(range_=[0:14-0:20], val='symbol')
+            range_=0:14-0:20
+            Identifier(location='types3.dl#0:14-0:20', val='symbol')
           )
         )
       )
     )
   )
   RelationDeclaration(
-    range_=[2:0-2:40]
+    range_=2:0-2:40
     ResultNode(
-      range_=[2:6-2:16]
-      Identifier(range_=[2:6-2:16], val='is_student')
+      range_=2:6-2:16
+      Identifier(location='types3.dl#2:6-2:16', val='is_student')
     )
     Attribute(
-      range_=[2:17-2:27]
+      range_=2:17-2:27
       ResultNode(
-        range_=[2:17-2:21]
-        Identifier(range_=[2:17-2:21], val='name')
+        range_=2:17-2:21
+        Identifier(location='types3.dl#2:17-2:21', val='name')
       )
       ResultNode(
-        range_=[2:23-2:27]
+        range_=2:23-2:27
         TypeReference(
-          range_=[2:23-2:27]
+          range_=2:23-2:27
           ResultNode(
-            range_=[2:23-2:27]
+            range_=2:23-2:27
             TypeReferenceName(
-              range_=[2:23-2:27]
-              Identifier(range_=[2:23-2:27], val='Name')
+              range_=2:23-2:27
+              Identifier(location='types3.dl#2:23-2:27', val='Name')
             )
           )
         )
       )
     )
     Attribute(
-      range_=[2:29-2:39]
+      range_=2:29-2:39
       ResultNode(
-        range_=[2:29-2:31]
-        Identifier(range_=[2:29-2:31], val='id')
+        range_=2:29-2:31
+        Identifier(location='types3.dl#2:29-2:31', val='id')
       )
       ResultNode(
-        range_=[2:33-2:39]
+        range_=2:33-2:39
         TypeReference(
-          range_=[2:33-2:39]
+          range_=2:33-2:39
           ResultNode(
-            range_=[2:33-2:39]
+            range_=2:33-2:39
             TypeReferenceName(
-              range_=[2:33-2:39]
-              Identifier(range_=[2:33-2:39], val='number')
+              range_=2:33-2:39
+              Identifier(location='types3.dl#2:33-2:39', val='number')
             )
           )
         )
@@ -72,46 +72,46 @@ File(
     )
   )
   RelationDeclaration(
-    range_=[3:0-3:40]
+    range_=3:0-3:40
     ResultNode(
-      range_=[3:6-3:16]
-      Identifier(range_=[3:6-3:16], val='is_teacher')
+      range_=3:6-3:16
+      Identifier(location='types3.dl#3:6-3:16', val='is_teacher')
     )
     Attribute(
-      range_=[3:17-3:27]
+      range_=3:17-3:27
       ResultNode(
-        range_=[3:17-3:21]
-        Identifier(range_=[3:17-3:21], val='name')
+        range_=3:17-3:21
+        Identifier(location='types3.dl#3:17-3:21', val='name')
       )
       ResultNode(
-        range_=[3:23-3:27]
+        range_=3:23-3:27
         TypeReference(
-          range_=[3:23-3:27]
+          range_=3:23-3:27
           ResultNode(
-            range_=[3:23-3:27]
+            range_=3:23-3:27
             TypeReferenceName(
-              range_=[3:23-3:27]
-              Identifier(range_=[3:23-3:27], val='Name')
+              range_=3:23-3:27
+              Identifier(location='types3.dl#3:23-3:27', val='Name')
             )
           )
         )
       )
     )
     Attribute(
-      range_=[3:29-3:39]
+      range_=3:29-3:39
       ResultNode(
-        range_=[3:29-3:31]
-        Identifier(range_=[3:29-3:31], val='id')
+        range_=3:29-3:31
+        Identifier(location='types3.dl#3:29-3:31', val='id')
       )
       ResultNode(
-        range_=[3:33-3:39]
+        range_=3:33-3:39
         TypeReference(
-          range_=[3:33-3:39]
+          range_=3:33-3:39
           ResultNode(
-            range_=[3:33-3:39]
+            range_=3:33-3:39
             TypeReferenceName(
-              range_=[3:33-3:39]
-              Identifier(range_=[3:33-3:39], val='number')
+              range_=3:33-3:39
+              Identifier(location='types3.dl#3:33-3:39', val='number')
             )
           )
         )
@@ -119,56 +119,56 @@ File(
     )
   )
   ResultNode(
-    range_=[5:0-5:20]
+    range_=5:0-5:20
     Fact(
-      range_=[5:0-5:20]
+      range_=5:0-5:20
       ResultNode(
-        range_=[5:0-5:8]
+        range_=5:0-5:8
         RelationReferenceName(
-          range_=[5:0-5:8]
-          Identifier(range_=[5:0-5:8], val='identity')
+          range_=5:0-5:8
+          Identifier(location='types3.dl#5:0-5:8', val='identity')
         )
       )
-      StringConstant(range_=[5:9-5:16], ty=UnresolvedType(), val='"Alice"')
-      NumberConstant(range_=[5:18-5:19], ty=UnresolvedType(), val=1)
+      StringConstant(location='types3.dl#5:9-5:16', ty=UnresolvedType(), val='"Alice"')
+      NumberConstant(location='types3.dl#5:18-5:19', ty=UnresolvedType(), val=1)
     )
   )
   ResultNode(
-    range_=[6:0-6:18]
+    range_=6:0-6:18
     Fact(
-      range_=[6:0-6:18]
+      range_=6:0-6:18
       ResultNode(
-        range_=[6:0-6:8]
+        range_=6:0-6:8
         RelationReferenceName(
-          range_=[6:0-6:8]
-          Identifier(range_=[6:0-6:8], val='identity')
+          range_=6:0-6:8
+          Identifier(location='types3.dl#6:0-6:8', val='identity')
         )
       )
-      StringConstant(range_=[6:9-6:14], ty=UnresolvedType(), val='"Bob"')
-      NumberConstant(range_=[6:16-6:17], ty=UnresolvedType(), val=2)
+      StringConstant(location='types3.dl#6:9-6:14', ty=UnresolvedType(), val='"Bob"')
+      NumberConstant(location='types3.dl#6:16-6:17', ty=UnresolvedType(), val=2)
     )
   )
   RelationDeclaration(
-    range_=[8:0-8:24]
+    range_=8:0-8:24
     ResultNode(
-      range_=[8:6-8:12]
-      Identifier(range_=[8:6-8:12], val='has_id')
+      range_=8:6-8:12
+      Identifier(location='types3.dl#8:6-8:12', val='has_id')
     )
     Attribute(
-      range_=[8:13-8:23]
+      range_=8:13-8:23
       ResultNode(
-        range_=[8:13-8:17]
-        Identifier(range_=[8:13-8:17], val='name')
+        range_=8:13-8:17
+        Identifier(location='types3.dl#8:13-8:17', val='name')
       )
       ResultNode(
-        range_=[8:19-8:23]
+        range_=8:19-8:23
         TypeReference(
-          range_=[8:19-8:23]
+          range_=8:19-8:23
           ResultNode(
-            range_=[8:19-8:23]
+            range_=8:19-8:23
             TypeReferenceName(
-              range_=[8:19-8:23]
-              Identifier(range_=[8:19-8:23], val='Name')
+              range_=8:19-8:23
+              Identifier(location='types3.dl#8:19-8:23', val='Name')
             )
           )
         )
@@ -176,47 +176,47 @@ File(
     )
   )
   Rule(
-    range_=[10:0-10:36]
+    range_=10:0-10:36
     RuleHead(
-      range_=[10:0-10:12]
+      range_=10:0-10:12
       ResultNode(
-        range_=[10:0-10:12]
+        range_=10:0-10:12
         RelationReference(
-          range_=[10:0-10:12]
+          range_=10:0-10:12
           ResultNode(
-            range_=[10:0-10:6]
+            range_=10:0-10:6
             RelationReferenceName(
-              range_=[10:0-10:6]
-              Identifier(range_=[10:0-10:6], val='has_id')
+              range_=10:0-10:6
+              Identifier(location='types3.dl#10:0-10:6', val='has_id')
             )
           )
-          Variable(range_=[10:7-10:11], ty=UnresolvedType(), name='name')
+          Variable(location='types3.dl#10:7-10:11', ty=UnresolvedType(), name='name')
         )
       )
     )
     ResultNode(
-      range_=[10:16-10:35]
+      range_=10:16-10:35
       Disjunction(
-        range_=[10:16-10:35]
+        range_=10:16-10:35
         Conjunction(
-          range_=[10:16-10:35]
+          range_=10:16-10:35
           ResultNode(
-            range_=[10:16-10:35]
+            range_=10:16-10:35
             RelationReferenceClause(
-              range_=[10:16-10:35]
+              range_=10:16-10:35
               ResultNode(
-                range_=[10:16-10:35]
+                range_=10:16-10:35
                 RelationReference(
-                  range_=[10:16-10:35]
+                  range_=10:16-10:35
                   ResultNode(
-                    range_=[10:16-10:26]
+                    range_=10:16-10:26
                     RelationReferenceName(
-                      range_=[10:16-10:26]
-                      Identifier(range_=[10:16-10:26], val='is_student')
+                      range_=10:16-10:26
+                      Identifier(location='types3.dl#10:16-10:26', val='is_student')
                     )
                   )
-                  Variable(range_=[10:27-10:31], ty=UnresolvedType(), name='name')
-                  Variable(range_=[10:33-10:34], ty=UnresolvedType(), name='_')
+                  Variable(location='types3.dl#10:27-10:31', ty=UnresolvedType(), name='name')
+                  Variable(location='types3.dl#10:33-10:34', ty=UnresolvedType(), name='_')
                 )
               )
             )
@@ -226,47 +226,47 @@ File(
     )
   )
   Rule(
-    range_=[11:0-11:36]
+    range_=11:0-11:36
     RuleHead(
-      range_=[11:0-11:12]
+      range_=11:0-11:12
       ResultNode(
-        range_=[11:0-11:12]
+        range_=11:0-11:12
         RelationReference(
-          range_=[11:0-11:12]
+          range_=11:0-11:12
           ResultNode(
-            range_=[11:0-11:6]
+            range_=11:0-11:6
             RelationReferenceName(
-              range_=[11:0-11:6]
-              Identifier(range_=[11:0-11:6], val='has_id')
+              range_=11:0-11:6
+              Identifier(location='types3.dl#11:0-11:6', val='has_id')
             )
           )
-          Variable(range_=[11:7-11:11], ty=UnresolvedType(), name='name')
+          Variable(location='types3.dl#11:7-11:11', ty=UnresolvedType(), name='name')
         )
       )
     )
     ResultNode(
-      range_=[11:16-11:35]
+      range_=11:16-11:35
       Disjunction(
-        range_=[11:16-11:35]
+        range_=11:16-11:35
         Conjunction(
-          range_=[11:16-11:35]
+          range_=11:16-11:35
           ResultNode(
-            range_=[11:16-11:35]
+            range_=11:16-11:35
             RelationReferenceClause(
-              range_=[11:16-11:35]
+              range_=11:16-11:35
               ResultNode(
-                range_=[11:16-11:35]
+                range_=11:16-11:35
                 RelationReference(
-                  range_=[11:16-11:35]
+                  range_=11:16-11:35
                   ResultNode(
-                    range_=[11:16-11:26]
+                    range_=11:16-11:26
                     RelationReferenceName(
-                      range_=[11:16-11:26]
-                      Identifier(range_=[11:16-11:26], val='is_teacher')
+                      range_=11:16-11:26
+                      Identifier(location='types3.dl#11:16-11:26', val='is_teacher')
                     )
                   )
-                  Variable(range_=[11:27-11:31], ty=UnresolvedType(), name='name')
-                  Variable(range_=[11:33-11:34], ty=UnresolvedType(), name='_')
+                  Variable(location='types3.dl#11:27-11:31', ty=UnresolvedType(), name='name')
+                  Variable(location='types3.dl#11:33-11:34', ty=UnresolvedType(), name='_')
                 )
               )
             )

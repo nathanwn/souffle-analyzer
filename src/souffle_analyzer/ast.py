@@ -106,6 +106,9 @@ class Range:
     start: Position
     end: Position
 
+    def __repr__(self) -> str:
+        return f"{self.start}-{self.end}"
+
     @classmethod
     def from_single_position(cls, position: Position) -> Range:
         return Range(
@@ -125,9 +128,6 @@ class Range:
             start=self.start.to_lsp_type(), end=self.end.to_lsp_type()
         )
 
-    def __repr__(self) -> str:
-        return f"[{self.start}-{self.end}]"
-
     def is_single_position(self) -> bool:
         return self.start == self.end
 
@@ -142,6 +142,9 @@ class Location:
     uri: str
     range_: Range
 
+    def __repr__(self) -> str:
+        return f"'{self.uri}#{self.range_}'"
+
     @classmethod
     def from_lsp_type(cls, loc: lsptypes.Location) -> Location:
         return cls(uri=loc.uri, range_=Range.from_lsp_type(loc.range))
@@ -152,20 +155,24 @@ class Location:
 
 @dataclass
 class SyntaxIssue:
-    range_: Range
+    location: Location
     message: str | None
 
 
 @dataclass
 class Node:
-    range_: Range
+    location: Location
+
+    @property
+    def range_(self) -> Range:
+        return self.location.range_
 
     @property
     def children_sorted_by_range(self) -> list[Node]:
-        return sorted(self.children, key=lambda child: child.range_.start)
+        return sorted(self.children, key=lambda child: child.location.range_.start)
 
     def covers_position(self, position: Position) -> bool:
-        return self.range_.covers(position)
+        return self.location.range_.covers(position)
 
     @property
     def children(self) -> list[Node]:
@@ -177,7 +184,7 @@ class Node:
 
 
 class IsDeclarationNode(Protocol):
-    def get_declaration_name_range(self) -> Range | None: ...
+    def get_declaration_name_location(self) -> Location | None: ...
 
 
 @dataclass
@@ -229,7 +236,67 @@ class Atom(ValidNode):
 
 
 @dataclass
-class File(ValidNode):
+class Workspace:
+    documents: dict[str, Document] = field(default_factory=dict)
+
+    def get_relation_declaration_with_name(
+        self,
+        name: RelationReferenceName,
+    ) -> RelationDeclaration | None:
+        if len(name.parts) != 1:
+            # TODO: support more complex names
+            return None
+        # TODO: optimize this to only look for "related" documents
+        for document in self.documents.values():
+            for relation_declaration in document.relation_declarations:
+                relation_declaration_name = relation_declaration.name.inner
+                if isinstance(relation_declaration_name, ErrorNode):
+                    continue
+                if relation_declaration_name.val == name.parts[0].val:
+                    return relation_declaration
+        return None
+
+    def get_type_declaration_with_name(
+        self,
+        name: TypeReferenceName,
+    ) -> TypeDeclaration | None:
+        if len(name.parts) != 1:
+            # TODO: support more complex names
+            return None
+        # TODO: optimize this to only look for "related" documents
+        for document in self.documents.values():
+            for type_declaration in document.type_declarations:
+                type_declaration_name = type_declaration.name.inner
+                if not isinstance(type_declaration_name, ValidNode):
+                    continue
+                if type_declaration_name.val == name.parts[0].val:
+                    return type_declaration
+        return None
+
+    def get_adt_branch_with_name(
+        self,
+        name: BranchInitName,
+    ) -> AbstractDataTypeBranch | None:
+        if len(name.parts) != 1:
+            # TODO: support more complex names
+            return None
+        # TODO: optimize this to only look for "related" documents
+        for document in self.documents.values():
+            for type_declaration in document.type_declarations:
+                type_expression_node = type_declaration.expression
+                if not isinstance(
+                    type_expression_node.inner, AbstractDataTypeExpression
+                ):
+                    continue
+                type_expression = type_expression_node.inner
+                adt_branch = type_expression.get_branch_with_name(name.parts[0].val)
+                if adt_branch is not None:
+                    return adt_branch
+        return None
+
+
+@dataclass
+class Document(ValidNode):
     code: str
     relation_declarations: list[RelationDeclaration]
     type_declarations: list[TypeDeclaration]
@@ -252,54 +319,7 @@ class File(ValidNode):
         ]
 
     def accept(self, visitor: Visitor[T]) -> T:
-        return visitor.visit_file(self)
-
-    def get_relation_declaration_with_name(
-        self,
-        name: RelationReferenceName,
-    ) -> RelationDeclaration | None:
-        if len(name.parts) != 1:
-            # TODO: support more complex names
-            return None
-        for relation_declaration in self.relation_declarations:
-            relation_declaration_name = relation_declaration.name.inner
-            if isinstance(relation_declaration_name, ErrorNode):
-                continue
-            if relation_declaration_name.val == name.parts[0].val:
-                return relation_declaration
-        return None
-
-    def get_type_declaration_with_name(
-        self,
-        name: TypeReferenceName,
-    ) -> TypeDeclaration | None:
-        if len(name.parts) != 1:
-            # TODO: support more complex names
-            return None
-        for type_declaration in self.type_declarations:
-            type_declaration_name = type_declaration.name.inner
-            if not isinstance(type_declaration_name, ValidNode):
-                continue
-            if type_declaration_name.val == name.parts[0].val:
-                return type_declaration
-        return None
-
-    def get_adt_branch_with_name(
-        self,
-        name: BranchInitName,
-    ) -> AbstractDataTypeBranch | None:
-        if len(name.parts) != 1:
-            # TODO: support more complex names
-            return None
-        for type_declaration in self.type_declarations:
-            type_expression_node = type_declaration.expression
-            if not isinstance(type_expression_node.inner, AbstractDataTypeExpression):
-                continue
-            type_expression = type_expression_node.inner
-            adt_branch = type_expression.get_branch_with_name(name.parts[0].val)
-            if adt_branch is not None:
-                return adt_branch
-        return None
+        return visitor.visit_document(self)
 
 
 @dataclass
@@ -319,10 +339,10 @@ class TypeDeclaration(SouffleType, ValidNode):
     def accept(self, visitor: Visitor[T]) -> T:
         return visitor.visit_type_declaration(self)
 
-    def get_declaration_name_range(self) -> Range | None:
+    def get_declaration_name_location(self) -> Location | None:
         if isinstance(self.name.inner, ErrorNode):
             return None
-        return self.name.inner.range_
+        return self.name.inner.location
 
 
 @dataclass
@@ -406,10 +426,10 @@ class AbstractDataTypeBranch(ValidNode):
     def accept(self, visitor: Visitor[T]) -> T:
         return visitor.visit_abstract_data_type_branch(self)
 
-    def get_declaration_name_range(self) -> Range | None:
+    def get_declaration_name_location(self) -> Location | None:
         if isinstance(self.name.inner, ErrorNode):
             return None
-        return self.name.inner.range_
+        return self.name.inner.location
 
     def get_signature(self) -> str | None:
         builder: list[str] = []
@@ -610,10 +630,10 @@ class RelationDeclaration(ValidNode):
     def accept(self, visitor: Visitor[T]) -> T:
         return visitor.visit_relation_declaration(self)
 
-    def get_declaration_name_range(self) -> Range | None:
+    def get_declaration_name_location(self) -> Location | None:
         if isinstance(self.name.inner, ErrorNode):
             return None
-        return self.name.inner.range_
+        return self.name.inner.location
 
     def get_signature(self) -> str | None:
         builder: list[str] = []
@@ -992,7 +1012,10 @@ class LineComment(Comment):
 
     def merge(self, other: LineComment) -> LineComment:
         return LineComment(
-            range_=Range(self.range_.start, other.range_.end),
+            location=Location(
+                uri=self.location.uri,
+                range_=Range(self.range_.start, other.range_.end),
+            ),
             # syntax_issues=[*self.syntax_issues, *other.syntax_issues],
             content=[*self.content, *other.content],
         )

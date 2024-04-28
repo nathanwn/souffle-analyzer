@@ -30,8 +30,8 @@ def test_parser(file_snapshot: SnapshotAssertion, filename: str) -> None:
     test_data_file = os.path.join(test_data_dir, filename)
     with open(test_data_file, "rb") as f:
         code = f.read()
-    parser = Parser()
-    file = parser.parse(code)
+    parser = Parser(uri=filename, code=code)
+    file = parser.parse()
 
     res = os.linesep.join(format_souffle_ast(file))
     assert res.replace(os.linesep, "\n") == file_snapshot
@@ -60,8 +60,8 @@ def test_parser_on_incomplete_files(
     with open(test_data_file, "rb") as f:
         code = f.read()
 
-    parser = Parser()
-    file = parser.parse(code)
+    parser = Parser(uri=filename, code=code)
+    file = parser.parse()
     code_lines = code.decode().splitlines()
 
     all_positions = get_positions_in_range(
@@ -80,13 +80,17 @@ def test_parser_on_incomplete_files(
             prev = cur
             new_code = "".join(new_code_buf).encode()
             try:
-                parser.parse(new_code)
+                new_parser = Parser(uri=filename, code=new_code)
+                new_parser.parse()
             except BaseException as err:
                 pytest.fail(
                     os.linesep.join(
                         [
                             str(f"Unexpected error: {err}"),
-                            *format_souffle_code(new_code.decode().splitlines()),
+                            *format_souffle_code(
+                                new_code.decode().splitlines(),
+                                uri=filename,
+                            ),
                         ],
                     )
                 )

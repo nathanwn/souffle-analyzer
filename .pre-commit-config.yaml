@@ -27,6 +27,12 @@ repos:
     - id: pyupgrade
       args: [--py38-plus]
 
+  - repo: https://github.com/PyCQA/autoflake
+    rev: v2.3.1
+    hooks:
+      - id: autoflake
+        args: [--remove-all-unused-imports, --in-place]
+
   - repo: https://github.com/psf/black
     rev: 24.3.0
     hooks:
@@ -41,12 +47,6 @@ repos:
     rev: v1.9.0
     hooks:
       - id: mypy
-
-  - repo: https://github.com/PyCQA/autoflake
-    rev: v2.3.1
-    hooks:
-      - id: autoflake
-        args: [--remove-all-unused-imports, --in-place]
 
   - repo: https://github.com/pycqa/flake8
     rev: 7.0.0

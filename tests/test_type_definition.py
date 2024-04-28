@@ -28,7 +28,7 @@ def test_type_definition(file_snapshot: SnapshotAssertion, filename: str) -> Non
         code = f.read()
 
     ctx = AnalysisContext()
-    ctx.open_document(filename, code)
+    ctx.sync_document(filename, code)
     code_lines = code.splitlines()
 
     def analyze(position: Position) -> Optional[lsptypes.Location]:
@@ -38,12 +38,13 @@ def test_type_definition(file_snapshot: SnapshotAssertion, filename: str) -> Non
         out = []
         out.append("-- Type Definition --")
         range_ = Range.from_lsp_type(result.range)
-        out.extend(format_souffle_code_range(code_lines, range_))
+        out.extend(format_souffle_code_range(code_lines, filename, range_))
         return out
 
     assert (
         format_cursorwise_results(
             code_lines=code_lines,
+            uri=filename,
             analyze=analyze,
             format_result=format_result,
         )

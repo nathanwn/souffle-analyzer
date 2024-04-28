@@ -3,12 +3,12 @@ from typing import Optional, Tuple
 from souffle_analyzer.ast import (
     BUILTIN_TYPES,
     BranchInitName,
-    File,
     Node,
     Position,
     Range,
     RelationReferenceName,
     TypeReferenceName,
+    Workspace,
 )
 from souffle_analyzer.visitor.visitor import Visitor
 
@@ -16,12 +16,13 @@ T = Optional[Tuple[str, Range]]
 
 
 class HoverVisitor(Visitor[T]):
-    def __init__(self, file: File, position: Position) -> None:
+    def __init__(self, workspace: Workspace, uri: str, position: Position) -> None:
         self.position = position
-        super().__init__(file)
+        self.uri = uri
+        super().__init__(workspace)
 
     def process(self) -> T:
-        return self.visit_file(self.file)
+        return self.workspace.documents[self.uri].accept(self)
 
     def visit_type_reference_name(self, type_reference_name: TypeReferenceName) -> T:
         if len(type_reference_name.parts) == 1:
@@ -33,8 +34,8 @@ class HoverVisitor(Visitor[T]):
     def visit_relation_reference_name(
         self, relation_reference_name: RelationReferenceName
     ) -> T:
-        matching_relation_declaration = self.file.get_relation_declaration_with_name(
-            relation_reference_name
+        matching_relation_declaration = (
+            self.workspace.get_relation_declaration_with_name(relation_reference_name)
         )
         if matching_relation_declaration is None:
             return None
@@ -44,7 +45,7 @@ class HoverVisitor(Visitor[T]):
         )
 
     def visit_branch_init_name(self, branch_init_name: BranchInitName) -> T:
-        matching_branch_init_declaration = self.file.get_adt_branch_with_name(
+        matching_branch_init_declaration = self.workspace.get_adt_branch_with_name(
             branch_init_name
         )
         if matching_branch_init_declaration is None:

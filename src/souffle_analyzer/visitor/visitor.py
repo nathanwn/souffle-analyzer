@@ -19,9 +19,9 @@ from souffle_analyzer.ast import (
     Directive,
     DirectiveQualifier,
     Disjunction,
+    Document,
     ErrorNode,
     Fact,
-    File,
     Identifier,
     LineComment,
     NegOp,
@@ -44,14 +44,15 @@ from souffle_analyzer.ast import (
     TypeReferenceName,
     UnionTypeExpression,
     Variable,
+    Workspace,
 )
 
 T = TypeVar("T")
 
 
 class Visitor(Generic[T]):
-    def __init__(self, file: File) -> None:
-        self.file = file
+    def __init__(self, workspace: Workspace) -> None:
+        self.workspace = workspace
 
     def visit_error_node(self, error_node: ErrorNode) -> T:
         return self.generic_visit(error_node)
@@ -59,8 +60,8 @@ class Visitor(Generic[T]):
     def visit_result_node(self, result_node: ResultNode) -> T:
         return self.generic_visit(result_node)
 
-    def visit_file(self, file: File) -> T:
-        return self.generic_visit(file)
+    def visit_document(self, document: Document) -> T:
+        return self.generic_visit(document)
 
     def visit_type_declaration(self, type_declaration: TypeDeclaration) -> T:
         return self.generic_visit(type_declaration)

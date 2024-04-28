@@ -1,3 +1,4 @@
+semantic_arity1.dl
 0 | .decl foo(x: number, y: number)
 1 |
 2 | foo().
@@ -12,9 +13,11 @@
 =====
 
 -- Cursor range --
+semantic_arity1.dl
 2 | foo().
   | ~~~~~
 -- Range --
+semantic_arity1.dl
 2 | foo().
   | ~~~~~
 -- Message --
@@ -22,9 +25,11 @@ Number of arguments: have 0, want 2.
 _____
 
 -- Cursor range --
+semantic_arity1.dl
 3 | foo(1).
   | ~~~~~~
 -- Range --
+semantic_arity1.dl
 3 | foo(1).
   | ~~~~~~
 -- Message --
@@ -32,9 +37,11 @@ Number of arguments: have 1, want 2.
 _____
 
 -- Cursor range --
+semantic_arity1.dl
 5 | foo(1, 2, 3).
   | ~~~~~~~~~~~~
 -- Range --
+semantic_arity1.dl
 5 | foo(1, 2, 3).
   | ~~~~~~~~~~~~
 -- Message --
@@ -42,9 +49,11 @@ Number of arguments: have 3, want 2.
 _____
 
 -- Cursor range --
+semantic_arity1.dl
 9 | bar(x, y, z) :- foo(x, y).
   | ~~~~~~~~~~~~
 -- Range --
+semantic_arity1.dl
 9 | bar(x, y, z) :- foo(x, y).
   | ~~~~~~~~~~~~
 -- Message --

@@ -1,3 +1,4 @@
+types3.dl
  0 | .type Name <: symbol
  1 |
  2 | .decl is_student(name: Name, id: number)
@@ -14,33 +15,41 @@
 =====
 
 -- Cursor range --
+types3.dl
 10 | has_id(name) :- is_student(name, _).
    |        ~~~~
 -- Type Definition --
+types3.dl
  0 | .type Name <: symbol
    |       ~~~~
 _____
 
 -- Cursor range --
+types3.dl
 10 | has_id(name) :- is_student(name, _).
    |                            ~~~~
 -- Type Definition --
+types3.dl
  0 | .type Name <: symbol
    |       ~~~~
 _____
 
 -- Cursor range --
+types3.dl
 11 | has_id(name) :- is_teacher(name, _).
    |        ~~~~
 -- Type Definition --
+types3.dl
  0 | .type Name <: symbol
    |       ~~~~
 _____
 
 -- Cursor range --
+types3.dl
 11 | has_id(name) :- is_teacher(name, _).
    |                            ~~~~
 -- Type Definition --
+types3.dl
  0 | .type Name <: symbol
    |       ~~~~
 _____

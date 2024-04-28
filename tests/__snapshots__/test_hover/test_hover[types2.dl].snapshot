@@ -1,3 +1,4 @@
+types2.dl
  0 | .type Exp = Const { val: number }
  1 |           | Var { id: symbol}
  2 |           | Add { e1: Exp, e2: Exp }
@@ -18,9 +19,11 @@
 =====
 
 -- Cursor range --
+types2.dl
  0 | .type Exp = Const { val: number }
    |                          ~~~~~~
 -- Hover range --
+types2.dl
  0 | .type Exp = Const { val: number }
    |                          ~~~~~~
 --   Message   --
@@ -28,9 +31,11 @@ Type `number`. Each value is a signed integer.
 _____
 
 -- Cursor range --
+types2.dl
  1 |           | Var { id: symbol}
    |                       ~~~~~~
 -- Hover range --
+types2.dl
  1 |           | Var { id: symbol}
    |                       ~~~~~~
 --   Message   --
@@ -38,9 +43,11 @@ Type `symbol`. Each value is a string.
 _____
 
 -- Cursor range --
+types2.dl
  6 | has_expr($Const(1)).
    | ~~~~~~~~
 -- Hover range --
+types2.dl
  6 | has_expr($Const(1)).
    | ~~~~~~~~
 --   Message   --
@@ -50,9 +57,11 @@ has_expr(exp: Exp)
 _____
 
 -- Cursor range --
+types2.dl
  6 | has_expr($Const(1)).
    |           ~~~~~
 -- Hover range --
+types2.dl
  6 | has_expr($Const(1)).
    |           ~~~~~
 --   Message   --
@@ -62,9 +71,11 @@ Const {val: number}
 _____
 
 -- Cursor range --
+types2.dl
  7 | has_expr($Var("x")).
    | ~~~~~~~~
 -- Hover range --
+types2.dl
  7 | has_expr($Var("x")).
    | ~~~~~~~~
 --   Message   --
@@ -74,9 +85,11 @@ has_expr(exp: Exp)
 _____
 
 -- Cursor range --
+types2.dl
  7 | has_expr($Var("x")).
    |           ~~~
 -- Hover range --
+types2.dl
  7 | has_expr($Var("x")).
    |           ~~~
 --   Message   --
@@ -86,9 +99,11 @@ Var {id: symbol}
 _____
 
 -- Cursor range --
+types2.dl
  8 | has_expr($Add($Const(2), $Const(3))).
    | ~~~~~~~~
 -- Hover range --
+types2.dl
  8 | has_expr($Add($Const(2), $Const(3))).
    | ~~~~~~~~
 --   Message   --
@@ -98,9 +113,11 @@ has_expr(exp: Exp)
 _____
 
 -- Cursor range --
+types2.dl
  8 | has_expr($Add($Const(2), $Const(3))).
    |           ~~~
 -- Hover range --
+types2.dl
  8 | has_expr($Add($Const(2), $Const(3))).
    |           ~~~
 --   Message   --
@@ -110,9 +127,11 @@ Add {e1: Exp, e2: Exp}
 _____
 
 -- Cursor range --
+types2.dl
  8 | has_expr($Add($Const(2), $Const(3))).
    |                ~~~~~
 -- Hover range --
+types2.dl
  8 | has_expr($Add($Const(2), $Const(3))).
    |                ~~~~~
 --   Message   --
@@ -122,9 +141,11 @@ Const {val: number}
 _____
 
 -- Cursor range --
+types2.dl
  8 | has_expr($Add($Const(2), $Const(3))).
    |                           ~~~~~
 -- Hover range --
+types2.dl
  8 | has_expr($Add($Const(2), $Const(3))).
    |                           ~~~~~
 --   Message   --
@@ -134,9 +155,11 @@ Const {val: number}
 _____
 
 -- Cursor range --
+types2.dl
 10 | .decl produces_value(val: number)
    |                           ~~~~~~
 -- Hover range --
+types2.dl
 10 | .decl produces_value(val: number)
    |                           ~~~~~~
 --   Message   --
@@ -144,9 +167,11 @@ Type `number`. Each value is a signed integer.
 _____
 
 -- Cursor range --
+types2.dl
 12 | produces_value(val) :- has_expr($Const(val)).
    | ~~~~~~~~~~~~~~
 -- Hover range --
+types2.dl
 12 | produces_value(val) :- has_expr($Const(val)).
    | ~~~~~~~~~~~~~~
 --   Message   --
@@ -156,9 +181,11 @@ produces_value(val: number)
 _____
 
 -- Cursor range --
+types2.dl
 12 | produces_value(val) :- has_expr($Const(val)).
    |                        ~~~~~~~~
 -- Hover range --
+types2.dl
 12 | produces_value(val) :- has_expr($Const(val)).
    |                        ~~~~~~~~
 --   Message   --
@@ -168,9 +195,11 @@ has_expr(exp: Exp)
 _____
 
 -- Cursor range --
+types2.dl
 12 | produces_value(val) :- has_expr($Const(val)).
    |                                  ~~~~~
 -- Hover range --
+types2.dl
 12 | produces_value(val) :- has_expr($Const(val)).
    |                                  ~~~~~
 --   Message   --
@@ -180,9 +209,11 @@ Const {val: number}
 _____
 
 -- Cursor range --
+types2.dl
 13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
    | ~~~~~~~~~~~~~~
 -- Hover range --
+types2.dl
 13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
    | ~~~~~~~~~~~~~~
 --   Message   --
@@ -192,9 +223,11 @@ produces_value(val: number)
 _____
 
 -- Cursor range --
+types2.dl
 13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
    |                        ~~~~~~~~
 -- Hover range --
+types2.dl
 13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
    |                        ~~~~~~~~
 --   Message   --
@@ -204,9 +237,11 @@ has_expr(exp: Exp)
 _____
 
 -- Cursor range --
+types2.dl
 13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
    |                                  ~~~
 -- Hover range --
+types2.dl
 13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
    |                                  ~~~
 --   Message   --
@@ -216,9 +251,11 @@ Add {e1: Exp, e2: Exp}
 _____
 
 -- Cursor range --
+types2.dl
 13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
    |                                       ~~~~~
 -- Hover range --
+types2.dl
 13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
    |                                       ~~~~~
 --   Message   --
@@ -228,9 +265,11 @@ Const {val: number}
 _____
 
 -- Cursor range --
+types2.dl
 13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
    |                                                   ~~~~~
 -- Hover range --
+types2.dl
 13 | produces_value(val) :- has_expr($Add($Const(c1), $Const(c2))), val = c1 + c2.
    |                                                   ~~~~~
 --   Message   --
@@ -240,9 +279,11 @@ Const {val: number}
 _____
 
 -- Cursor range --
+types2.dl
 15 | .output produces_value
    |         ~~~~~~~~~~~~~~
 -- Hover range --
+types2.dl
 15 | .output produces_value
    |         ~~~~~~~~~~~~~~
 --   Message   --

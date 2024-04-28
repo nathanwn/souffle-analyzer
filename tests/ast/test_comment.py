@@ -1,6 +1,6 @@
 import pytest
 
-from souffle_analyzer.ast import BlockComment, LineComment, Position, Range
+from souffle_analyzer.ast import BlockComment, LineComment, Location, Position, Range
 
 
 @pytest.mark.parametrize(
@@ -36,8 +36,10 @@ from souffle_analyzer.ast import BlockComment, LineComment, Position, Range
 )
 def test_block_comment_get_text(content: str, text: str):
     block_comment = BlockComment(
-        range_=Range(Position(0, 0), Position(1, 1)),
-        # syntax_issues=[],
+        location=Location(
+            uri="",
+            range_=Range(Position(0, 0), Position(1, 1)),
+        ),
         content=content,
     )
     assert block_comment.get_text() == text
@@ -67,8 +69,10 @@ def test_block_comment_get_text(content: str, text: str):
 )
 def test_line_comment_get_text(content: str, text: str):
     line_comment = LineComment(
-        range_=Range(Position(0, 0), Position(1, 1)),
-        # syntax_issues=[],
+        location=Location(
+            uri="",
+            range_=Range(Position(0, 0), Position(1, 1)),
+        ),
         content=content.splitlines(),
     )
     assert line_comment.get_text() == text

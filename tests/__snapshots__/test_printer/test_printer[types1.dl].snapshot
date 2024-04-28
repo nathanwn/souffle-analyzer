@@ -1,3 +1,4 @@
+types1.dl
 0 | .type Piece = Pawn | King
 1 | .type Edge = [
 2 |     from: Node,

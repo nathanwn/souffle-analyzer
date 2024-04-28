@@ -1,46 +1,46 @@
-File(
-  range_=[0:0-6:0]
+Document(
+  range_=0:0-6:0
   RelationDeclaration(
-    range_=[0:0-0:29]
+    range_=0:0-0:29
     ResultNode(
-      range_=[0:6-0:7]
-      Identifier(range_=[0:6-0:7], val='A')
+      range_=0:6-0:7
+      Identifier(location='syntax_error_1.dl#0:6-0:7', val='A')
     )
     Attribute(
-      range_=[0:8-0:17]
+      range_=0:8-0:17
       ResultNode(
-        range_=[0:8-0:9]
-        Identifier(range_=[0:8-0:9], val='x')
+        range_=0:8-0:9
+        Identifier(location='syntax_error_1.dl#0:8-0:9', val='x')
       )
       ResultNode(
-        range_=[0:11-0:17]
+        range_=0:11-0:17
         TypeReference(
-          range_=[0:11-0:17]
+          range_=0:11-0:17
           ResultNode(
-            range_=[0:11-0:17]
+            range_=0:11-0:17
             TypeReferenceName(
-              range_=[0:11-0:17]
-              Identifier(range_=[0:11-0:17], val='number')
+              range_=0:11-0:17
+              Identifier(location='syntax_error_1.dl#0:11-0:17', val='number')
             )
           )
         )
       )
     )
     Attribute(
-      range_=[0:19-0:28]
+      range_=0:19-0:28
       ResultNode(
-        range_=[0:19-0:20]
-        Identifier(range_=[0:19-0:20], val='y')
+        range_=0:19-0:20
+        Identifier(location='syntax_error_1.dl#0:19-0:20', val='y')
       )
       ResultNode(
-        range_=[0:22-0:28]
+        range_=0:22-0:28
         TypeReference(
-          range_=[0:22-0:28]
+          range_=0:22-0:28
           ResultNode(
-            range_=[0:22-0:28]
+            range_=0:22-0:28
             TypeReferenceName(
-              range_=[0:22-0:28]
-              Identifier(range_=[0:22-0:28], val='number')
+              range_=0:22-0:28
+              Identifier(location='syntax_error_1.dl#0:22-0:28', val='number')
             )
           )
         )
@@ -48,26 +48,26 @@ File(
     )
   )
   ResultNode(
-    range_=[2:0-2:7]
+    range_=2:0-2:7
     Fact(
-      range_=[2:0-2:7]
+      range_=2:0-2:7
       ResultNode(
-        range_=[2:0-2:1]
+        range_=2:0-2:1
         RelationReferenceName(
-          range_=[2:0-2:1]
-          Identifier(range_=[2:0-2:1], val='A')
+          range_=2:0-2:1
+          Identifier(location='syntax_error_1.dl#2:0-2:1', val='A')
         )
       )
-      NumberConstant(range_=[2:2-2:3], ty=UnresolvedType(), val=1)
-      NumberConstant(range_=[2:5-2:6], ty=UnresolvedType(), val=2)
+      NumberConstant(location='syntax_error_1.dl#2:2-2:3', ty=UnresolvedType(), val=1)
+      NumberConstant(location='syntax_error_1.dl#2:5-2:6', ty=UnresolvedType(), val=2)
     )
   )
   Directive(
-    range_=[5:0-5:9]
-    DirectiveQualifier(range_=[5:0-5:7], keyword='.output')
+    range_=5:0-5:9
+    DirectiveQualifier(location='syntax_error_1.dl#5:0-5:7', keyword='.output')
     RelationReferenceName(
-      range_=[5:8-5:9]
-      Identifier(range_=[5:8-5:9], val='A')
+      range_=5:8-5:9
+      Identifier(location='syntax_error_1.dl#5:8-5:9', val='A')
     )
   )
 )

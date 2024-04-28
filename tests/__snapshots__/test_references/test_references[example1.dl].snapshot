@@ -1,3 +1,4 @@
+example1.dl
  0 | /* A is a relation. */
  1 | .decl A(x: number, y: number)
  2 |
@@ -19,255 +20,327 @@
 =====
 
 -- Cursor range --
+example1.dl
  1 | .decl A(x: number, y: number)
    |       ~
 -- References --
+example1.dl
  1 | .decl A(x: number, y: number)
    |       ~
 
+example1.dl
  9 | B(x, y) :- A(x, y).
    |            ~
 
+example1.dl
 10 | B(x, z) :- A(x, y), B(y, z).
    |            ~
 
+example1.dl
 13 | C(x, y) :- A(x, y), !B(x, y).
    |            ~
 
+example1.dl
 15 | .input A
    |        ~
 
 _____
 
 -- Cursor range --
+example1.dl
  6 | .decl B(x: number, y: number)
    |       ~
 -- References --
+example1.dl
  6 | .decl B(x: number, y: number)
    |       ~
 
+example1.dl
  9 | B(x, y) :- A(x, y).
    | ~
 
+example1.dl
 10 | B(x, z) :- A(x, y), B(y, z).
    | ~
 
+example1.dl
 10 | B(x, z) :- A(x, y), B(y, z).
    |                     ~
 
+example1.dl
 13 | C(x, y) :- A(x, y), !B(x, y).
    |                      ~
 
 _____
 
 -- Cursor range --
+example1.dl
  9 | B(x, y) :- A(x, y).
    | ~
 -- References --
+example1.dl
  6 | .decl B(x: number, y: number)
    |       ~
 
+example1.dl
  9 | B(x, y) :- A(x, y).
    | ~
 
+example1.dl
 10 | B(x, z) :- A(x, y), B(y, z).
    | ~
 
+example1.dl
 10 | B(x, z) :- A(x, y), B(y, z).
    |                     ~
 
+example1.dl
 13 | C(x, y) :- A(x, y), !B(x, y).
    |                      ~
 
 _____
 
 -- Cursor range --
+example1.dl
  9 | B(x, y) :- A(x, y).
    |            ~
 -- References --
+example1.dl
  1 | .decl A(x: number, y: number)
    |       ~
 
+example1.dl
  9 | B(x, y) :- A(x, y).
    |            ~
 
+example1.dl
 10 | B(x, z) :- A(x, y), B(y, z).
    |            ~
 
+example1.dl
 13 | C(x, y) :- A(x, y), !B(x, y).
    |            ~
 
+example1.dl
 15 | .input A
    |        ~
 
 _____
 
 -- Cursor range --
+example1.dl
 10 | B(x, z) :- A(x, y), B(y, z).
    | ~
 -- References --
+example1.dl
  6 | .decl B(x: number, y: number)
    |       ~
 
+example1.dl
  9 | B(x, y) :- A(x, y).
    | ~
 
+example1.dl
 10 | B(x, z) :- A(x, y), B(y, z).
    | ~
 
+example1.dl
 10 | B(x, z) :- A(x, y), B(y, z).
    |                     ~
 
+example1.dl
 13 | C(x, y) :- A(x, y), !B(x, y).
    |                      ~
 
 _____
 
 -- Cursor range --
+example1.dl
 10 | B(x, z) :- A(x, y), B(y, z).
    |            ~
 -- References --
+example1.dl
  1 | .decl A(x: number, y: number)
    |       ~
 
+example1.dl
  9 | B(x, y) :- A(x, y).
    |            ~
 
+example1.dl
 10 | B(x, z) :- A(x, y), B(y, z).
    |            ~
 
+example1.dl
 13 | C(x, y) :- A(x, y), !B(x, y).
    |            ~
 
+example1.dl
 15 | .input A
    |        ~
 
 _____
 
 -- Cursor range --
+example1.dl
 10 | B(x, z) :- A(x, y), B(y, z).
    |                     ~
 -- References --
+example1.dl
  6 | .decl B(x: number, y: number)
    |       ~
 
+example1.dl
  9 | B(x, y) :- A(x, y).
    | ~
 
+example1.dl
 10 | B(x, z) :- A(x, y), B(y, z).
    | ~
 
+example1.dl
 10 | B(x, z) :- A(x, y), B(y, z).
    |                     ~
 
+example1.dl
 13 | C(x, y) :- A(x, y), !B(x, y).
    |                      ~
 
 _____
 
 -- Cursor range --
+example1.dl
 12 | .decl C(x: number, y: number)
    |       ~
 -- References --
+example1.dl
 12 | .decl C(x: number, y: number)
    |       ~
 
+example1.dl
 13 | C(x, y) :- A(x, y), !B(x, y).
    | ~
 
+example1.dl
 16 | .output C
    |         ~
 
 _____
 
 -- Cursor range --
+example1.dl
 13 | C(x, y) :- A(x, y), !B(x, y).
    | ~
 -- References --
+example1.dl
 12 | .decl C(x: number, y: number)
    |       ~
 
+example1.dl
 13 | C(x, y) :- A(x, y), !B(x, y).
    | ~
 
+example1.dl
 16 | .output C
    |         ~
 
 _____
 
 -- Cursor range --
+example1.dl
 13 | C(x, y) :- A(x, y), !B(x, y).
    |            ~
 -- References --
+example1.dl
  1 | .decl A(x: number, y: number)
    |       ~
 
+example1.dl
  9 | B(x, y) :- A(x, y).
    |            ~
 
+example1.dl
 10 | B(x, z) :- A(x, y), B(y, z).
    |            ~
 
+example1.dl
 13 | C(x, y) :- A(x, y), !B(x, y).
    |            ~
 
+example1.dl
 15 | .input A
    |        ~
 
 _____
 
 -- Cursor range --
+example1.dl
 13 | C(x, y) :- A(x, y), !B(x, y).
    |                      ~
 -- References --
+example1.dl
  6 | .decl B(x: number, y: number)
    |       ~
 
+example1.dl
  9 | B(x, y) :- A(x, y).
    | ~
 
+example1.dl
 10 | B(x, z) :- A(x, y), B(y, z).
    | ~
 
+example1.dl
 10 | B(x, z) :- A(x, y), B(y, z).
    |                     ~
 
+example1.dl
 13 | C(x, y) :- A(x, y), !B(x, y).
    |                      ~
 
 _____
 
 -- Cursor range --
+example1.dl
 15 | .input A
    |        ~
 -- References --
+example1.dl
  1 | .decl A(x: number, y: number)
    |       ~
 
+example1.dl
  9 | B(x, y) :- A(x, y).
    |            ~
 
+example1.dl
 10 | B(x, z) :- A(x, y), B(y, z).
    |            ~
 
+example1.dl
 13 | C(x, y) :- A(x, y), !B(x, y).
    |            ~
 
+example1.dl
 15 | .input A
    |        ~
 
 _____
 
 -- Cursor range --
+example1.dl
 16 | .output C
    |         ~
 -- References --
+example1.dl
 12 | .decl C(x: number, y: number)
    |       ~
 
+example1.dl
 13 | C(x, y) :- A(x, y), !B(x, y).
    | ~
 
+example1.dl
 16 | .output C
    |         ~
 

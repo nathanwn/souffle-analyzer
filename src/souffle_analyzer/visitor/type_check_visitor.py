@@ -6,21 +6,22 @@ from souffle_analyzer.ast import (
     Atom,
     ErrorNode,
     Fact,
-    File,
     Node,
     RelationReference,
     UnresolvedType,
+    Workspace,
 )
 from souffle_analyzer.visitor.visitor import Visitor
 
 
 class TypeInferVisitor(Visitor[None]):
-    def __init__(self, file: File) -> None:
-        self.file = file
+    def __init__(self, workspace: Workspace) -> None:
+        self.workspace = workspace
         self.diagnostics: List[Diagnostic] = []
 
     def process(self) -> None:
-        return self.file.accept(self)
+        for document in self.workspace.documents.values():
+            document.accept(self)
 
     def visit_fact(self, fact: Fact) -> None:
         return self.visit_atom(fact)
@@ -32,7 +33,7 @@ class TypeInferVisitor(Visitor[None]):
         relation_name = atom.name.inner
         if isinstance(relation_name, ErrorNode):
             return
-        relation = self.file.get_relation_declaration_with_name(relation_name)
+        relation = self.workspace.get_relation_declaration_with_name(relation_name)
         if not relation:
             # This should be already been checked and reported.
             return
@@ -48,7 +49,7 @@ class TypeInferVisitor(Visitor[None]):
             type_name = type_reference.name.inner
             if isinstance(type_name, ErrorNode):
                 continue
-            ty = self.file.get_type_declaration_with_name(type_name)
+            ty = self.workspace.get_type_declaration_with_name(type_name)
             if ty is not None:
                 argument.ty = ty
 

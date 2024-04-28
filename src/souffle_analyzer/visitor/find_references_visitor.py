@@ -3,15 +3,15 @@ from typing import List, Optional
 from souffle_analyzer.ast import (
     AbstractDataTypeBranch,
     BranchInitName,
-    File,
     IsDeclarationNode,
+    Location,
     Node,
     Position,
-    Range,
     RelationDeclaration,
     RelationReferenceName,
     TypeDeclaration,
     TypeReferenceName,
+    Workspace,
 )
 from souffle_analyzer.visitor.collect_declaration_references_visitor import (
     CollectDeclarationReferencesVisitor,
@@ -22,20 +22,21 @@ T = Optional[IsDeclarationNode]
 
 
 class FindDeclarationReferencesVisitor(Visitor[T]):
-    def __init__(self, file: File, position: Position) -> None:
+    def __init__(self, workspace: Workspace, uri: str, position: Position) -> None:
+        self.uri = uri
         self.position = position
-        super().__init__(file)
+        super().__init__(workspace)
 
-    def process(self) -> List[Range]:
-        declaration = self.file.accept(self)
-        references = []
+    def process(self) -> List[Location]:
+        declaration = self.workspace.documents[self.uri].accept(self)
+        references: List[Location] = []
         if declaration is not None:
-            declaration_name_range = declaration.get_declaration_name_range()
-            if declaration_name_range is not None:
-                references.append(declaration_name_range)
+            declaration_name_location = declaration.get_declaration_name_location()
+            if declaration_name_location is not None:
+                references.append(declaration_name_location)
             references.extend(
                 CollectDeclarationReferencesVisitor(
-                    file=self.file, declaration=declaration
+                    workspace=self.workspace, declaration=declaration
                 ).process()
             )
         return references

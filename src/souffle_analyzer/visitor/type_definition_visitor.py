@@ -4,26 +4,27 @@ from souffle_analyzer.ast import (
     Atom,
     Constant,
     Fact,
-    File,
+    Location,
     Node,
     Position,
-    Range,
     RelationReference,
     TypeDeclaration,
     Variable,
+    Workspace,
 )
 from souffle_analyzer.visitor.visitor import Visitor
 
-T = Optional[Range]
+T = Optional[Location]
 
 
 class TypeDefinitionVisitor(Visitor[T]):
-    def __init__(self, file: File, position: Position) -> None:
+    def __init__(self, workspace: Workspace, uri: str, position: Position) -> None:
+        self.uri = uri
         self.position = position
-        super().__init__(file)
+        super().__init__(workspace)
 
     def process(self) -> T:
-        return self.file.accept(self)
+        return self.workspace.documents[self.uri].accept(self)
 
     def visit_fact(self, fact: Fact) -> T:
         return self.visit_atom(fact)
@@ -40,7 +41,7 @@ class TypeDefinitionVisitor(Visitor[T]):
                 continue
             if argument.covers_position(self.position):
                 if isinstance(argument.ty, TypeDeclaration):
-                    return argument.ty.name.range_
+                    return argument.ty.name.location
         return None
 
     def generic_visit(self, node: Node) -> T:

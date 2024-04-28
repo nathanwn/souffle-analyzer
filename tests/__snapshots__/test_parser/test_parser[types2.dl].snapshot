@@ -1,40 +1,40 @@
-File(
-  range_=[0:0-16:0]
+Document(
+  range_=0:0-16:0
   TypeDeclaration(
-    range_=[0:0-2:36]
+    range_=0:0-2:36
     ResultNode(
-      range_=[0:6-0:9]
-      Identifier(range_=[0:6-0:9], val='Exp')
+      range_=0:6-0:9
+      Identifier(location='types2.dl#0:6-0:9', val='Exp')
     )
     ResultNode(
-      range_=[0:10-0:11]
-      TypeDeclarationOp(range_=[0:10-0:11], op=EQUIVALENT_TYPE(=))
+      range_=0:10-0:11
+      TypeDeclarationOp(location='types2.dl#0:10-0:11', op=EQUIVALENT_TYPE(=))
     )
     ResultNode(
-      range_=[0:12-2:36]
+      range_=0:12-2:36
       AbstractDataTypeExpression(
-        range_=[0:12-2:36]
+        range_=0:12-2:36
         AbstractDataTypeBranch(
-          range_=[0:12-0:33]
+          range_=0:12-0:33
           ResultNode(
-            range_=[0:12-0:17]
-            Identifier(range_=[0:12-0:17], val='Const')
+            range_=0:12-0:17
+            Identifier(location='types2.dl#0:12-0:17', val='Const')
           )
           Attribute(
-            range_=[0:20-0:31]
+            range_=0:20-0:31
             ResultNode(
-              range_=[0:20-0:23]
-              Identifier(range_=[0:20-0:23], val='val')
+              range_=0:20-0:23
+              Identifier(location='types2.dl#0:20-0:23', val='val')
             )
             ResultNode(
-              range_=[0:25-0:31]
+              range_=0:25-0:31
               TypeReference(
-                range_=[0:25-0:31]
+                range_=0:25-0:31
                 ResultNode(
-                  range_=[0:25-0:31]
+                  range_=0:25-0:31
                   TypeReferenceName(
-                    range_=[0:25-0:31]
-                    Identifier(range_=[0:25-0:31], val='number')
+                    range_=0:25-0:31
+                    Identifier(location='types2.dl#0:25-0:31', val='number')
                   )
                 )
               )
@@ -42,26 +42,26 @@ File(
           )
         )
         AbstractDataTypeBranch(
-          range_=[1:12-1:29]
+          range_=1:12-1:29
           ResultNode(
-            range_=[1:12-1:15]
-            Identifier(range_=[1:12-1:15], val='Var')
+            range_=1:12-1:15
+            Identifier(location='types2.dl#1:12-1:15', val='Var')
           )
           Attribute(
-            range_=[1:18-1:28]
+            range_=1:18-1:28
             ResultNode(
-              range_=[1:18-1:20]
-              Identifier(range_=[1:18-1:20], val='id')
+              range_=1:18-1:20
+              Identifier(location='types2.dl#1:18-1:20', val='id')
             )
             ResultNode(
-              range_=[1:22-1:28]
+              range_=1:22-1:28
               TypeReference(
-                range_=[1:22-1:28]
+                range_=1:22-1:28
                 ResultNode(
-                  range_=[1:22-1:28]
+                  range_=1:22-1:28
                   TypeReferenceName(
-                    range_=[1:22-1:28]
-                    Identifier(range_=[1:22-1:28], val='symbol')
+                    range_=1:22-1:28
+                    Identifier(location='types2.dl#1:22-1:28', val='symbol')
                   )
                 )
               )
@@ -69,46 +69,46 @@ File(
           )
         )
         AbstractDataTypeBranch(
-          range_=[2:12-2:36]
+          range_=2:12-2:36
           ResultNode(
-            range_=[2:12-2:15]
-            Identifier(range_=[2:12-2:15], val='Add')
+            range_=2:12-2:15
+            Identifier(location='types2.dl#2:12-2:15', val='Add')
           )
           Attribute(
-            range_=[2:18-2:25]
+            range_=2:18-2:25
             ResultNode(
-              range_=[2:18-2:20]
-              Identifier(range_=[2:18-2:20], val='e1')
+              range_=2:18-2:20
+              Identifier(location='types2.dl#2:18-2:20', val='e1')
             )
             ResultNode(
-              range_=[2:22-2:25]
+              range_=2:22-2:25
               TypeReference(
-                range_=[2:22-2:25]
+                range_=2:22-2:25
                 ResultNode(
-                  range_=[2:22-2:25]
+                  range_=2:22-2:25
                   TypeReferenceName(
-                    range_=[2:22-2:25]
-                    Identifier(range_=[2:22-2:25], val='Exp')
+                    range_=2:22-2:25
+                    Identifier(location='types2.dl#2:22-2:25', val='Exp')
                   )
                 )
               )
             )
           )
           Attribute(
-            range_=[2:27-2:34]
+            range_=2:27-2:34
             ResultNode(
-              range_=[2:27-2:29]
-              Identifier(range_=[2:27-2:29], val='e2')
+              range_=2:27-2:29
+              Identifier(location='types2.dl#2:27-2:29', val='e2')
             )
             ResultNode(
-              range_=[2:31-2:34]
+              range_=2:31-2:34
               TypeReference(
-                range_=[2:31-2:34]
+                range_=2:31-2:34
                 ResultNode(
-                  range_=[2:31-2:34]
+                  range_=2:31-2:34
                   TypeReferenceName(
-                    range_=[2:31-2:34]
-                    Identifier(range_=[2:31-2:34], val='Exp')
+                    range_=2:31-2:34
+                    Identifier(location='types2.dl#2:31-2:34', val='Exp')
                   )
                 )
               )
@@ -119,26 +119,26 @@ File(
     )
   )
   RelationDeclaration(
-    range_=[4:0-4:24]
+    range_=4:0-4:24
     ResultNode(
-      range_=[4:6-4:14]
-      Identifier(range_=[4:6-4:14], val='has_expr')
+      range_=4:6-4:14
+      Identifier(location='types2.dl#4:6-4:14', val='has_expr')
     )
     Attribute(
-      range_=[4:15-4:23]
+      range_=4:15-4:23
       ResultNode(
-        range_=[4:15-4:18]
-        Identifier(range_=[4:15-4:18], val='exp')
+        range_=4:15-4:18
+        Identifier(location='types2.dl#4:15-4:18', val='exp')
       )
       ResultNode(
-        range_=[4:20-4:23]
+        range_=4:20-4:23
         TypeReference(
-          range_=[4:20-4:23]
+          range_=4:20-4:23
           ResultNode(
-            range_=[4:20-4:23]
+            range_=4:20-4:23
             TypeReferenceName(
-              range_=[4:20-4:23]
-              Identifier(range_=[4:20-4:23], val='Exp')
+              range_=4:20-4:23
+              Identifier(location='types2.dl#4:20-4:23', val='Exp')
             )
           )
         )
@@ -146,124 +146,124 @@ File(
     )
   )
   ResultNode(
-    range_=[6:0-6:19]
+    range_=6:0-6:19
     Fact(
-      range_=[6:0-6:19]
+      range_=6:0-6:19
       ResultNode(
-        range_=[6:0-6:8]
+        range_=6:0-6:8
         RelationReferenceName(
-          range_=[6:0-6:8]
-          Identifier(range_=[6:0-6:8], val='has_expr')
+          range_=6:0-6:8
+          Identifier(location='types2.dl#6:0-6:8', val='has_expr')
         )
       )
       BranchInit(
-        range_=[6:9-6:18]
+        range_=6:9-6:18
         ty=UnresolvedType()
         ResultNode(
-          range_=[6:10-6:15]
+          range_=6:10-6:15
           BranchInitName(
-            range_=[6:10-6:15]
-            Identifier(range_=[6:10-6:15], val='Const')
+            range_=6:10-6:15
+            Identifier(location='types2.dl#6:10-6:15', val='Const')
           )
         )
-        NumberConstant(range_=[6:16-6:17], ty=UnresolvedType(), val=1)
+        NumberConstant(location='types2.dl#6:16-6:17', ty=UnresolvedType(), val=1)
       )
     )
   )
   ResultNode(
-    range_=[7:0-7:19]
+    range_=7:0-7:19
     Fact(
-      range_=[7:0-7:19]
+      range_=7:0-7:19
       ResultNode(
-        range_=[7:0-7:8]
+        range_=7:0-7:8
         RelationReferenceName(
-          range_=[7:0-7:8]
-          Identifier(range_=[7:0-7:8], val='has_expr')
+          range_=7:0-7:8
+          Identifier(location='types2.dl#7:0-7:8', val='has_expr')
         )
       )
       BranchInit(
-        range_=[7:9-7:18]
+        range_=7:9-7:18
         ty=UnresolvedType()
         ResultNode(
-          range_=[7:10-7:13]
+          range_=7:10-7:13
           BranchInitName(
-            range_=[7:10-7:13]
-            Identifier(range_=[7:10-7:13], val='Var')
+            range_=7:10-7:13
+            Identifier(location='types2.dl#7:10-7:13', val='Var')
           )
         )
-        StringConstant(range_=[7:14-7:17], ty=UnresolvedType(), val='"x"')
+        StringConstant(location='types2.dl#7:14-7:17', ty=UnresolvedType(), val='"x"')
       )
     )
   )
   ResultNode(
-    range_=[8:0-8:36]
+    range_=8:0-8:36
     Fact(
-      range_=[8:0-8:36]
+      range_=8:0-8:36
       ResultNode(
-        range_=[8:0-8:8]
+        range_=8:0-8:8
         RelationReferenceName(
-          range_=[8:0-8:8]
-          Identifier(range_=[8:0-8:8], val='has_expr')
+          range_=8:0-8:8
+          Identifier(location='types2.dl#8:0-8:8', val='has_expr')
         )
       )
       BranchInit(
-        range_=[8:9-8:35]
+        range_=8:9-8:35
         ty=UnresolvedType()
         ResultNode(
-          range_=[8:10-8:13]
+          range_=8:10-8:13
           BranchInitName(
-            range_=[8:10-8:13]
-            Identifier(range_=[8:10-8:13], val='Add')
+            range_=8:10-8:13
+            Identifier(location='types2.dl#8:10-8:13', val='Add')
           )
         )
         BranchInit(
-          range_=[8:14-8:23]
+          range_=8:14-8:23
           ty=UnresolvedType()
           ResultNode(
-            range_=[8:15-8:20]
+            range_=8:15-8:20
             BranchInitName(
-              range_=[8:15-8:20]
-              Identifier(range_=[8:15-8:20], val='Const')
+              range_=8:15-8:20
+              Identifier(location='types2.dl#8:15-8:20', val='Const')
             )
           )
-          NumberConstant(range_=[8:21-8:22], ty=UnresolvedType(), val=2)
+          NumberConstant(location='types2.dl#8:21-8:22', ty=UnresolvedType(), val=2)
         )
         BranchInit(
-          range_=[8:25-8:34]
+          range_=8:25-8:34
           ty=UnresolvedType()
           ResultNode(
-            range_=[8:26-8:31]
+            range_=8:26-8:31
             BranchInitName(
-              range_=[8:26-8:31]
-              Identifier(range_=[8:26-8:31], val='Const')
+              range_=8:26-8:31
+              Identifier(location='types2.dl#8:26-8:31', val='Const')
             )
           )
-          NumberConstant(range_=[8:32-8:33], ty=UnresolvedType(), val=3)
+          NumberConstant(location='types2.dl#8:32-8:33', ty=UnresolvedType(), val=3)
         )
       )
     )
   )
   RelationDeclaration(
-    range_=[10:0-10:33]
+    range_=10:0-10:33
     ResultNode(
-      range_=[10:6-10:20]
-      Identifier(range_=[10:6-10:20], val='produces_value')
+      range_=10:6-10:20
+      Identifier(location='types2.dl#10:6-10:20', val='produces_value')
     )
     Attribute(
-      range_=[10:21-10:32]
+      range_=10:21-10:32
       ResultNode(
-        range_=[10:21-10:24]
-        Identifier(range_=[10:21-10:24], val='val')
+        range_=10:21-10:24
+        Identifier(location='types2.dl#10:21-10:24', val='val')
       )
       ResultNode(
-        range_=[10:26-10:32]
+        range_=10:26-10:32
         TypeReference(
-          range_=[10:26-10:32]
+          range_=10:26-10:32
           ResultNode(
-            range_=[10:26-10:32]
+            range_=10:26-10:32
             TypeReferenceName(
-              range_=[10:26-10:32]
-              Identifier(range_=[10:26-10:32], val='number')
+              range_=10:26-10:32
+              Identifier(location='types2.dl#10:26-10:32', val='number')
             )
           )
         )
@@ -271,56 +271,56 @@ File(
     )
   )
   Rule(
-    range_=[12:0-12:45]
+    range_=12:0-12:45
     RuleHead(
-      range_=[12:0-12:19]
+      range_=12:0-12:19
       ResultNode(
-        range_=[12:0-12:19]
+        range_=12:0-12:19
         RelationReference(
-          range_=[12:0-12:19]
+          range_=12:0-12:19
           ResultNode(
-            range_=[12:0-12:14]
+            range_=12:0-12:14
             RelationReferenceName(
-              range_=[12:0-12:14]
-              Identifier(range_=[12:0-12:14], val='produces_value')
+              range_=12:0-12:14
+              Identifier(location='types2.dl#12:0-12:14', val='produces_value')
             )
           )
-          Variable(range_=[12:15-12:18], ty=UnresolvedType(), name='val')
+          Variable(location='types2.dl#12:15-12:18', ty=UnresolvedType(), name='val')
         )
       )
     )
     ResultNode(
-      range_=[12:23-12:44]
+      range_=12:23-12:44
       Disjunction(
-        range_=[12:23-12:44]
+        range_=12:23-12:44
         Conjunction(
-          range_=[12:23-12:44]
+          range_=12:23-12:44
           ResultNode(
-            range_=[12:23-12:44]
+            range_=12:23-12:44
             RelationReferenceClause(
-              range_=[12:23-12:44]
+              range_=12:23-12:44
               ResultNode(
-                range_=[12:23-12:44]
+                range_=12:23-12:44
                 RelationReference(
-                  range_=[12:23-12:44]
+                  range_=12:23-12:44
                   ResultNode(
-                    range_=[12:23-12:31]
+                    range_=12:23-12:31
                     RelationReferenceName(
-                      range_=[12:23-12:31]
-                      Identifier(range_=[12:23-12:31], val='has_expr')
+                      range_=12:23-12:31
+                      Identifier(location='types2.dl#12:23-12:31', val='has_expr')
                     )
                   )
                   BranchInit(
-                    range_=[12:32-12:43]
+                    range_=12:32-12:43
                     ty=UnresolvedType()
                     ResultNode(
-                      range_=[12:33-12:38]
+                      range_=12:33-12:38
                       BranchInitName(
-                        range_=[12:33-12:38]
-                        Identifier(range_=[12:33-12:38], val='Const')
+                        range_=12:33-12:38
+                        Identifier(location='types2.dl#12:33-12:38', val='Const')
                       )
                     )
-                    Variable(range_=[12:39-12:42], ty=UnresolvedType(), name='val')
+                    Variable(location='types2.dl#12:39-12:42', ty=UnresolvedType(), name='val')
                   )
                 )
               )
@@ -331,78 +331,78 @@ File(
     )
   )
   Rule(
-    range_=[13:0-13:77]
+    range_=13:0-13:77
     RuleHead(
-      range_=[13:0-13:19]
+      range_=13:0-13:19
       ResultNode(
-        range_=[13:0-13:19]
+        range_=13:0-13:19
         RelationReference(
-          range_=[13:0-13:19]
+          range_=13:0-13:19
           ResultNode(
-            range_=[13:0-13:14]
+            range_=13:0-13:14
             RelationReferenceName(
-              range_=[13:0-13:14]
-              Identifier(range_=[13:0-13:14], val='produces_value')
+              range_=13:0-13:14
+              Identifier(location='types2.dl#13:0-13:14', val='produces_value')
             )
           )
-          Variable(range_=[13:15-13:18], ty=UnresolvedType(), name='val')
+          Variable(location='types2.dl#13:15-13:18', ty=UnresolvedType(), name='val')
         )
       )
     )
     ResultNode(
-      range_=[13:23-13:76]
+      range_=13:23-13:76
       Disjunction(
-        range_=[13:23-13:76]
+        range_=13:23-13:76
         Conjunction(
-          range_=[13:23-13:76]
+          range_=13:23-13:76
           ResultNode(
-            range_=[13:23-13:61]
+            range_=13:23-13:61
             RelationReferenceClause(
-              range_=[13:23-13:61]
+              range_=13:23-13:61
               ResultNode(
-                range_=[13:23-13:61]
+                range_=13:23-13:61
                 RelationReference(
-                  range_=[13:23-13:61]
+                  range_=13:23-13:61
                   ResultNode(
-                    range_=[13:23-13:31]
+                    range_=13:23-13:31
                     RelationReferenceName(
-                      range_=[13:23-13:31]
-                      Identifier(range_=[13:23-13:31], val='has_expr')
+                      range_=13:23-13:31
+                      Identifier(location='types2.dl#13:23-13:31', val='has_expr')
                     )
                   )
                   BranchInit(
-                    range_=[13:32-13:60]
+                    range_=13:32-13:60
                     ty=UnresolvedType()
                     ResultNode(
-                      range_=[13:33-13:36]
+                      range_=13:33-13:36
                       BranchInitName(
-                        range_=[13:33-13:36]
-                        Identifier(range_=[13:33-13:36], val='Add')
+                        range_=13:33-13:36
+                        Identifier(location='types2.dl#13:33-13:36', val='Add')
                       )
                     )
                     BranchInit(
-                      range_=[13:37-13:47]
+                      range_=13:37-13:47
                       ty=UnresolvedType()
                       ResultNode(
-                        range_=[13:38-13:43]
+                        range_=13:38-13:43
                         BranchInitName(
-                          range_=[13:38-13:43]
-                          Identifier(range_=[13:38-13:43], val='Const')
+                          range_=13:38-13:43
+                          Identifier(location='types2.dl#13:38-13:43', val='Const')
                         )
                       )
-                      Variable(range_=[13:44-13:46], ty=UnresolvedType(), name='c1')
+                      Variable(location='types2.dl#13:44-13:46', ty=UnresolvedType(), name='c1')
                     )
                     BranchInit(
-                      range_=[13:49-13:59]
+                      range_=13:49-13:59
                       ty=UnresolvedType()
                       ResultNode(
-                        range_=[13:50-13:55]
+                        range_=13:50-13:55
                         BranchInitName(
-                          range_=[13:50-13:55]
-                          Identifier(range_=[13:50-13:55], val='Const')
+                          range_=13:50-13:55
+                          Identifier(location='types2.dl#13:50-13:55', val='Const')
                         )
                       )
-                      Variable(range_=[13:56-13:58], ty=UnresolvedType(), name='c2')
+                      Variable(location='types2.dl#13:56-13:58', ty=UnresolvedType(), name='c2')
                     )
                   )
                 )
@@ -410,33 +410,33 @@ File(
             )
           )
           ResultNode(
-            range_=[13:63-13:76]
+            range_=13:63-13:76
             BinaryConstraint(
-              range_=[13:63-13:76]
+              range_=13:63-13:76
               ResultNode(
-                range_=[13:63-13:76]
-                Variable(range_=[13:63-13:66], ty=UnresolvedType(), name='val')
+                range_=13:63-13:76
+                Variable(location='types2.dl#13:63-13:66', ty=UnresolvedType(), name='val')
               )
               ResultNode(
-                range_=[13:63-13:76]
-                BinaryConstraintOp(range_=[13:67-13:68], op='=')
+                range_=13:63-13:76
+                BinaryConstraintOp(location='types2.dl#13:67-13:68', op='=')
               )
               ResultNode(
-                range_=[13:63-13:76]
+                range_=13:63-13:76
                 BinaryOperation(
-                  range_=[13:69-13:76]
+                  range_=13:69-13:76
                   ty=UnresolvedType()
                   ResultNode(
-                    range_=[13:69-13:76]
-                    Variable(range_=[13:69-13:71], ty=UnresolvedType(), name='c1')
+                    range_=13:69-13:76
+                    Variable(location='types2.dl#13:69-13:71', ty=UnresolvedType(), name='c1')
                   )
                   ResultNode(
-                    range_=[13:69-13:76]
-                    BinaryOperator(range_=[13:72-13:73], op='+')
+                    range_=13:69-13:76
+                    BinaryOperator(location='types2.dl#13:72-13:73', op='+')
                   )
                   ResultNode(
-                    range_=[13:69-13:76]
-                    Variable(range_=[13:74-13:76], ty=UnresolvedType(), name='c2')
+                    range_=13:69-13:76
+                    Variable(location='types2.dl#13:74-13:76', ty=UnresolvedType(), name='c2')
                   )
                 )
               )
@@ -447,11 +447,11 @@ File(
     )
   )
   Directive(
-    range_=[15:0-15:22]
-    DirectiveQualifier(range_=[15:0-15:7], keyword='.output')
+    range_=15:0-15:22
+    DirectiveQualifier(location='types2.dl#15:0-15:7', keyword='.output')
     RelationReferenceName(
-      range_=[15:8-15:22]
-      Identifier(range_=[15:8-15:22], val='produces_value')
+      range_=15:8-15:22
+      Identifier(location='types2.dl#15:8-15:22', val='produces_value')
     )
   )
 )

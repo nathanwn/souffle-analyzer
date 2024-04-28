@@ -3,11 +3,11 @@ from typing import List, Optional, Tuple
 
 from souffle_analyzer.ast import (
     ErrorNode,
-    File,
     Node,
     Position,
     Range,
     RelationDeclaration,
+    Workspace,
 )
 from souffle_analyzer.visitor.visitor import Visitor
 
@@ -15,12 +15,13 @@ T = Optional[List[Tuple[Range, str]]]
 
 
 class CodeActionVisitor(Visitor[T]):
-    def __init__(self, file: File, position: Position) -> None:
-        self.file = file
+    def __init__(self, workspace: Workspace, uri: str, position: Position) -> None:
+        self.uri = uri
         self.position = position
+        super().__init__(workspace)
 
     def process(self) -> T:
-        return self.visit_file(self.file)
+        return self.workspace.documents[self.uri].accept(self)
 
     def visit_relation_declaration(
         self, relation_declaration: RelationDeclaration

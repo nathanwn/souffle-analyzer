@@ -1,36 +1,36 @@
-File(
-  range_=[0:0-8:0]
+Document(
+  range_=0:0-8:0
   TypeDeclaration(
-    range_=[0:0-0:25]
+    range_=0:0-0:25
     ResultNode(
-      range_=[0:6-0:11]
-      Identifier(range_=[0:6-0:11], val='Piece')
+      range_=0:6-0:11
+      Identifier(location='types1.dl#0:6-0:11', val='Piece')
     )
     ResultNode(
-      range_=[0:12-0:13]
-      TypeDeclarationOp(range_=[0:12-0:13], op=EQUIVALENT_TYPE(=))
+      range_=0:12-0:13
+      TypeDeclarationOp(location='types1.dl#0:12-0:13', op=EQUIVALENT_TYPE(=))
     )
     ResultNode(
-      range_=[0:14-0:25]
+      range_=0:14-0:25
       UnionTypeExpression(
-        range_=[0:14-0:25]
+        range_=0:14-0:25
         TypeReference(
-          range_=[0:14-0:18]
+          range_=0:14-0:18
           ResultNode(
-            range_=[0:14-0:18]
+            range_=0:14-0:18
             TypeReferenceName(
-              range_=[0:14-0:18]
-              Identifier(range_=[0:14-0:18], val='Pawn')
+              range_=0:14-0:18
+              Identifier(location='types1.dl#0:14-0:18', val='Pawn')
             )
           )
         )
         TypeReference(
-          range_=[0:21-0:25]
+          range_=0:21-0:25
           ResultNode(
-            range_=[0:21-0:25]
+            range_=0:21-0:25
             TypeReferenceName(
-              range_=[0:21-0:25]
-              Identifier(range_=[0:21-0:25], val='King')
+              range_=0:21-0:25
+              Identifier(location='types1.dl#0:21-0:25', val='King')
             )
           )
         )
@@ -38,74 +38,74 @@ File(
     )
   )
   TypeDeclaration(
-    range_=[1:0-5:1]
+    range_=1:0-5:1
     ResultNode(
-      range_=[1:6-1:10]
-      Identifier(range_=[1:6-1:10], val='Edge')
+      range_=1:6-1:10
+      Identifier(location='types1.dl#1:6-1:10', val='Edge')
     )
     ResultNode(
-      range_=[1:11-1:12]
-      TypeDeclarationOp(range_=[1:11-1:12], op=EQUIVALENT_TYPE(=))
+      range_=1:11-1:12
+      TypeDeclarationOp(location='types1.dl#1:11-1:12', op=EQUIVALENT_TYPE(=))
     )
     ResultNode(
-      range_=[1:13-5:1]
+      range_=1:13-5:1
       RecordTypeExpression(
-        range_=[1:13-5:1]
+        range_=1:13-5:1
         Attribute(
-          range_=[2:4-2:14]
+          range_=2:4-2:14
           ResultNode(
-            range_=[2:4-2:8]
-            Identifier(range_=[2:4-2:8], val='from')
+            range_=2:4-2:8
+            Identifier(location='types1.dl#2:4-2:8', val='from')
           )
           ResultNode(
-            range_=[2:10-2:14]
+            range_=2:10-2:14
             TypeReference(
-              range_=[2:10-2:14]
+              range_=2:10-2:14
               ResultNode(
-                range_=[2:10-2:14]
+                range_=2:10-2:14
                 TypeReferenceName(
-                  range_=[2:10-2:14]
-                  Identifier(range_=[2:10-2:14], val='Node')
+                  range_=2:10-2:14
+                  Identifier(location='types1.dl#2:10-2:14', val='Node')
                 )
               )
             )
           )
         )
         Attribute(
-          range_=[3:4-3:12]
+          range_=3:4-3:12
           ResultNode(
-            range_=[3:4-3:6]
-            Identifier(range_=[3:4-3:6], val='to')
+            range_=3:4-3:6
+            Identifier(location='types1.dl#3:4-3:6', val='to')
           )
           ResultNode(
-            range_=[3:8-3:12]
+            range_=3:8-3:12
             TypeReference(
-              range_=[3:8-3:12]
+              range_=3:8-3:12
               ResultNode(
-                range_=[3:8-3:12]
+                range_=3:8-3:12
                 TypeReferenceName(
-                  range_=[3:8-3:12]
-                  Identifier(range_=[3:8-3:12], val='Node')
+                  range_=3:8-3:12
+                  Identifier(location='types1.dl#3:8-3:12', val='Node')
                 )
               )
             )
           )
         )
         Attribute(
-          range_=[4:4-4:18]
+          range_=4:4-4:18
           ResultNode(
-            range_=[4:4-4:10]
-            Identifier(range_=[4:4-4:10], val='weight')
+            range_=4:4-4:10
+            Identifier(location='types1.dl#4:4-4:10', val='weight')
           )
           ResultNode(
-            range_=[4:12-4:18]
+            range_=4:12-4:18
             TypeReference(
-              range_=[4:12-4:18]
+              range_=4:12-4:18
               ResultNode(
-                range_=[4:12-4:18]
+                range_=4:12-4:18
                 TypeReferenceName(
-                  range_=[4:12-4:18]
-                  Identifier(range_=[4:12-4:18], val='number')
+                  range_=4:12-4:18
+                  Identifier(location='types1.dl#4:12-4:18', val='number')
                 )
               )
             )
@@ -115,87 +115,87 @@ File(
     )
   )
   TypeDeclaration(
-    range_=[6:0-7:53]
+    range_=6:0-7:53
     ResultNode(
-      range_=[6:6-6:10]
-      Identifier(range_=[6:6-6:10], val='Tree')
+      range_=6:6-6:10
+      Identifier(location='types1.dl#6:6-6:10', val='Tree')
     )
     ResultNode(
-      range_=[6:11-6:12]
-      TypeDeclarationOp(range_=[6:11-6:12], op=EQUIVALENT_TYPE(=))
+      range_=6:11-6:12
+      TypeDeclarationOp(location='types1.dl#6:11-6:12', op=EQUIVALENT_TYPE(=))
     )
     ResultNode(
-      range_=[6:13-7:53]
+      range_=6:13-7:53
       AbstractDataTypeExpression(
-        range_=[6:13-7:53]
+        range_=6:13-7:53
         AbstractDataTypeBranch(
-          range_=[6:13-6:21]
+          range_=6:13-6:21
           ResultNode(
-            range_=[6:13-6:18]
-            Identifier(range_=[6:13-6:18], val='Empty')
+            range_=6:13-6:18
+            Identifier(location='types1.dl#6:13-6:18', val='Empty')
           )
         )
         AbstractDataTypeBranch(
-          range_=[7:13-7:53]
+          range_=7:13-7:53
           ResultNode(
-            range_=[7:13-7:17]
-            Identifier(range_=[7:13-7:17], val='Node')
+            range_=7:13-7:17
+            Identifier(location='types1.dl#7:13-7:17', val='Node')
           )
           Attribute(
-            range_=[7:19-7:27]
+            range_=7:19-7:27
             ResultNode(
-              range_=[7:19-7:21]
-              Identifier(range_=[7:19-7:21], val='t1')
+              range_=7:19-7:21
+              Identifier(location='types1.dl#7:19-7:21', val='t1')
             )
             ResultNode(
-              range_=[7:23-7:27]
+              range_=7:23-7:27
               TypeReference(
-                range_=[7:23-7:27]
+                range_=7:23-7:27
                 ResultNode(
-                  range_=[7:23-7:27]
+                  range_=7:23-7:27
                   TypeReferenceName(
-                    range_=[7:23-7:27]
-                    Identifier(range_=[7:23-7:27], val='Tree')
+                    range_=7:23-7:27
+                    Identifier(location='types1.dl#7:23-7:27', val='Tree')
                   )
                 )
               )
             )
           )
           Attribute(
-            range_=[7:29-7:42]
+            range_=7:29-7:42
             ResultNode(
-              range_=[7:29-7:32]
-              Identifier(range_=[7:29-7:32], val='val')
+              range_=7:29-7:32
+              Identifier(location='types1.dl#7:29-7:32', val='val')
             )
             ResultNode(
-              range_=[7:34-7:42]
+              range_=7:34-7:42
               TypeReference(
-                range_=[7:34-7:42]
+                range_=7:34-7:42
                 ResultNode(
-                  range_=[7:34-7:42]
+                  range_=7:34-7:42
                   TypeReferenceName(
-                    range_=[7:34-7:42]
-                    Identifier(range_=[7:34-7:42], val='unsigned')
+                    range_=7:34-7:42
+                    Identifier(location='types1.dl#7:34-7:42', val='unsigned')
                   )
                 )
               )
             )
           )
           Attribute(
-            range_=[7:44-7:52]
+            range_=7:44-7:52
             ResultNode(
-              range_=[7:44-7:46]
-              Identifier(range_=[7:44-7:46], val='t2')
+              range_=7:44-7:46
+              Identifier(location='types1.dl#7:44-7:46', val='t2')
             )
             ResultNode(
-              range_=[7:48-7:52]
+              range_=7:48-7:52
               TypeReference(
-                range_=[7:48-7:52]
+                range_=7:48-7:52
                 ResultNode(
-                  range_=[7:48-7:52]
+                  range_=7:48-7:52
                   TypeReferenceName(
-                    range_=[7:48-7:52]
-                    Identifier(range_=[7:48-7:52], val='Tree')
+                    range_=7:48-7:52
+                    Identifier(location='types1.dl#7:48-7:52', val='Tree')
                   )
                 )
               )
