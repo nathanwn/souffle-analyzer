@@ -1,4 +1,4 @@
-from typing import Optional, TextIO, Tuple
+from typing import BinaryIO, Optional, Tuple
 
 from lsprotocol import converters
 from lsprotocol.types import (
@@ -22,7 +22,7 @@ from souffle_analyzer.rpc import JsonRpcNode
 
 
 class LanguageServer(JsonRpcNode):
-    def __init__(self, in_stream: TextIO, out_stream: TextIO):
+    def __init__(self, in_stream: BinaryIO, out_stream: BinaryIO):
         self.converter = converters.get_converter()
         self.ctx = AnalysisContext()
         super().__init__(in_stream, out_stream)

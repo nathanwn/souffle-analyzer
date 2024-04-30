@@ -1,16 +1,16 @@
 import json
-from typing import Optional, TextIO
+from typing import BinaryIO, Optional
 
 from souffle_analyzer.logging import logger
 
 
 class JsonRpcNode:
-    def __init__(self, in_stream: TextIO, out_stream: TextIO):
+    def __init__(self, in_stream: BinaryIO, out_stream: BinaryIO) -> None:
         self.in_stream = in_stream
         self.out_stream = out_stream
 
     def read_message(self) -> Optional[dict]:
-        content_length_prefix = "Content-Length:"
+        content_length_prefix = b"Content-Length:"
         content_length = None
         content_length_prefix_pos = -1
 
@@ -41,7 +41,14 @@ class JsonRpcNode:
             break
 
         # Read the message from the body
-        message = json.loads(body)
+        try:
+            message = json.loads(body)
+        except json.JSONDecodeError as e:
+            logger.error("Error while decoding message: %s", e)
+            logger.error("body is: %s", body)
+            logger.error("content length is: %s", content_length)
+            return None
+
         return message
 
     def write_message(self, message: object) -> None:
@@ -50,7 +57,7 @@ class JsonRpcNode:
         self.out_stream.write(encoded_msg)
         self.out_stream.flush()
 
-    def encode_message(self, message: object) -> str:
+    def encode_message(self, message: object) -> bytes:
         content = json.dumps(message)
-        message = f"Content-Length: {len(content)}\r\n\r\n{content}"
+        message = f"Content-Length: {len(content)}\r\n\r\n{content}".encode()
         return message

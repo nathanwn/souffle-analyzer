@@ -42,7 +42,10 @@ def main(argv: Sequence[str] | None = None) -> int:
     if args.command == "server":
         configure_logging(args.log_file, args.verbose)
         logger.info(f"Started {PROG} in '{os.getcwd()}'.")
-        server = LanguageServer(in_stream=sys.stdin, out_stream=sys.stdout)
+        server = LanguageServer(
+            in_stream=sys.stdin.buffer,
+            out_stream=sys.stdout.buffer,
+        )
         server.serve()
 
     return 0

@@ -1,6 +1,5 @@
 import io
 import json
-from string import printable
 
 import pytest
 from hypothesis import given
@@ -9,8 +8,8 @@ from hypothesis import strategies as st
 from souffle_analyzer.server import JsonRpcNode
 
 arbitrary_json_msgs = st.recursive(
-    st.none() | st.booleans() | st.text(printable),
-    lambda children: st.lists(children) | st.dictionaries(st.text(printable), children),
+    st.none() | st.booleans() | st.text(),
+    lambda children: st.lists(children) | st.dictionaries(st.text(), children),
     max_leaves=4,
 )
 
@@ -19,8 +18,10 @@ arbitrary_json_msgs = st.recursive(
 def test_read_one_valid_message(msg):
     content = json.dumps(msg)
     server = JsonRpcNode(
-        in_stream=io.StringIO(f"Content-Length: {len(content)}\r\n\r\n{content}"),
-        out_stream=io.StringIO(),
+        in_stream=io.BytesIO(
+            f"Content-Length: {len(content)}\r\n\r\n{content}".encode()
+        ),
+        out_stream=io.BytesIO(),
     )
     assert server.read_message() == msg
 
@@ -29,8 +30,10 @@ def test_read_one_valid_message(msg):
 def test_read_valid_message_sequence(msg):
     content = json.dumps(msg)
     server = JsonRpcNode(
-        in_stream=io.StringIO(f"Content-Length: {len(content)}\r\n\r\n{content}"),
-        out_stream=io.StringIO(),
+        in_stream=io.BytesIO(
+            f"Content-Length: {len(content)}\r\n\r\n{content}".encode()
+        ),
+        out_stream=io.BytesIO(),
     )
     assert server.read_message() == msg
 
@@ -38,14 +41,14 @@ def test_read_valid_message_sequence(msg):
 @given(sent_msg=arbitrary_json_msgs)
 def test_json_rpc_roundtrip(sent_msg):
     # Simulating two JSON-RPC nodes communicating with each other.
-    communication_stream = io.StringIO()
+    communication_stream = io.BytesIO()
     node1 = JsonRpcNode(
-        in_stream=io.StringIO(),
+        in_stream=io.BytesIO(),
         out_stream=communication_stream,
     )
     node2 = JsonRpcNode(
         in_stream=communication_stream,
-        out_stream=io.StringIO(),
+        out_stream=io.BytesIO(),
     )
     node1.write_message(sent_msg)
     # Reset the stream.
@@ -78,7 +81,7 @@ def test_json_rpc_roundtrip(sent_msg):
 )
 def test_read_invalid_message(raw_text: str):
     server = JsonRpcNode(
-        in_stream=io.StringIO(raw_text),
-        out_stream=io.StringIO(),
+        in_stream=io.BytesIO(raw_text.encode()),
+        out_stream=io.BytesIO(),
     )
     assert server.read_message() is None
