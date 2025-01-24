@@ -1,3 +1,4 @@
+import * as vscode from 'vscode';
 import { ExtensionContext, workspace } from 'vscode';
 
 import {
@@ -40,7 +41,9 @@ export function activate(context: ExtensionContext) {
     );
 
     // Start the client. This will also launch the server
-    client.start();
+    client
+        .start()
+        .catch(err => vscode.window.showErrorMessage(`Cannot start server: ${err}`));
 }
 
 export function deactivate(): Thenable<void> | undefined {

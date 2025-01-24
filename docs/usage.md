@@ -1,17 +1,17 @@
 # Using souffle-analyzer
 
-To try using souffle-analyzer, you need two things:
+To try using souffle-analyzer, you need 2 steps:
 
-* The server, which is a souffle-analyzer executable.
-* The client, which is a compatible text editor.
+* **Step 1**: Install the language server.
+* **Step 2**: Hook the language server into your text editor of choice.
 
-## The language server executable
+## Step 1: Install the language server
 
 You can access the pre-built executables in the project's [Release page](https://github.com/nathanwn/souffle-analyzer/releases/tag/nightly). Note: At the moment, we only offer the pre-release/nightly version.
 
 Alternatively, you can build the server from source if you choose to. Just clone the project, create a virtual environment, and do `pip install .`.
 
-## Text editors
+## Step 2: Hook the language server into the text editor of choice
 
 ### VS Code
 
