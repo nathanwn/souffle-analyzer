@@ -8,18 +8,18 @@ on:
 
 jobs:
   lint:
-    uses: nathanwn/workflows/.github/workflows/tox.yml@3654b0bc8b591f0b6ef0deae901a8645ed9330c7  # v0.5.0
+    uses: nathanwn/workflows/.github/workflows/tox.yml@54c16bafa9c75cad9db4d716354fefa87b3cb09b  # v0.6.0
     with:
       os: '["ubuntu-latest"]'
       env: '["pre-commit"]'
 
   test:
-    uses: nathanwn/workflows/.github/workflows/tox.yml@3654b0bc8b591f0b6ef0deae901a8645ed9330c7  # v0.5.0
+    uses: nathanwn/workflows/.github/workflows/tox.yml@54c16bafa9c75cad9db4d716354fefa87b3cb09b  # v0.6.0
     with:
-      # Use macos-12 instead of macos-14/macos-latest due to:
+      # Use macos-13 instead of macos-14/macos-latest due to:
       # https://github.com/actions/setup-python/issues/825#issuecomment-2012392172
-      os: '["ubuntu-latest", "windows-latest", "macos-12"]'
-      env: '["py38", "py39", "py310", "py311", "py312"]'
+      os: '["ubuntu-latest", "windows-latest", "macos-13"]'
+      env: '["py39", "py310", "py311", "py312", "py313"]'
 
   test-vscode-extension:
     runs-on: ubuntu-latest

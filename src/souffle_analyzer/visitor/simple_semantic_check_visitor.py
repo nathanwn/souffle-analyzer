@@ -1,5 +1,3 @@
-from typing import List
-
 from lsprotocol.types import Diagnostic
 
 from souffle_analyzer.ast import (
@@ -16,10 +14,10 @@ from souffle_analyzer.visitor.visitor import Visitor
 class SimpleSemanticCheckVisitor(Visitor[None]):
     def __init__(self, workspace: Workspace, uri: str) -> None:
         self.uri = uri
-        self.diagnostics: List[Diagnostic] = []
+        self.diagnostics: list[Diagnostic] = []
         super().__init__(workspace)
 
-    def process(self) -> List[Diagnostic]:
+    def process(self) -> list[Diagnostic]:
         self.workspace.documents[self.uri].accept(self)
         return self.diagnostics
 

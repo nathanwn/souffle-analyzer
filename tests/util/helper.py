@@ -1,6 +1,6 @@
 import os
 from dataclasses import dataclass
-from typing import Any, Callable, Generic, List, Optional, Tuple, TypeVar
+from typing import Any, Callable, Generic, Optional, TypeVar
 
 from souffle_analyzer.ast import Position, Range
 from souffle_analyzer.printer import format_souffle_code, format_souffle_code_range
@@ -8,7 +8,7 @@ from souffle_analyzer.printer import format_souffle_code, format_souffle_code_ra
 T = TypeVar("T")
 
 
-def parse_code_with_cursor_position(code_with_cursor: str) -> Tuple[str, Position]:
+def parse_code_with_cursor_position(code_with_cursor: str) -> tuple[str, Position]:
     code_with_cursor = clean_multiline_string(code_with_cursor)
     lines = code_with_cursor.splitlines()
     cursor_line = -1
@@ -60,12 +60,12 @@ class RangewiseResult(Generic[T]):
 
 
 def format_rangewise_results(
-    code_lines: List[str],
+    code_lines: list[str],
     uri: str,
-    format_result: Callable[[Any], List[str]],
+    format_result: Callable[[Any], list[str]],
     rangewise_results: Any,
 ) -> str:
-    out: List[str] = []
+    out: list[str] = []
 
     for result in rangewise_results:
         assert result is not None
@@ -83,16 +83,16 @@ def format_rangewise_results(
 
 
 def format_cursorwise_results(
-    code_lines: List[str],
+    code_lines: list[str],
     uri: str,
     analyze: Callable[[Position], Optional[Any]],
-    format_result: Callable[[Any], List[str]],
+    format_result: Callable[[Any], list[str]],
 ) -> str:
     cur_start: Optional[Position] = None
     cur_end: Optional[Position] = None
     cur_result: Optional[object] = None
 
-    rangewise_results: List[RangewiseResult] = []
+    rangewise_results: list[RangewiseResult] = []
 
     for line_no, line in enumerate(code_lines):
         for char_no, _ in enumerate(line):

@@ -1,5 +1,5 @@
 import os
-from typing import List, Optional
+from typing import Optional
 
 import pytest
 from lsprotocol import types as lsptypes
@@ -31,10 +31,10 @@ def test_hover(file_snapshot: SnapshotAssertion, filename: str) -> None:
     ctx.sync_document(filename, code)
     code_lines = code.splitlines()
 
-    def analyze(position: Position) -> Optional[List[lsptypes.TextEdit]]:
+    def analyze(position: Position) -> Optional[list[lsptypes.TextEdit]]:
         return ctx.get_code_actions(filename, position.to_lsp_type())
 
-    def format_result(result: List[lsptypes.TextEdit]) -> List[str]:
+    def format_result(result: list[lsptypes.TextEdit]) -> list[str]:
         out = []
         out.append("-- Insertion point --")
         out.extend(

@@ -1,9 +1,7 @@
-from typing import List
-
 from souffle_analyzer.ast import Argument, Node, Position, Range
 
 
-def get_positions_in_range(range_: Range, code_lines: List[str]) -> List[Position]:
+def get_positions_in_range(range_: Range, code_lines: list[str]) -> list[Position]:
     start = range_.start
     end = range_.end
     cur = Position(start.line, start.character)
@@ -22,7 +20,7 @@ def get_positions_in_range(range_: Range, code_lines: List[str]) -> List[Positio
     return res
 
 
-def format_souffle_code(lines: List[str], uri: str) -> List[str]:
+def format_souffle_code(lines: list[str], uri: str) -> list[str]:
     printed_lines = [uri]
     max_line_no = len(lines) - 1
     for line_no, line in enumerate(lines):
@@ -34,7 +32,7 @@ def format_souffle_code(lines: List[str], uri: str) -> List[str]:
     return printed_lines
 
 
-def format_souffle_code_range(lines: List[str], uri: str, range_: Range) -> List[str]:
+def format_souffle_code_range(lines: list[str], uri: str, range_: Range) -> list[str]:
     max_line_no = len(lines) - 1
     sidebar_size = len(str(max_line_no))
     printed_lines = [uri]
@@ -61,7 +59,7 @@ def indent(s: str, level: int) -> str:
     return f"{(level * size) * ' '}{s}"
 
 
-def format_souffle_ast(node: Node, level=0) -> List[str]:
+def format_souffle_ast(node: Node, level=0) -> list[str]:
     children = node.children_sorted_by_range
     if len(children) == 0:
         return [indent(str(node), level=level)]

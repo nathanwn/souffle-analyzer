@@ -1,5 +1,5 @@
 import os
-from typing import List, Optional
+from typing import Optional
 
 import pytest
 from lsprotocol import types as lsptypes
@@ -34,7 +34,7 @@ def test_type_definition(file_snapshot: SnapshotAssertion, filename: str) -> Non
     def analyze(position: Position) -> Optional[lsptypes.Location]:
         return ctx.get_type_definition(filename, position.to_lsp_type())
 
-    def format_result(result: lsptypes.Location) -> List[str]:
+    def format_result(result: lsptypes.Location) -> list[str]:
         out = []
         out.append("-- Type Definition --")
         range_ = Range.from_lsp_type(result.range)

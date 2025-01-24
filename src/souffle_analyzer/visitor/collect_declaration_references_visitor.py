@@ -1,5 +1,3 @@
-from typing import List
-
 from souffle_analyzer.ast import (
     BranchInitName,
     ErrorNode,
@@ -16,10 +14,10 @@ from souffle_analyzer.visitor.visitor import Visitor
 class CollectDeclarationReferencesVisitor(Visitor[None]):
     def __init__(self, workspace: Workspace, declaration: IsDeclarationNode) -> None:
         self.declaration = declaration
-        self.references: List[Location] = []
+        self.references: list[Location] = []
         super().__init__(workspace)
 
-    def process(self) -> List[Location]:
+    def process(self) -> list[Location]:
         for document in self.workspace.documents.values():
             document.accept(self)
         return self.references

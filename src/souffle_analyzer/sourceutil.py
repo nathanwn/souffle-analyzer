@@ -1,6 +1,5 @@
 import os
 import re
-from typing import List, Set, Tuple
 
 
 def get_consecutive_block_at_line(
@@ -26,14 +25,14 @@ def get_consecutive_block_at_line(
     return os.linesep.join(lines)
 
 
-def get_words_in_consecutive_block_at_line(code: str, line_no: int) -> Set[str]:
+def get_words_in_consecutive_block_at_line(code: str, line_no: int) -> set[str]:
     block = get_consecutive_block_at_line(code, line_no)
     words = re.split(r"[^\w]+", block)
     res = set(filter(lambda _: len(_) > 0, words))
     return res
 
 
-def get_pair_symbol_score(code: str, symbol_pair: Tuple[str, str]) -> List[List[int]]:
+def get_pair_symbol_score(code: str, symbol_pair: tuple[str, str]) -> list[list[int]]:
     # On each line, there is always at least a value marking the
     # bracket score at the "beginning" of the line before
     # any character appears.

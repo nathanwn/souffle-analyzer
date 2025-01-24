@@ -1,5 +1,3 @@
-from typing import List
-
 from lsprotocol.types import Diagnostic
 
 from souffle_analyzer.ast import (
@@ -17,7 +15,7 @@ from souffle_analyzer.visitor.visitor import Visitor
 class TypeInferVisitor(Visitor[None]):
     def __init__(self, workspace: Workspace) -> None:
         self.workspace = workspace
-        self.diagnostics: List[Diagnostic] = []
+        self.diagnostics: list[Diagnostic] = []
 
     def process(self) -> None:
         for document in self.workspace.documents.values():

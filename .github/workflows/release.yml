@@ -19,13 +19,13 @@ jobs:
       fail-fast: false
       matrix:
         # Try to build on the oldest images possible to maximize compatibility.
-        os: [ubuntu-20.04, windows-2019, macos-12, macos-14]
+        os: [ubuntu-20.04, windows-2019, macos-13, macos-14]
         include:
           - os: ubuntu-20.04
             asset_name: souffle-analyzer-linux64
           - os: windows-2019
             asset_name: souffle-analyzer-win64.exe
-          - os: macos-12
+          - os: macos-13
             asset_name: souffle-analyzer-macos-x86-64
           - os: macos-14
             asset_name: souffle-analyzer-macos-arm64

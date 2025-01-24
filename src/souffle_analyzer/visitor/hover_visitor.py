@@ -1,4 +1,4 @@
-from typing import Optional, Tuple
+from typing import Optional
 
 from souffle_analyzer.ast import (
     BUILTIN_TYPES,
@@ -12,7 +12,7 @@ from souffle_analyzer.ast import (
 )
 from souffle_analyzer.visitor.visitor import Visitor
 
-T = Optional[Tuple[str, Range]]
+T = Optional[tuple[str, Range]]
 
 
 class HoverVisitor(Visitor[T]):

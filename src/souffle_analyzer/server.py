@@ -1,4 +1,4 @@
-from typing import BinaryIO, Optional, Tuple
+from typing import BinaryIO, Optional
 
 from lsprotocol import converters
 from lsprotocol.types import (
@@ -95,7 +95,7 @@ class LanguageServer(JsonRpcNode):
             self.handle_incoming_message(msg)
 
 
-def get_lsp_types_from_method(method: str) -> Optional[Tuple[type, ...]]:
+def get_lsp_types_from_method(method: str) -> Optional[tuple[type, ...]]:
     return METHOD_TO_TYPES.get(method)
 
 

@@ -1,5 +1,3 @@
-from typing import Set
-
 import pytest
 
 from souffle_analyzer.sourceutil import (
@@ -111,7 +109,7 @@ def test_get_consecutive_block_at_line(
 def test_get_words_in_consecutive_block_at_line(
     code: str,
     line_no: int,
-    words: Set[str],
+    words: set[str],
 ) -> None:
     code = clean_multiline_string(code)
     assert get_words_in_consecutive_block_at_line(code, line_no) == words

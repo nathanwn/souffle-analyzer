@@ -1,5 +1,5 @@
 import os
-from typing import List, Optional, Tuple
+from typing import Optional
 
 from souffle_analyzer.ast import (
     ErrorNode,
@@ -11,7 +11,7 @@ from souffle_analyzer.ast import (
 )
 from souffle_analyzer.visitor.visitor import Visitor
 
-T = Optional[List[Tuple[Range, str]]]
+T = Optional[list[tuple[Range, str]]]
 
 
 class CodeActionVisitor(Visitor[T]):

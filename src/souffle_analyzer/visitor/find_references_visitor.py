@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Optional
 
 from souffle_analyzer.ast import (
     AbstractDataTypeBranch,
@@ -27,9 +27,9 @@ class FindDeclarationReferencesVisitor(Visitor[T]):
         self.position = position
         super().__init__(workspace)
 
-    def process(self) -> List[Location]:
+    def process(self) -> list[Location]:
         declaration = self.workspace.documents[self.uri].accept(self)
-        references: List[Location] = []
+        references: list[Location] = []
         if declaration is not None:
             declaration_name_location = declaration.get_declaration_name_location()
             if declaration_name_location is not None:

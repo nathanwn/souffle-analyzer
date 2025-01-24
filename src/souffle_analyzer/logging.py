@@ -2,7 +2,6 @@ import logging
 import logging.config
 import os
 import sys
-from typing import Dict
 
 from souffle_analyzer.metadata import PROG
 
@@ -22,7 +21,7 @@ def configure_logging(log_file: str, verbose: bool) -> None:
     logging.config.dictConfig(gen_logging_config(log_file, verbose))
 
 
-def gen_logging_config(log_file_path: str, verbose: bool) -> Dict:
+def gen_logging_config(log_file_path: str, verbose: bool) -> dict:
     return {
         "version": 1,
         "disable_existing_loggers": False,

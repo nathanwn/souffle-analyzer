@@ -65,9 +65,8 @@ from souffle_analyzer.logging import logger
 
 class Parser:
     def __init__(self, uri: str, code: bytes):
-        self.parser = ts.Parser()
-        souffle_language = ts.Language(tree_sitter_souffle.language(), "souffle")
-        self.parser.set_language(souffle_language)
+        souffle_language = ts.Language(tree_sitter_souffle.language())
+        self.parser = ts.Parser(souffle_language)
         self.uri = uri
         self.code = code
 
@@ -77,7 +76,7 @@ class Parser:
         return document
 
     def get_text(self, node: ts.Node) -> str:
-        return node.text.decode()
+        return node.text.decode() if node.text else ""
 
     def get_location(self, node: ts.Node) -> Location:
         return Location(

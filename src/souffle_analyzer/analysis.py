@@ -1,7 +1,7 @@
 import os
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import List, Optional, Tuple
+from typing import Optional
 from urllib.parse import urlsplit
 
 import lsprotocol.types as lsptypes
@@ -61,7 +61,7 @@ class AnalysisContext:
         document = parser.parse()
         self.workspace.documents[uri] = document
 
-    def sync_document(self, uri, text: str) -> List[lsptypes.Diagnostic]:
+    def sync_document(self, uri, text: str) -> list[lsptypes.Diagnostic]:
         self.load_document(uri, text)
         self.sync_workspace()
         simple_semantic_check_visitor = SimpleSemanticCheckVisitor(
@@ -71,13 +71,13 @@ class AnalysisContext:
         diagnostics = simple_semantic_check_visitor.process()
         return diagnostics
 
-    def open_document(self, uri: str, text: str) -> List[lsptypes.Diagnostic]:
+    def open_document(self, uri: str, text: str) -> list[lsptypes.Diagnostic]:
         return self.sync_document(uri, text)
 
     def update_document(
-        self, uri: str, changes: List[lsptypes.TextDocumentContentChangeEvent]
-    ) -> List[lsptypes.Diagnostic]:
-        diagnostics: List[lsptypes.Diagnostic] = []
+        self, uri: str, changes: list[lsptypes.TextDocumentContentChangeEvent]
+    ) -> list[lsptypes.Diagnostic]:
+        diagnostics: list[lsptypes.Diagnostic] = []
         for change in changes:
             if isinstance(change, lsptypes.TextDocumentContentChangeEvent_Type1):
                 pass
@@ -88,7 +88,7 @@ class AnalysisContext:
 
     def hover(
         self, uri: str, position: lsptypes.Position
-    ) -> Optional[Tuple[str, Range]]:
+    ) -> Optional[tuple[str, Range]]:
         hover_visitor = HoverVisitor(
             workspace=self.workspace,
             uri=uri,
@@ -117,7 +117,7 @@ class AnalysisContext:
 
     def get_references(
         self, uri: str, position: lsptypes.Position
-    ) -> List[lsptypes.Location]:
+    ) -> list[lsptypes.Location]:
         find_references_visitor = FindDeclarationReferencesVisitor(
             workspace=self.workspace,
             uri=uri,
@@ -146,7 +146,7 @@ class AnalysisContext:
         uri: str,
         position: lsptypes.Position,
         context: Optional[lsptypes.CompletionContext],
-    ) -> List[lsptypes.CompletionItem]:
+    ) -> list[lsptypes.CompletionItem]:
         code = self.workspace.documents[uri].code
         code_lines = code.splitlines()
         if context is None:
@@ -217,7 +217,7 @@ class AnalysisContext:
                         suggested_words.append(word)
                 return [lsptypes.CompletionItem(label=word) for word in suggested_words]
 
-    def get_type_name_completion_items(self, uri: str) -> List[lsptypes.CompletionItem]:
+    def get_type_name_completion_items(self, uri: str) -> list[lsptypes.CompletionItem]:
         completions = []
         for builtin_type in BUILTIN_TYPES:
             completions.append(
@@ -242,7 +242,7 @@ class AnalysisContext:
 
     def get_relation_name_completion_items(
         self, uri: str
-    ) -> List[lsptypes.CompletionItem]:
+    ) -> list[lsptypes.CompletionItem]:
         completions = []
         for relation_declaration in self.workspace.documents[uri].relation_declarations:
             relation_name = relation_declaration.name.inner
@@ -260,7 +260,7 @@ class AnalysisContext:
 
     def get_code_actions(
         self, uri: str, position: lsptypes.Position
-    ) -> Optional[List[lsptypes.TextEdit]]:
+    ) -> Optional[list[lsptypes.TextEdit]]:
         code_actions_visitor = CodeActionVisitor(
             workspace=self.workspace,
             uri=uri,

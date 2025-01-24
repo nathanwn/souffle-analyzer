@@ -1,5 +1,3 @@
-from typing import Set
-
 import pytest
 from lsprotocol.types import CompletionContext, CompletionTriggerKind
 
@@ -79,7 +77,7 @@ from tests.util.helper import parse_code_with_cursor_position
     ],
 )
 def test_completion_no_trigger_character(
-    code_with_cursor_position: str, completion_label_set: Set[str]
+    code_with_cursor_position: str, completion_label_set: set[str]
 ) -> None:
     code, cursor_position = parse_code_with_cursor_position(code_with_cursor_position)
     ctx = AnalysisContext()

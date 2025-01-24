@@ -3,8 +3,8 @@ from __future__ import annotations
 import argparse
 import os
 import sys
+from collections.abc import Sequence
 from importlib import metadata as importlib_metadata
-from typing import Sequence
 
 from souffle_analyzer.logging import configure_logging, get_default_log_location, logger
 from souffle_analyzer.metadata import PROG

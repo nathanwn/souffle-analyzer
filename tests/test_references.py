@@ -1,5 +1,5 @@
 import os
-from typing import List, Optional
+from typing import Optional
 
 import lsprotocol.types as lsptypes
 import pytest
@@ -32,14 +32,14 @@ def test_references(file_snapshot: SnapshotAssertion, filename: str) -> None:
     ctx.sync_document(filename, code)
     code_lines = code.splitlines()
 
-    def analyze(position: Position) -> Optional[List[lsptypes.Location]]:
+    def analyze(position: Position) -> Optional[list[lsptypes.Location]]:
         result = ctx.get_references(filename, position.to_lsp_type())
         # Hide empty reference lists from test output
         if len(result) == 0:
             return None
         return result
 
-    def format_result(result: List[lsptypes.Location]) -> List[str]:
+    def format_result(result: list[lsptypes.Location]) -> list[str]:
         out = []
         out.append("-- References --")
         for loc in result:

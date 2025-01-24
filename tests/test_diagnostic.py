@@ -1,5 +1,4 @@
 import os
-from typing import List
 
 import pytest
 from lsprotocol.types import Diagnostic
@@ -38,7 +37,7 @@ def test_diagnostic(file_snapshot: SnapshotAssertion, filename: str) -> None:
             )
         )
 
-    def format_result(result: Diagnostic) -> List[str]:
+    def format_result(result: Diagnostic) -> list[str]:
         out = []
         out.append("-- Range --")
         out.extend(
