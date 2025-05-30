@@ -18,10 +18,10 @@ from souffle_analyzer.visitor.collect_declaration_references_visitor import (
 )
 from souffle_analyzer.visitor.visitor import Visitor
 
-T = Optional[IsDeclarationNode]
+FindDeclarationReferencesResult = Optional[IsDeclarationNode]
 
 
-class FindDeclarationReferencesVisitor(Visitor[T]):
+class FindDeclarationReferencesVisitor(Visitor[FindDeclarationReferencesResult]):
     def __init__(self, workspace: Workspace, uri: str, position: Position) -> None:
         self.uri = uri
         self.position = position
@@ -44,41 +44,47 @@ class FindDeclarationReferencesVisitor(Visitor[T]):
     def visit_relation_declaration(
         self,
         relation_declaration: RelationDeclaration,
-    ) -> T:
+    ) -> FindDeclarationReferencesResult:
         if relation_declaration.name.covers_position(self.position):
             return relation_declaration
         return self.generic_visit(relation_declaration)
 
     def visit_relation_reference_name(
         self, relation_reference_name: RelationReferenceName
-    ) -> T:
+    ) -> FindDeclarationReferencesResult:
         if relation_reference_name.declaration is not None:
             return relation_reference_name.declaration
         return self.generic_visit(relation_reference_name)
 
-    def visit_type_declaration(self, type_declaration: TypeDeclaration) -> T:
+    def visit_type_declaration(
+        self, type_declaration: TypeDeclaration
+    ) -> FindDeclarationReferencesResult:
         if type_declaration.name.covers_position(self.position):
             return type_declaration
         return self.generic_visit(type_declaration)
 
-    def visit_type_reference_name(self, type_reference_name: TypeReferenceName) -> T:
+    def visit_type_reference_name(
+        self, type_reference_name: TypeReferenceName
+    ) -> FindDeclarationReferencesResult:
         if type_reference_name.declaration is not None:
             return type_reference_name.declaration
         return self.generic_visit(type_reference_name)
 
     def visit_abstract_data_type_branch(
         self, abstract_data_type_branch: AbstractDataTypeBranch
-    ) -> T:
+    ) -> FindDeclarationReferencesResult:
         if abstract_data_type_branch.name.covers_position(self.position):
             return abstract_data_type_branch
         return self.generic_visit(abstract_data_type_branch)
 
-    def visit_branch_init_name(self, branch_init_name: BranchInitName) -> T:
+    def visit_branch_init_name(
+        self, branch_init_name: BranchInitName
+    ) -> FindDeclarationReferencesResult:
         if branch_init_name.declaration is not None:
             return branch_init_name.declaration
         return self.generic_visit(branch_init_name)
 
-    def generic_visit(self, node: Node) -> T:
+    def generic_visit(self, node: Node) -> FindDeclarationReferencesResult:
         for child in node.children_sorted_by_range:
             if child.covers_position(self.position):
                 return child.accept(self)

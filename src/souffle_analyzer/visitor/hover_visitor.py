@@ -12,19 +12,21 @@ from souffle_analyzer.ast import (
 )
 from souffle_analyzer.visitor.visitor import Visitor
 
-T = Optional[tuple[str, Range]]
+HoverResult = Optional[tuple[str, Range]]
 
 
-class HoverVisitor(Visitor[T]):
+class HoverVisitor(Visitor[HoverResult]):
     def __init__(self, workspace: Workspace, uri: str, position: Position) -> None:
         self.position = position
         self.uri = uri
         super().__init__(workspace)
 
-    def process(self) -> T:
+    def process(self) -> HoverResult:
         return self.workspace.documents[self.uri].accept(self)
 
-    def visit_type_reference_name(self, type_reference_name: TypeReferenceName) -> T:
+    def visit_type_reference_name(
+        self, type_reference_name: TypeReferenceName
+    ) -> HoverResult:
         if len(type_reference_name.parts) == 1:
             for builtin_type in BUILTIN_TYPES:
                 if type_reference_name.parts[0].val == builtin_type.name:
@@ -33,7 +35,7 @@ class HoverVisitor(Visitor[T]):
 
     def visit_relation_reference_name(
         self, relation_reference_name: RelationReferenceName
-    ) -> T:
+    ) -> HoverResult:
         matching_relation_declaration = (
             self.workspace.get_relation_declaration_with_name(relation_reference_name)
         )
@@ -44,7 +46,7 @@ class HoverVisitor(Visitor[T]):
             relation_reference_name.range_,
         )
 
-    def visit_branch_init_name(self, branch_init_name: BranchInitName) -> T:
+    def visit_branch_init_name(self, branch_init_name: BranchInitName) -> HoverResult:
         matching_branch_init_declaration = self.workspace.get_adt_branch_with_name(
             branch_init_name
         )
@@ -55,7 +57,7 @@ class HoverVisitor(Visitor[T]):
             branch_init_name.range_,
         )
 
-    def generic_visit(self, node: Node) -> T:
+    def generic_visit(self, node: Node) -> HoverResult:
         for child in node.children_sorted_by_range:
             if child.covers_position(self.position):
                 return child.accept(self)
