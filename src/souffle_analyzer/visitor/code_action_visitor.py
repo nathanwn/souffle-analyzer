@@ -11,21 +11,21 @@ from souffle_analyzer.ast import (
 )
 from souffle_analyzer.visitor.visitor import Visitor
 
-T = Optional[list[tuple[Range, str]]]
+CodeActionResult = Optional[list[tuple[Range, str]]]
 
 
-class CodeActionVisitor(Visitor[T]):
+class CodeActionVisitor(Visitor[CodeActionResult]):
     def __init__(self, workspace: Workspace, uri: str, position: Position) -> None:
         self.uri = uri
         self.position = position
         super().__init__(workspace)
 
-    def process(self) -> T:
+    def process(self) -> CodeActionResult:
         return self.workspace.documents[self.uri].accept(self)
 
     def visit_relation_declaration(
         self, relation_declaration: RelationDeclaration
-    ) -> T:
+    ) -> CodeActionResult:
         if relation_declaration.doc_text is not None:
             return None
         doc_text_template = []
@@ -39,7 +39,7 @@ class CodeActionVisitor(Visitor[T]):
         pos = relation_declaration.range_.start
         return [(Range(pos, pos), os.linesep.join(doc_text_template))]
 
-    def generic_visit(self, node: Node) -> T:
+    def generic_visit(self, node: Node) -> CodeActionResult:
         for child in node.children_sorted_by_range:
             if child.covers_position(self.position):
                 return child.accept(self)
