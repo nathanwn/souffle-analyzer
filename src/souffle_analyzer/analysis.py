@@ -1,4 +1,5 @@
 import os
+from collections.abc import Sequence
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Optional
@@ -75,13 +76,13 @@ class AnalysisContext:
         return self.sync_document(uri, text)
 
     def update_document(
-        self, uri: str, changes: list[lsptypes.TextDocumentContentChangeEvent]
+        self, uri: str, changes: Sequence[lsptypes.TextDocumentContentChangeEvent]
     ) -> list[lsptypes.Diagnostic]:
         diagnostics: list[lsptypes.Diagnostic] = []
         for change in changes:
-            if isinstance(change, lsptypes.TextDocumentContentChangeEvent_Type1):
+            if isinstance(change, lsptypes.TextDocumentContentChangePartial):
                 pass
-            if isinstance(change, lsptypes.TextDocumentContentChangeEvent_Type2):
+            if isinstance(change, lsptypes.TextDocumentContentChangeWholeDocument):
                 logger.debug("update document")
                 diagnostics.extend(self.sync_document(uri, change.text))
         return diagnostics

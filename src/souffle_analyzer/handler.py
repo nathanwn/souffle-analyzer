@@ -2,35 +2,35 @@ from importlib import metadata as importlib_metadata
 
 from lsprotocol.types import (
     CodeAction,
+    CodeActionRequest,
+    CodeActionResponse,
     CompletionOptions,
+    CompletionRequest,
+    CompletionResponse,
+    DefinitionRequest,
+    DefinitionResponse,
     DiagnosticOptions,
+    DidChangeTextDocumentNotification,
+    DidOpenTextDocumentNotification,
     Hover,
+    HoverRequest,
+    HoverResponse,
     InitializeRequest,
     InitializeResponse,
     InitializeResult,
-    InitializeResultServerInfoType,
     MarkupContent,
     MarkupKind,
     OptionalVersionedTextDocumentIdentifier,
+    PublishDiagnosticsNotification,
     PublishDiagnosticsParams,
+    ReferencesRequest,
+    ReferencesResponse,
     ServerCapabilities,
-    TextDocumentCodeActionRequest,
-    TextDocumentCodeActionResponse,
-    TextDocumentCompletionRequest,
-    TextDocumentCompletionResponse,
-    TextDocumentDefinitionRequest,
-    TextDocumentDefinitionResponse,
-    TextDocumentDidChangeNotification,
-    TextDocumentDidOpenNotification,
+    ServerInfo,
     TextDocumentEdit,
-    TextDocumentHoverRequest,
-    TextDocumentHoverResponse,
-    TextDocumentPublishDiagnosticsNotification,
-    TextDocumentReferencesRequest,
-    TextDocumentReferencesResponse,
     TextDocumentSyncKind,
-    TextDocumentTypeDefinitionRequest,
-    TextDocumentTypeDefinitionResponse,
+    TypeDefinitionRequest,
+    TypeDefinitionResponse,
     WorkspaceEdit,
 )
 
@@ -72,7 +72,7 @@ def handle_initialize_request(
                     workspace_diagnostics=False,
                 ),
             ),
-            server_info=InitializeResultServerInfoType(
+            server_info=ServerInfo(
                 name=PROG,
                 version=importlib_metadata.version(PROG),
             ),
@@ -81,37 +81,37 @@ def handle_initialize_request(
 
 
 def handle_text_document_did_open_notification(
-    request: TextDocumentDidOpenNotification,
+    request: DidOpenTextDocumentNotification,
     ctx: AnalysisContext,
-) -> TextDocumentPublishDiagnosticsNotification:
+) -> PublishDiagnosticsNotification:
     uri = request.params.text_document.uri
     diagnostics = ctx.open_document(
         uri=uri,
         text=request.params.text_document.text,
     )
-    return TextDocumentPublishDiagnosticsNotification(
+    return PublishDiagnosticsNotification(
         params=PublishDiagnosticsParams(uri=uri, diagnostics=diagnostics),
     )
 
 
 def handle_text_document_did_change_notification(
-    request: TextDocumentDidChangeNotification,
+    request: DidChangeTextDocumentNotification,
     ctx: AnalysisContext,
-) -> TextDocumentPublishDiagnosticsNotification:
+) -> PublishDiagnosticsNotification:
     uri = request.params.text_document.uri
     diagnostics = ctx.update_document(
         uri=uri,
         changes=request.params.content_changes,
     )
-    return TextDocumentPublishDiagnosticsNotification(
+    return PublishDiagnosticsNotification(
         params=PublishDiagnosticsParams(uri=uri, diagnostics=diagnostics),
     )
 
 
 def handle_text_document_hover_request(
-    request: TextDocumentHoverRequest,
+    request: HoverRequest,
     ctx: AnalysisContext,
-) -> TextDocumentHoverResponse:
+) -> HoverResponse:
     document_uri = request.params.text_document.uri
     position = request.params.position
     hover_result = ctx.hover(uri=document_uri, position=position)
@@ -127,16 +127,16 @@ def handle_text_document_hover_request(
         )
         logger.debug("Hover result found: %s", result)
 
-    return TextDocumentHoverResponse(
+    return HoverResponse(
         id=request.id,
         result=result,
     )
 
 
 def handle_text_document_definition_request(
-    request: TextDocumentDefinitionRequest,
+    request: DefinitionRequest,
     ctx: AnalysisContext,
-) -> TextDocumentDefinitionResponse:
+) -> DefinitionResponse:
     document_uri = request.params.text_document.uri
     position = request.params.position
     definition_result = ctx.get_definition(uri=document_uri, position=position)
@@ -146,59 +146,59 @@ def handle_text_document_definition_request(
     else:
         logger.debug("Definition result found: %s", definition_result)
 
-    return TextDocumentDefinitionResponse(
+    return DefinitionResponse(
         id=request.id,
         result=definition_result,
     )
 
 
 def handle_text_document_reference_request(
-    request: TextDocumentReferencesRequest, ctx: AnalysisContext
-) -> TextDocumentReferencesResponse:
+    request: ReferencesRequest, ctx: AnalysisContext
+) -> ReferencesResponse:
     result = ctx.get_references(
         uri=request.params.text_document.uri,
         position=request.params.position,
     )
-    return TextDocumentReferencesResponse(
+    return ReferencesResponse(
         id=request.id,
         result=result,
     )
 
 
 def handle_text_document_type_definition_request(
-    request: TextDocumentTypeDefinitionRequest,
+    request: TypeDefinitionRequest,
     ctx: AnalysisContext,
-) -> TextDocumentTypeDefinitionResponse:
+) -> TypeDefinitionResponse:
     document_uri = request.params.text_document.uri
     position = request.params.position
     type_definition_result = ctx.get_type_definition(
         uri=document_uri, position=position
     )
-    return TextDocumentTypeDefinitionResponse(
+    return TypeDefinitionResponse(
         id=request.id,
         result=type_definition_result,
     )
 
 
 def handle_text_document_completion_request(
-    request: TextDocumentCompletionRequest,
+    request: CompletionRequest,
     ctx: AnalysisContext,
-) -> TextDocumentCompletionResponse:
+) -> CompletionResponse:
     uri = request.params.text_document.uri
     position = request.params.position
     context = request.params.context
     logger.debug(request)
     result = ctx.get_completion_items(uri, position, context)
-    return TextDocumentCompletionResponse(
+    return CompletionResponse(
         id=request.id,
         result=result,
     )
 
 
 def handle_text_document_code_action_request(
-    request: TextDocumentCodeActionRequest,
+    request: CodeActionRequest,
     ctx: AnalysisContext,
-) -> TextDocumentCodeActionResponse:
+) -> CodeActionResponse:
     uri = request.params.text_document.uri
     # Only support position-based code action for now
     position = request.params.range.start
@@ -221,7 +221,7 @@ def handle_text_document_code_action_request(
                 ),
             )
         ]
-    return TextDocumentCodeActionResponse(
+    return CodeActionResponse(
         id=request.id,
         result=list(result),
     )
