@@ -3,16 +3,16 @@ from typing import BinaryIO, Optional
 from lsprotocol import converters
 from lsprotocol.types import (
     METHOD_TO_TYPES,
+    CodeActionRequest,
+    CompletionRequest,
+    DefinitionRequest,
+    DidChangeTextDocumentNotification,
+    DidOpenTextDocumentNotification,
+    HoverRequest,
     InitializedNotification,
     InitializeRequest,
-    TextDocumentCodeActionRequest,
-    TextDocumentCompletionRequest,
-    TextDocumentDefinitionRequest,
-    TextDocumentDidChangeNotification,
-    TextDocumentDidOpenNotification,
-    TextDocumentHoverRequest,
-    TextDocumentReferencesRequest,
-    TextDocumentTypeDefinitionRequest,
+    ReferencesRequest,
+    TypeDefinitionRequest,
 )
 
 from souffle_analyzer import handler
@@ -46,43 +46,43 @@ class LanguageServer(JsonRpcNode):
             self.write_server_response(response)
         elif isinstance(request, InitializedNotification):
             logger.info("Connection established successfully.")
-        elif isinstance(request, TextDocumentDidOpenNotification):
+        elif isinstance(request, DidOpenTextDocumentNotification):
             diagnostic_notification = (
                 handler.handle_text_document_did_open_notification(request, self.ctx)
             )
             logger.info("Opened: %s", request.params.text_document.uri)
             self.write_server_response(diagnostic_notification)
-        elif isinstance(request, TextDocumentDidChangeNotification):
+        elif isinstance(request, DidChangeTextDocumentNotification):
             diagnostic_notification = (
                 handler.handle_text_document_did_change_notification(request, self.ctx)
             )
             logger.info("Changed: %s", request.params.text_document.uri)
             self.write_server_response(diagnostic_notification)
-        elif isinstance(request, TextDocumentHoverRequest):
+        elif isinstance(request, HoverRequest):
             response = handler.handle_text_document_hover_request(request, self.ctx)
             self.write_server_response(response)
-        elif isinstance(request, TextDocumentDefinitionRequest):
+        elif isinstance(request, DefinitionRequest):
             response = handler.handle_text_document_definition_request(
                 request, self.ctx
             )
             self.write_server_response(response)
-        elif isinstance(request, TextDocumentReferencesRequest):
+        elif isinstance(request, ReferencesRequest):
             response = handler.handle_text_document_reference_request(
                 request,
                 self.ctx,
             )
             self.write_server_response(response)
-        elif isinstance(request, TextDocumentTypeDefinitionRequest):
+        elif isinstance(request, TypeDefinitionRequest):
             response = handler.handle_text_document_type_definition_request(
                 request, self.ctx
             )
             self.write_server_response(response)
-        elif isinstance(request, TextDocumentCompletionRequest):
+        elif isinstance(request, CompletionRequest):
             response = handler.handle_text_document_completion_request(
                 request, self.ctx
             )
             self.write_server_response(response)
-        elif isinstance(request, TextDocumentCodeActionRequest):
+        elif isinstance(request, CodeActionRequest):
             response = handler.handle_text_document_code_action_request(
                 request, self.ctx
             )

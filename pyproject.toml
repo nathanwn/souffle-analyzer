@@ -12,7 +12,7 @@ keywords = [
 version = "0.0.1"
 dependencies = [
     "typing_extensions>=3.10.0; python_version<'3.10'",
-    "lsprotocol>=2023.0.1",
+    "lsprotocol>=2025.0.0",
     "tree-sitter>=0.23.2",
     "tree-sitter-souffle@git+https://github.com/nathanwn/tree-sitter-souffle@4b5fd8b1d4c9d9a7047794756549c49cf611812b",
 ]
