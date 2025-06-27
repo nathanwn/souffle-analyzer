@@ -1,5 +1,5 @@
 import json
-from typing import BinaryIO, Optional
+from typing import BinaryIO
 
 from souffle_analyzer.logging import logger
 
@@ -9,7 +9,7 @@ class JsonRpcNode:
         self.in_stream = in_stream
         self.out_stream = out_stream
 
-    def read_message(self) -> Optional[dict]:
+    def read_message(self) -> dict | None:
         content_length_prefix = b"Content-Length:"
         content_length = None
         content_length_prefix_pos = -1
