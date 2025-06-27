@@ -1,5 +1,4 @@
 import os
-from typing import Optional
 
 import pytest
 from syrupy.assertion import SnapshotAssertion
@@ -31,7 +30,7 @@ def test_hover(file_snapshot: SnapshotAssertion, filename: str) -> None:
     ctx.sync_document(filename, code)
     code_lines = code.splitlines()
 
-    def analyze(position: Position) -> Optional[tuple[str, Range]]:
+    def analyze(position: Position) -> tuple[str, Range] | None:
         return ctx.hover(filename, position.to_lsp_type())
 
     def format_result(result: tuple[str, Range]) -> list[str]:

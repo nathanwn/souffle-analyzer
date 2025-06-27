@@ -1,6 +1,7 @@
 import os
+from collections.abc import Callable
 from dataclasses import dataclass
-from typing import Any, Callable, Generic, Optional, TypeVar
+from typing import Any, Generic, TypeVar
 
 from souffle_analyzer.ast import Position, Range
 from souffle_analyzer.printer import format_souffle_code, format_souffle_code_range
@@ -85,12 +86,12 @@ def format_rangewise_results(
 def format_cursorwise_results(
     code_lines: list[str],
     uri: str,
-    analyze: Callable[[Position], Optional[Any]],
+    analyze: Callable[[Position], Any | None],
     format_result: Callable[[Any], list[str]],
 ) -> str:
-    cur_start: Optional[Position] = None
-    cur_end: Optional[Position] = None
-    cur_result: Optional[object] = None
+    cur_start: Position | None = None
+    cur_end: Position | None = None
+    cur_result: object | None = None
 
     rangewise_results: list[RangewiseResult] = []
 

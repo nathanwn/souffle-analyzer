@@ -1,5 +1,4 @@
 import os
-from typing import Optional
 
 import pytest
 from lsprotocol import types as lsptypes
@@ -32,7 +31,7 @@ def test_definition(file_snapshot: SnapshotAssertion, filename: str) -> None:
     ctx.sync_document(filename, code)
     code_lines = code.splitlines()
 
-    def analyze(position: Position) -> Optional[lsptypes.Location]:
+    def analyze(position: Position) -> lsptypes.Location | None:
         return ctx.get_definition(filename, position.to_lsp_type())
 
     def format_result(result: lsptypes.Location) -> list[str]:

@@ -19,7 +19,7 @@ jobs:
       # Use macos-13 instead of macos-14/macos-latest due to:
       # https://github.com/actions/setup-python/issues/825#issuecomment-2012392172
       os: '["ubuntu-latest", "windows-latest", "macos-13"]'
-      env: '["py39", "py310", "py311", "py312", "py313"]'
+      env: '["py310", "py311", "py312", "py313"]'
 
   test-vscode-extension:
     runs-on: ubuntu-latest

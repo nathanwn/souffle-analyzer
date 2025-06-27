@@ -2,7 +2,6 @@ import os
 from collections.abc import Sequence
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Optional
 from urllib.parse import urlsplit
 
 import lsprotocol.types as lsptypes
@@ -34,7 +33,7 @@ from souffle_analyzer.visitor.type_definition_visitor import TypeDefinitionVisit
 @dataclass
 class AnalysisContext:
     workspace: Workspace = field(default_factory=lambda: Workspace())
-    root_uri: Optional[str] = field(default=None)
+    root_uri: str | None = field(default=None)
 
     def load_workspace(self, root_uri: str) -> None:
         self.root_uri = root_uri
@@ -87,9 +86,7 @@ class AnalysisContext:
                 diagnostics.extend(self.sync_document(uri, change.text))
         return diagnostics
 
-    def hover(
-        self, uri: str, position: lsptypes.Position
-    ) -> Optional[tuple[str, Range]]:
+    def hover(self, uri: str, position: lsptypes.Position) -> tuple[str, Range] | None:
         hover_visitor = HoverVisitor(
             workspace=self.workspace,
             uri=uri,
@@ -102,7 +99,7 @@ class AnalysisContext:
 
     def get_definition(
         self, uri: str, position: lsptypes.Position
-    ) -> Optional[lsptypes.Location]:
+    ) -> lsptypes.Location | None:
         definition_visitor = DefinitionVisitor(
             workspace=self.workspace,
             uri=uri,
@@ -128,7 +125,7 @@ class AnalysisContext:
 
     def get_type_definition(
         self, uri: str, position: lsptypes.Position
-    ) -> Optional[lsptypes.Location]:
+    ) -> lsptypes.Location | None:
         type_definition_visitor = TypeDefinitionVisitor(
             workspace=self.workspace,
             uri=uri,
@@ -146,7 +143,7 @@ class AnalysisContext:
         self,
         uri: str,
         position: lsptypes.Position,
-        context: Optional[lsptypes.CompletionContext],
+        context: lsptypes.CompletionContext | None,
     ) -> list[lsptypes.CompletionItem]:
         code = self.workspace.documents[uri].code
         code_lines = code.splitlines()
@@ -261,7 +258,7 @@ class AnalysisContext:
 
     def get_code_actions(
         self, uri: str, position: lsptypes.Position
-    ) -> Optional[list[lsptypes.TextEdit]]:
+    ) -> list[lsptypes.TextEdit] | None:
         code_actions_visitor = CodeActionVisitor(
             workspace=self.workspace,
             uri=uri,
