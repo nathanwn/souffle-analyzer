@@ -9,6 +9,20 @@ from souffle_analyzer.printer import format_souffle_code, format_souffle_code_ra
 T = TypeVar("T")
 
 
+def write_output_file(out_file: str, result: str) -> None:
+    out_dir = os.path.dirname(out_file)
+    if not os.path.isdir(out_dir):
+        os.makedirs(out_dir)
+
+    lines = result.splitlines()
+    while len(lines) > 0 and len(lines[-1]) == 0:
+        lines.pop()
+    with open(out_file, "w") as f:
+        for line in lines:
+            f.write(line)
+            f.write("\n")
+
+
 def parse_code_with_cursor_position(code_with_cursor: str) -> tuple[str, Position]:
     code_with_cursor = clean_multiline_string(code_with_cursor)
     lines = code_with_cursor.splitlines()
@@ -55,35 +69,33 @@ def clean_multiline_string(s: str):
 
 
 @dataclass
-class RangewiseResult(Generic[T]):
+class ByRangeResult(Generic[T]):
     cursor_range: Range
     result: T
 
 
-def format_rangewise_results(
+def format_by_range_results(
     code_lines: list[str],
     uri: str,
     format_result: Callable[[Any], list[str]],
     rangewise_results: Any,
 ) -> str:
-    out: list[str] = []
+    lines = format_souffle_code(code_lines, uri=uri)
+    lines.append("=====")
+    lines.append("")
 
     for result in rangewise_results:
         assert result is not None
-        out.append("-- Cursor range --")
-        out.extend(format_souffle_code_range(code_lines, uri, result.cursor_range))
-        out.extend(format_result(result.result))
-        out.extend(["_____", ""])
+        lines.append("-- Cursor range --")
+        lines.extend(format_souffle_code_range(code_lines, uri, result.cursor_range))
+        lines.extend(format_result(result.result))
+        lines.append("_____")
+        lines.append("")  # add new line at end of file
 
-    return "\n\n=====\n\n".join(
-        [
-            "\n".join(format_souffle_code(code_lines, uri=uri)),
-            "\n".join(out),
-        ]
-    )
+    return "\n".join(lines)
 
 
-def format_cursorwise_results(
+def format_by_position_results(
     code_lines: list[str],
     uri: str,
     analyze: Callable[[Position], Any | None],
@@ -93,7 +105,7 @@ def format_cursorwise_results(
     cur_end: Position | None = None
     cur_result: object | None = None
 
-    rangewise_results: list[RangewiseResult] = []
+    rangewise_results: list[ByRangeResult] = []
 
     for line_no, line in enumerate(code_lines):
         for char_no, _ in enumerate(line):
@@ -104,7 +116,7 @@ def format_cursorwise_results(
                     assert cur_start is not None
                     assert cur_end is not None
                     rangewise_results.append(
-                        RangewiseResult(
+                        ByRangeResult(
                             Range(start=cur_start, end=cur_end),
                             cur_result,
                         )
@@ -126,10 +138,10 @@ def format_cursorwise_results(
 
     if cur_start is not None and cur_end is not None and cur_result is not None:
         rangewise_results.append(
-            RangewiseResult(
+            ByRangeResult(
                 Range(start=cur_start, end=cur_end),
                 cur_result,
             )
         )
 
-    return format_rangewise_results(code_lines, uri, format_result, rangewise_results)
+    return format_by_range_results(code_lines, uri, format_result, rangewise_results)

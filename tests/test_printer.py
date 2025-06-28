@@ -1,9 +1,9 @@
 import os
 
 import pytest
-from syrupy.assertion import SnapshotAssertion
 
 from souffle_analyzer.printer import format_souffle_code
+from tests.util.helper import write_output_file
 
 
 @pytest.mark.parametrize(
@@ -15,10 +15,21 @@ from souffle_analyzer.printer import format_souffle_code
         ("types1.dl"),
     ],
 )
-def test_printer(file_snapshot: SnapshotAssertion, filename: str) -> None:
-    test_data_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "testdata")
+def test_printer(
+    update_output: bool,
+    test_data_dir: str,
+    filename: str,
+) -> None:
     test_data_file = os.path.join(test_data_dir, filename)
     with open(test_data_file) as f:
         code = f.read()
-    res = os.linesep.join(format_souffle_code(code.splitlines(), uri=filename))
-    assert res.replace(os.linesep, "\n") == file_snapshot
+    result = os.linesep.join(format_souffle_code(code.splitlines(), uri=filename))
+    result = result.replace(os.linesep, "\n")
+
+    out_file = os.path.join(test_data_dir, "test_printer", filename + ".out")
+    if update_output:
+        write_output_file(out_file, result)
+    else:
+        with open(out_file) as f:
+            output = f.read()
+        assert result == output
