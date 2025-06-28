@@ -12,8 +12,11 @@ keywords = [
 version = "0.0.1"
 dependencies = [
     "lsprotocol>=2025.0.0",
-    "tree-sitter>=0.23.2",
-    "tree-sitter-souffle@git+https://github.com/nathanwn/tree-sitter-souffle@4b5fd8b1d4c9d9a7047794756549c49cf611812b",
+    # TODO: Need to upgrade to 0.25.0 which uses the new ABI 15
+    # which is currently not yet released, so we install from source
+    # "tree-sitter>=0.25.0",
+    "tree-sitter@git+https://github.com/tree-sitter/py-tree-sitter@24fcfe0ed8cdd8cc49756a52cfc135d42e083378",
+    "tree-sitter-souffle@git+https://github.com/nathanwn/tree-sitter-souffle@99b752096302c46e06028e39a92492d2a779be77",
 ]
 requires-python = ">=3.10"
 
