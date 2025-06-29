@@ -29,6 +29,7 @@ def format_souffle_code(lines: list[str], uri: str) -> list[str]:
             printed_lines.append(f"{sidebar} |")
         else:
             printed_lines.append(f"{sidebar} | {line}")
+    printed_lines.append("")  # add new line at the end
     return printed_lines
 
 
@@ -59,7 +60,13 @@ def indent(s: str, level: int) -> str:
     return f"{(level * size) * ' '}{s}"
 
 
-def format_souffle_ast(node: Node, level=0) -> list[str]:
+def format_souffle_ast(node: Node) -> list[str]:
+    lines = format_souffle_ast_recur(node, level=0)
+    lines.append("")  # add new line at the end
+    return lines
+
+
+def format_souffle_ast_recur(node: Node, level: int) -> list[str]:
     children = node.children_sorted_by_range
     if len(children) == 0:
         return [indent(str(node), level=level)]
@@ -71,7 +78,7 @@ def format_souffle_ast(node: Node, level=0) -> list[str]:
             res.append(indent(f"ty={node.ty}", level=level + 1))
 
         for child in children:
-            res.extend(format_souffle_ast(node=child, level=level + 1))
+            res.extend(format_souffle_ast_recur(node=child, level=level + 1))
 
         # if node.syntax_issues:
         #     res.append(indent("SyntaxIssues[", level + 1))

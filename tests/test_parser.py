@@ -1,7 +1,6 @@
 import os
 
 import pytest
-from syrupy.assertion import SnapshotAssertion
 
 from souffle_analyzer.parser import Parser
 from souffle_analyzer.printer import (
@@ -9,6 +8,7 @@ from souffle_analyzer.printer import (
     format_souffle_code,
     get_positions_in_range,
 )
+from tests.util.helper import write_output_file
 
 
 @pytest.mark.parametrize(
@@ -25,16 +25,26 @@ from souffle_analyzer.printer import (
         ("syntax_incomplete1.dl"),
     ],
 )
-def test_parser(file_snapshot: SnapshotAssertion, filename: str) -> None:
-    test_data_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "testdata")
+def test_parser(
+    update_output: bool,
+    test_data_dir: str,
+    filename: str,
+) -> None:
     test_data_file = os.path.join(test_data_dir, filename)
     with open(test_data_file, "rb") as f:
         code = f.read()
     parser = Parser(uri=filename, code=code)
     file = parser.parse()
 
-    res = os.linesep.join(format_souffle_ast(file))
-    assert res.replace(os.linesep, "\n") == file_snapshot
+    result = "\n".join(format_souffle_ast(file))
+
+    out_file = os.path.join(test_data_dir, "test_parser", filename + ".out")
+    if update_output:
+        write_output_file(out_file, result)
+    else:
+        with open(out_file) as f:
+            output = f.read()
+        assert result == output
 
 
 @pytest.mark.parametrize(

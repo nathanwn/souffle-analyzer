@@ -2,12 +2,11 @@ import os
 
 import pytest
 from lsprotocol.types import Diagnostic
-from syrupy.assertion import SnapshotAssertion
 
 from souffle_analyzer.analysis import AnalysisContext
 from souffle_analyzer.ast import Range
 from souffle_analyzer.printer import format_souffle_code_range
-from tests.util.helper import RangewiseResult, format_rangewise_results
+from tests.util.helper import ByRangeResult, format_by_range_results, write_output_file
 
 
 @pytest.mark.parametrize(
@@ -16,11 +15,11 @@ from tests.util.helper import RangewiseResult, format_rangewise_results
         ("semantic_arity1.dl"),
     ],
 )
-def test_diagnostic(file_snapshot: SnapshotAssertion, filename: str) -> None:
-    test_data_dir = os.path.join(
-        os.path.dirname(os.path.abspath(__file__)),
-        "testdata",
-    )
+def test_diagnostic(
+    update_output: bool,
+    test_data_dir: str,
+    filename: str,
+) -> None:
     test_data_file = os.path.join(test_data_dir, filename)
     with open(test_data_file) as f:
         code = f.read()
@@ -32,7 +31,7 @@ def test_diagnostic(file_snapshot: SnapshotAssertion, filename: str) -> None:
 
     for diagnostic in diagnostics:
         rangewise_diagnostics.append(
-            RangewiseResult(
+            ByRangeResult(
                 cursor_range=Range.from_lsp_type(diagnostic.range), result=diagnostic
             )
         )
@@ -51,12 +50,17 @@ def test_diagnostic(file_snapshot: SnapshotAssertion, filename: str) -> None:
         out.append(result.message)
         return out
 
-    assert (
-        format_rangewise_results(
-            code_lines=code_lines,
-            uri=filename,
-            format_result=format_result,
-            rangewise_results=rangewise_diagnostics,
-        )
-        == file_snapshot
+    result = format_by_range_results(
+        code_lines=code_lines,
+        uri=filename,
+        format_result=format_result,
+        rangewise_results=rangewise_diagnostics,
     )
+
+    out_file = os.path.join(test_data_dir, "test_diagnostic", filename + ".out")
+    if update_output:
+        write_output_file(out_file, result)
+    else:
+        with open(out_file) as f:
+            output = f.read()
+        assert result == output

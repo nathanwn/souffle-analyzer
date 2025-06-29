@@ -1,13 +1,30 @@
+import os
+
 import pytest
-from syrupy.assertion import SnapshotAssertion
-from syrupy.extensions.single_file import SingleFileSnapshotExtension, WriteMode
 
 
-class CustomFileSnapshotExtension(SingleFileSnapshotExtension):
-    _write_mode = WriteMode.TEXT
-    _file_extension = "snapshot"
+def pytest_addoption(parser):
+    parser.addoption(
+        "--update-output",
+        action="store_true",
+        help="Update expected output of tests",
+    )
 
 
 @pytest.fixture
-def file_snapshot(snapshot: SnapshotAssertion):
-    return snapshot.with_defaults(extension_class=CustomFileSnapshotExtension)
+def update_output(request) -> bool:
+    return request.config.getoption("--update-output")
+
+
+def get_test_root_dir() -> str:
+    return os.path.dirname(os.path.abspath(__file__))
+
+
+@pytest.fixture
+def test_root_dir() -> str:
+    return get_test_root_dir()
+
+
+@pytest.fixture
+def test_data_dir() -> str:
+    return os.path.join(get_test_root_dir(), "testdata")

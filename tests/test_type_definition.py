@@ -2,12 +2,11 @@ import os
 
 import pytest
 from lsprotocol import types as lsptypes
-from syrupy.assertion import SnapshotAssertion
 
 from souffle_analyzer.analysis import AnalysisContext
 from souffle_analyzer.ast import Position, Range
 from souffle_analyzer.printer import format_souffle_code_range
-from tests.util.helper import format_cursorwise_results
+from tests.util.helper import format_by_position_results, write_output_file
 
 
 @pytest.mark.parametrize(
@@ -17,11 +16,11 @@ from tests.util.helper import format_cursorwise_results
         ("types3.dl"),
     ],
 )
-def test_type_definition(file_snapshot: SnapshotAssertion, filename: str) -> None:
-    test_data_dir = os.path.join(
-        os.path.dirname(os.path.abspath(__file__)),
-        "testdata",
-    )
+def test_type_definition(
+    update_output: bool,
+    test_data_dir: str,
+    filename: str,
+) -> None:
     test_data_file = os.path.join(test_data_dir, filename)
     with open(test_data_file) as f:
         code = f.read()
@@ -40,12 +39,17 @@ def test_type_definition(file_snapshot: SnapshotAssertion, filename: str) -> Non
         out.extend(format_souffle_code_range(code_lines, filename, range_))
         return out
 
-    assert (
-        format_cursorwise_results(
-            code_lines=code_lines,
-            uri=filename,
-            analyze=analyze,
-            format_result=format_result,
-        )
-        == file_snapshot
+    result = format_by_position_results(
+        code_lines=code_lines,
+        uri=filename,
+        analyze=analyze,
+        format_result=format_result,
     )
+
+    out_file = os.path.join(test_data_dir, "test_type_definition", filename + ".out")
+    if update_output:
+        write_output_file(out_file, result)
+    else:
+        with open(out_file) as f:
+            output = f.read()
+        assert result == output

@@ -26,7 +26,6 @@ test = [
     "covdefaults",
     "hypothesis",
     "pytest",
-    "syrupy",
 ]
 dev = [
     "pre-commit",
