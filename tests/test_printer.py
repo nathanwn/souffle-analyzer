@@ -23,8 +23,7 @@ def test_printer(
     test_data_file = os.path.join(test_data_dir, filename)
     with open(test_data_file) as f:
         code = f.read()
-    result = os.linesep.join(format_souffle_code(code.splitlines(), uri=filename))
-    result = result.replace(os.linesep, "\n")
+    result = "\n".join(format_souffle_code(code.splitlines(), uri=filename))
 
     out_file = os.path.join(test_data_dir, "test_printer", filename + ".out")
     if update_output:
