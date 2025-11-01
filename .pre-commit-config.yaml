@@ -32,8 +32,8 @@ repos:
       - id: autoflake
         args: [--remove-all-unused-imports, --in-place]
 
-  - repo: https://github.com/psf/black
-    rev: 24.10.0
+  - repo: https://github.com/psf/black-pre-commit-mirror
+    rev: 25.9.0
     hooks:
       - id: black
 
