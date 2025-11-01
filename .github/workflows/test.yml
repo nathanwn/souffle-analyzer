@@ -8,13 +8,13 @@ on:
 
 jobs:
   lint:
-    uses: nathanwn/workflows/.github/workflows/tox.yml@54c16bafa9c75cad9db4d716354fefa87b3cb09b  # v0.6.0
+    uses: nathanwn/workflows/.github/workflows/tox.yml@46f87a62e7c43be8de7917ac94c794a115593ff9  # v0.7.0
     with:
       os: '["ubuntu-latest"]'
       env: '["pre-commit"]'
 
   test:
-    uses: nathanwn/workflows/.github/workflows/tox.yml@54c16bafa9c75cad9db4d716354fefa87b3cb09b  # v0.6.0
+    uses: nathanwn/workflows/.github/workflows/tox.yml@46f87a62e7c43be8de7917ac94c794a115593ff9  # v0.7.0
     with:
       # Use macos-13 instead of macos-14/macos-latest due to:
       # https://github.com/actions/setup-python/issues/825#issuecomment-2012392172
