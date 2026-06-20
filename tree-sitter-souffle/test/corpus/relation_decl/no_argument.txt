@@ -1,0 +1,27 @@
+================================================================================
+relation without arguments
+================================================================================
+
+.decl A()
+A() :- B(42).
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (relation_decl
+    (decl_kw)
+    (identifier))
+  (rule
+    (rule_head
+      (atom
+        (qualified_name
+          (identifier))))
+    (disjunction
+      (conjunction
+        (conjunction_clause
+          (atom
+            (qualified_name
+              (identifier))
+            (argument
+              (constant
+                (decimal)))))))))

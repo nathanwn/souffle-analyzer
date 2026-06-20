@@ -1,0 +1,12 @@
+============================================
+preproc define
+============================================
+
+#define FOOBAR
+
+--------------------------------------------
+
+(source_file
+ (preproc_directive
+  (preproc_define
+   (preproc_macro))))

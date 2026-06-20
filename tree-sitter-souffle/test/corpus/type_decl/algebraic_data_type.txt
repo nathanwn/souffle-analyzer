@@ -1,0 +1,33 @@
+============================================
+abstract data type
+============================================
+
+.type Tree = Empty {}
+           | Node {t1: Tree, val: unsigned, t2: Tree}
+
+--------------------------------------------
+
+(source_file
+ (type_decl
+  (type_kw)
+  (identifier)
+  (eq_type_decl
+   (abstract_data_type
+    (adt_branch
+     (identifier))
+    (adt_branch
+     (identifier)
+     (attribute
+      (identifier)
+      (type_name
+       (user_defined_type_name
+        (identifier))))
+     (attribute
+      (identifier)
+      (type_name
+       (primitive_type)))
+     (attribute
+      (identifier)
+      (type_name
+       (user_defined_type_name
+        (identifier)))))))))

@@ -1,0 +1,48 @@
+====================================
+record type
+====================================
+
+.type Edge = [
+    from: Node,
+    to: Node,
+    weight: number
+]
+
+---
+
+(source_file
+  (type_decl
+    (type_kw)
+    (identifier)
+    (eq_type_decl
+      (record_type
+        (attribute
+          (identifier)
+          (type_name
+            (user_defined_type_name
+              (identifier))))
+        (attribute
+          (identifier)
+          (type_name
+            (user_defined_type_name
+              (identifier))))
+        (attribute
+          (identifier)
+          (type_name
+            (primitive_type)))))))
+
+
+====================================
+empty record type
+====================================
+
+.type Nop = []
+
+------------------------------------
+
+(source_file
+ (type_decl
+  (type_kw)
+  (identifier)
+  (eq_type_decl
+   (record_type))))

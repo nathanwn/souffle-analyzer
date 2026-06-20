@@ -1,0 +1,34 @@
+===================================
+negation
+===================================
+
+A(x) :- B(x), !C(x).
+
+-----------------------------------
+
+(source_file
+  (rule
+    (rule_head
+      (atom
+        (qualified_name
+          (identifier))
+        (argument
+          (variable
+            (identifier)))))
+    (disjunction
+      (conjunction
+        (conjunction_clause
+          (atom
+            (qualified_name
+              (identifier))
+            (argument
+              (variable
+                (identifier)))))
+        (conjunction_clause
+          (neg)
+          (atom
+            (qualified_name
+              (identifier))
+            (argument
+              (variable
+                (identifier)))))))))

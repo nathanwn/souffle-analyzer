@@ -1,0 +1,25 @@
+====================================
+pragma without optional value string
+====================================
+
+.pragma "legacy"
+
+------------------------------------
+
+(source_file
+ (pragma
+  (string_literal)))
+
+
+====================================
+pragma with optional value string
+====================================
+
+.pragma "provenance" "explain"
+
+------------------------------------
+
+(source_file
+ (pragma
+  (string_literal)
+  (string_literal)))

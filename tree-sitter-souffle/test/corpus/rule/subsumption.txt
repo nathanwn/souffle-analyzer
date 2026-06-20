@@ -1,0 +1,34 @@
+================================================================================
+subsumption
+================================================================================
+
+A(x) <= A(y) :- x < y.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (rule
+    (subsumption_head
+      (atom
+        (qualified_name
+          (identifier))
+        (argument
+          (variable
+            (identifier))))
+      (atom
+        (qualified_name
+          (identifier))
+        (argument
+          (variable
+            (identifier)))))
+    (disjunction
+      (conjunction
+        (conjunction_clause
+          (constraint
+            (binary_constraint
+              (argument
+                (variable
+                  (identifier)))
+              (argument
+                (variable
+                  (identifier))))))))))

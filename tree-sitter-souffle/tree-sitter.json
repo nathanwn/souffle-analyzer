@@ -1,0 +1,39 @@
+{
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/config.schema.json",
+  "grammars": [
+    {
+      "name": "souffle",
+      "camelcase": "Souffle",
+      "title": "Souffle",
+      "scope": "source.souffle",
+      "file-types": [
+        "souffle,dl"
+      ],
+      "injection-regex": "^souffle$",
+      "class-name": "TreeSitterSouffle"
+    }
+  ],
+  "metadata": {
+    "version": "0.1.0",
+    "license": "MIT",
+    "description": "Souffle grammar for tree-sitter",
+    "authors": [
+      {
+        "name": "nathanwn",
+        "url": "https://github.com/nathanwn"
+      }
+    ],
+    "links": {
+      "repository": "https://github.com/nathanwn/tree-sitter-souffle"
+    }
+  },
+  "bindings": {
+    "c": true,
+    "go": true,
+    "node": true,
+    "python": true,
+    "rust": true,
+    "swift": true,
+    "zig": false
+  }
+}

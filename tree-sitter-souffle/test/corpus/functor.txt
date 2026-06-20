@@ -1,0 +1,100 @@
+===============================
+functor without arguments
+===============================
+
+.functor g():symbol
+
+-------------------------------
+
+(source_file
+ (functor_decl
+  (functor_kw)
+  (identifier)
+  (type_name
+   (primitive_type))))
+
+
+===============================
+functor with one argument
+===============================
+
+.functor f(x:number):number
+
+-------------------------------
+
+(source_file
+ (functor_decl
+  (functor_kw)
+  (identifier)
+  (functor_attribute
+   (attribute
+    (identifier)
+    (type_name
+     (primitive_type))))
+  (type_name
+   (primitive_type))))
+
+
+===============================
+functor with two arguments
+===============================
+
+.functor f(x:number, y: number):number
+
+-------------------------------
+
+(source_file
+ (functor_decl
+  (functor_kw)
+  (identifier)
+  (functor_attribute
+   (attribute
+    (identifier)
+    (type_name
+     (primitive_type))))
+  (functor_attribute
+   (attribute
+    (identifier)
+    (type_name
+     (primitive_type))))
+  (type_name
+   (primitive_type))))
+
+
+=================================
+functor with anonymous arguments
+=================================
+
+.functor f(number, number):number
+
+---------------------------------
+
+(source_file
+ (functor_decl
+  (functor_kw)
+  (identifier)
+  (functor_attribute
+   (type_name
+    (primitive_type)))
+  (functor_attribute
+   (type_name
+    (primitive_type)))
+  (type_name
+   (primitive_type))))
+
+
+===============================
+stateful functor
+===============================
+
+.functor f():number stateful
+
+-------------------------------
+
+(source_file
+ (functor_decl
+  (functor_kw)
+  (identifier)
+  (type_name
+   (primitive_type))
+  (stateful)))

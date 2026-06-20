@@ -1,0 +1,64 @@
+================================================================================
+input directive with no attribute
+================================================================================
+
+.input edge
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (directive
+    (directive_qualifier
+      (input_kw))
+    (qualified_name
+      (identifier))))
+
+================================================================================
+input directive with one attribute
+================================================================================
+
+.input edge(IO=file)
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (directive
+    (directive_qualifier
+      (input_kw))
+    (qualified_name
+      (identifier))
+    (directive_attribute_assignment
+      (identifier)
+      (directive_value
+        (identifier)))))
+
+================================================================================
+input directive with multiple attributes
+================================================================================
+
+.input edge(IO=file, filename="path/to/infile", columns="4:7", delimiter=",")
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (directive
+    (directive_qualifier
+      (input_kw))
+    (qualified_name
+      (identifier))
+    (directive_attribute_assignment
+      (identifier)
+      (directive_value
+        (identifier)))
+    (directive_attribute_assignment
+      (identifier)
+      (directive_value
+        (string_literal)))
+    (directive_attribute_assignment
+      (identifier)
+      (directive_value
+        (string_literal)))
+    (directive_attribute_assignment
+      (identifier)
+      (directive_value
+        (string_literal)))))

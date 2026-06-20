@@ -11,7 +11,6 @@ on:
       - v[0-9]+.[0-9]+.[0-9]+
 
 # Build on the oldest supported images, so we have broader compatibility
-# Build with gcc-10 to prevent triggering #14150 (default is still gcc-9 on 20.04)
 jobs:
   build_binaries:
     runs-on: ${{ matrix.os }}
@@ -19,25 +18,26 @@ jobs:
       fail-fast: false
       matrix:
         # Try to build on the oldest images possible to maximize compatibility.
-        os: [ubuntu-20.04, windows-2019, macos-13, macos-14]
+        os: [ubuntu-22.04, windows-2022, macos-15-intel, macos-15]
         include:
-          - os: ubuntu-20.04
+          - os: ubuntu-22.04
             asset_name: souffle-analyzer-linux64
-          - os: windows-2019
+          - os: windows-2022
             asset_name: souffle-analyzer-win64.exe
-          - os: macos-13
+          - os: macos-15-intel
             asset_name: souffle-analyzer-macos-x86-64
-          - os: macos-14
+          - os: macos-15
             asset_name: souffle-analyzer-macos-arm64
 
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: '3.14'
       - run: |
           python -m pip install --upgrade pip wheel
           python -m pip install pyinstaller
+          python -m pip install ./tree-sitter-souffle
           python -m pip install .
       - name: Build executable
         run: >

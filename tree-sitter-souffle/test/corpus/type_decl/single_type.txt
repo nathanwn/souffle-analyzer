@@ -1,0 +1,34 @@
+====================================
+primitive type "number"
+====================================
+
+.type myNumber = number
+
+---
+
+(source_file
+  (type_decl
+    (type_kw)
+    name: (identifier)
+    (eq_type_decl
+      (type_name
+        (primitive_type)))))
+
+
+====================================
+user-defined type - component type
+====================================
+
+.type myNumber = Abc.Xyz
+
+---
+
+(source_file
+  (type_decl
+    (type_kw)
+    name: (identifier)
+    (eq_type_decl
+      (type_name
+          (user_defined_type_name
+            (identifier)
+            (identifier))))))

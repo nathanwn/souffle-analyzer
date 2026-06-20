@@ -5,10 +5,10 @@ repos:
     - id: check-useless-excludes
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v5.0.0
+    rev: v6.0.0
     hooks:
     - id: check-added-large-files
-      exclude: ^.*\.gif$
+      exclude: ^(.*\.gif|tree-sitter-souffle/src/.*)$
     - id: check-ast
     - id: check-case-conflict
     - id: check-merge-conflict
@@ -21,38 +21,42 @@ repos:
     - id: trailing-whitespace
 
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.19.1
+    rev: v3.21.2
     hooks:
     - id: pyupgrade
       args: [--py310-plus]
 
   - repo: https://github.com/PyCQA/autoflake
-    rev: v2.3.1
+    rev: v2.3.3
     hooks:
       - id: autoflake
         args: [--remove-all-unused-imports, --in-place]
 
   - repo: https://github.com/psf/black-pre-commit-mirror
-    rev: 25.9.0
+    rev: 26.5.1
     hooks:
       - id: black
+        exclude: ^tree-sitter-souffle/(bindings/.*|binding\.gyp|setup\.py)$
 
   - repo: https://github.com/pycqa/isort
-    rev: 5.13.2
+    rev: 8.0.1
     hooks:
       - id: isort
+        exclude: ^tree-sitter-souffle/(bindings/.*|binding\.gyp|setup\.py)$
 
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.14.1
+    rev: v2.1.0
     hooks:
       - id: mypy
+        exclude: ^tree-sitter-souffle/(bindings/.*|binding\.gyp|setup\.py)$
 
   - repo: https://github.com/pycqa/flake8
-    rev: 7.1.1
+    rev: 7.3.0
     hooks:
       - id: flake8
+        exclude: ^tree-sitter-souffle/(bindings/.*|binding\.gyp|setup\.py)$
 
   - repo: https://github.com/rhysd/actionlint
-    rev: v1.7.7
+    rev: v1.7.12
     hooks:
       - id: actionlint

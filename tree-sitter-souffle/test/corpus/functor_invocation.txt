@@ -1,0 +1,233 @@
+================================================================================
+user-defined functor invocation 1
+================================================================================
+
+A(@f(i)) :- A(i), @f(i) < 100.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (rule
+    (rule_head
+      (atom
+        (qualified_name
+          (identifier))
+        (argument
+          (functor_invocation
+            (user_defined_functor_name
+              (qualified_name
+                (identifier)))
+            (argument
+              (variable
+                (identifier)))))))
+    (disjunction
+      (conjunction
+        (conjunction_clause
+          (atom
+            (qualified_name
+              (identifier))
+            (argument
+              (variable
+                (identifier)))))
+        (conjunction_clause
+          (constraint
+            (binary_constraint
+              (argument
+                (functor_invocation
+                  (user_defined_functor_name
+                    (qualified_name
+                      (identifier)))
+                  (argument
+                    (variable
+                      (identifier)))))
+              (argument
+                (constant
+                  (decimal))))))))))
+
+================================================================================
+user-defined functor invocation 2
+================================================================================
+
+C(@f(i, j)) :- A(i), B(j), @f(i, j) < 100.
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (rule
+    (rule_head
+      (atom
+        (qualified_name
+          (identifier))
+        (argument
+          (functor_invocation
+            (user_defined_functor_name
+              (qualified_name
+                (identifier)))
+            (argument
+              (variable
+                (identifier)))
+            (argument
+              (variable
+                (identifier)))))))
+    (disjunction
+      (conjunction
+        (conjunction_clause
+          (atom
+            (qualified_name
+              (identifier))
+            (argument
+              (variable
+                (identifier)))))
+        (conjunction_clause
+          (atom
+            (qualified_name
+              (identifier))
+            (argument
+              (variable
+                (identifier)))))
+        (conjunction_clause
+          (constraint
+            (binary_constraint
+              (argument
+                (functor_invocation
+                  (user_defined_functor_name
+                    (qualified_name
+                      (identifier)))
+                  (argument
+                    (variable
+                      (identifier)))
+                  (argument
+                    (variable
+                      (identifier)))))
+              (argument
+                (constant
+                  (decimal))))))))))
+
+================================================================================
+intrinsic functor invocation: strlen
+================================================================================
+
+length(n) :- n=strlen("foobar").
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (rule
+    (rule_head
+      (atom
+        (qualified_name
+          (identifier))
+        (argument
+          (variable
+            (identifier)))))
+    (disjunction
+      (conjunction
+        (conjunction_clause
+          (constraint
+            (binary_constraint
+              (argument
+                (variable
+                  (identifier)))
+              (argument
+                (functor_invocation
+                  (intrinsic_functor_name)
+                  (argument
+                    (constant
+                      (string_literal))))))))))))
+
+================================================================================
+intrinsic functor max
+================================================================================
+
+A(max(x, y)) :- B(x).
+C(x) :- x = max y : B(y).
+P(x) :- x = max (y) : Q(y).
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (rule
+    (rule_head
+      (atom
+        (qualified_name
+          (identifier))
+        (argument
+          (functor_invocation
+            (intrinsic_functor_name)
+            (argument
+              (variable
+                (identifier)))
+            (argument
+              (variable
+                (identifier)))))))
+    (disjunction
+      (conjunction
+        (conjunction_clause
+          (atom
+            (qualified_name
+              (identifier))
+            (argument
+              (variable
+                (identifier))))))))
+  (rule
+    (rule_head
+      (atom
+        (qualified_name
+          (identifier))
+        (argument
+          (variable
+            (identifier)))))
+    (disjunction
+      (conjunction
+        (conjunction_clause
+          (constraint
+            (binary_constraint
+              (argument
+                (variable
+                  (identifier)))
+              (argument
+                (aggregator
+                  (aggregator_head
+                    (aggregate_op)
+                    (argument
+                      (variable
+                        (identifier))))
+                  (aggregator_body
+                    (atom
+                      (qualified_name
+                        (identifier))
+                      (argument
+                        (variable
+                          (identifier)))))))))))))
+  (rule
+    (rule_head
+      (atom
+        (qualified_name
+          (identifier))
+        (argument
+          (variable
+            (identifier)))))
+    (disjunction
+      (conjunction
+        (conjunction_clause
+          (constraint
+            (binary_constraint
+              (argument
+                (variable
+                  (identifier)))
+              (argument
+                (aggregator
+                  (aggregator_head
+                    (aggregate_op)
+                    (argument
+                      (paren_argument
+                        (argument
+                          (variable
+                            (identifier))))))
+                  (aggregator_body
+                    (atom
+                      (qualified_name
+                        (identifier))
+                      (argument
+                        (variable
+                          (identifier))))))))))))))

@@ -1,0 +1,12 @@
+====================================
+empty type
+====================================
+
+.type Nop
+
+---
+
+(source_file
+ (type_decl
+  (type_kw)
+  (identifier)))

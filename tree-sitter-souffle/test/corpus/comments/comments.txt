@@ -1,0 +1,60 @@
+====================================
+line comment
+====================================
+
+// This is a line comment
+
+---
+
+(source_file
+  (line_comment))
+
+====================================
+multiple line comments
+====================================
+
+// This is a line comment
+// This is the second line comment
+
+---
+
+(source_file
+  (line_comment)
+  (line_comment))
+
+====================================
+block comment on one line
+====================================
+
+/* This is a block comment */
+
+---
+
+(source_file
+  (block_comment))
+
+====================================
+block comment on multiple lines 1
+====================================
+
+/* This is
+a block comment */
+
+---
+
+(source_file
+  (block_comment))
+
+====================================
+block comment on multiple lines 2
+====================================
+
+/**
+ * This is
+ * a block comment
+**/
+
+---
+
+(source_file
+  (block_comment))

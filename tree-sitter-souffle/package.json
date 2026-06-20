@@ -1,0 +1,53 @@
+{
+  "name": "tree-sitter-souffle",
+  "version": "0.1.0",
+  "description": "Souffle grammar for tree-sitter",
+  "repository": "https://github.com/nathanwn/tree-sitter-souffle",
+  "license": "MIT",
+  "author": {
+    "name": "nathanwn",
+    "url": "https://github.com/nathanwn"
+  },
+  "main": "bindings/node",
+  "types": "bindings/node",
+  "keywords": [
+    "incremental",
+    "parsing",
+    "tree-sitter",
+    "souffle"
+  ],
+  "files": [
+    "grammar.js",
+    "tree-sitter.json",
+    "binding.gyp",
+    "prebuilds/**",
+    "bindings/node/*",
+    "queries/*",
+    "src/**",
+    "*.wasm"
+  ],
+  "dependencies": {
+    "node-addon-api": "^8.2.1",
+    "node-gyp-build": "^4.8.2"
+  },
+  "devDependencies": {
+    "prebuildify": "^6.0.1",
+    "tree-sitter-cli": "^0.25.6"
+  },
+  "peerDependencies": {
+    "tree-sitter": "^0.25.0"
+  },
+  "peerDependenciesMeta": {
+    "tree-sitter": {
+      "optional": true
+    }
+  },
+  "scripts": {
+    "install": "node-gyp-build",
+    "prestart": "npx tree-sitter build --wasm",
+    "start": "npx tree-sitter playground",
+    "test": "npx tree-sitter test",
+    "test_node_bindings": "node --test bindings/node/*_test.js",
+    "test_regression": "./regression.py"
+  }
+}

@@ -1,0 +1,46 @@
+================================================================================
+output directive no attribute
+================================================================================
+
+.output scc
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (directive
+    (directive_qualifier
+      (output_kw))
+    (qualified_name
+      (identifier))))
+
+================================================================================
+output directive no attribute empty paren
+================================================================================
+
+.output scc()
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (directive
+    (directive_qualifier
+      (output_kw))
+    (qualified_name
+      (identifier))))
+
+================================================================================
+output directive case that requires lookahead
+================================================================================
+
+.output foo.output.bar
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (directive
+    (directive_qualifier
+      (output_kw))
+    (qualified_name
+      (identifier)
+      (identifier)
+      (identifier))))

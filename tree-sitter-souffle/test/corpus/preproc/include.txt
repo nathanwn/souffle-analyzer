@@ -1,0 +1,12 @@
+====================================
+preprocessor include
+====================================
+
+#include "numbers"
+
+------------------------------------
+
+(source_file
+  (preproc_directive
+    (preproc_include
+      (path_spec))))
