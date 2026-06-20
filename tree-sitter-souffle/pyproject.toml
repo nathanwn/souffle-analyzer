@@ -14,7 +14,7 @@ classifiers = [
   "Typing :: Typed",
 ]
 authors = [{ name = "nathanwn" }]
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 license.text = "MIT"
 readme = "README.md"
 
@@ -25,5 +25,5 @@ Homepage = "https://github.com/nathanwn/tree-sitter-souffle"
 core = ["tree-sitter~=0.24"]
 
 [tool.cibuildwheel]
-build = "cp310-*"
+build = "cp311-*"
 build-frontend = "build"
