@@ -29,6 +29,7 @@ The following language server capabilities are currently available at both file 
   - generate docstring template for relation declarations
 - Diagnostics
 
+
 ## Repository Structure
 
 This project has 3 main components:
