@@ -1,0 +1,113 @@
+================================================================================
+range expression no step
+================================================================================
+
+A(x) :- x = range(1, 10).
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (rule
+    (rule_head
+      (atom
+        (qualified_name
+          (identifier))
+        (argument
+          (variable
+            (identifier)))))
+    (disjunction
+      (conjunction
+        (conjunction_clause
+          (constraint
+            (binary_constraint
+              (argument
+                (variable
+                  (identifier)))
+              (argument
+                (range_expression
+                  (argument
+                    (constant
+                      (decimal)))
+                  (argument
+                    (constant
+                      (decimal))))))))))))
+
+================================================================================
+range expression
+================================================================================
+
+A(x) :- x = range(-5, 10, 2).
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (rule
+    (rule_head
+      (atom
+        (qualified_name
+          (identifier))
+        (argument
+          (variable
+            (identifier)))))
+    (disjunction
+      (conjunction
+        (conjunction_clause
+          (constraint
+            (binary_constraint
+              (argument
+                (variable
+                  (identifier)))
+              (argument
+                (range_expression
+                  (argument
+                    (unary_operation
+                      (op)
+                      (argument
+                        (constant
+                          (decimal)))))
+                  (argument
+                    (constant
+                      (decimal)))
+                  (argument
+                    (constant
+                      (decimal))))))))))))
+
+================================================================================
+range expression with float
+================================================================================
+
+A(x) :- x = range(-5, 10, 0.5).
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (rule
+    (rule_head
+      (atom
+        (qualified_name
+          (identifier))
+        (argument
+          (variable
+            (identifier)))))
+    (disjunction
+      (conjunction
+        (conjunction_clause
+          (constraint
+            (binary_constraint
+              (argument
+                (variable
+                  (identifier)))
+              (argument
+                (range_expression
+                  (argument
+                    (unary_operation
+                      (op)
+                      (argument
+                        (constant
+                          (decimal)))))
+                  (argument
+                    (constant
+                      (decimal)))
+                  (argument
+                    (constant
+                      (float))))))))))))

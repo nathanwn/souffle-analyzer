@@ -1,0 +1,20 @@
+=====================================
+identifiers starting with ?
+=====================================
+
+.decl A(?first: number, ?second: number)
+
+-------------------------------------
+
+(source_file
+ (relation_decl
+  (decl_kw)
+  name: (identifier)
+  (attribute
+   name: (identifier)
+   type: (type_name
+    (primitive_type)))
+  (attribute
+   name: (identifier)
+   type: (type_name
+    (primitive_type)))))

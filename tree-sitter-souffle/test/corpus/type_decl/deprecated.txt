@@ -1,0 +1,29 @@
+===========================================
+number_type
+===========================================
+
+.number_type MyNumberType
+
+-------------------------------------------
+
+(source_file
+ (deprecated_type_decl
+  (number_type_kw)
+  (type_name
+   (user_defined_type_name
+    (identifier)))))
+
+===========================================
+symbol_type
+===========================================
+
+.symbol_type MySymbolType
+
+-------------------------------------------
+
+(source_file
+ (deprecated_type_decl
+  (symbol_type_kw)
+  (type_name
+   (user_defined_type_name
+    (identifier)))))

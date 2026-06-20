@@ -1,0 +1,129 @@
+================================================================================
+sample component
+================================================================================
+
+.comp Base {
+    .decl R(x:number) overridable
+    R(1).
+    R(x+1) :- R(x), x < 5.
+    .output R
+}
+.comp Sub : Base {
+    .override R
+    R(2).
+    R(x+1) :- R(x), x < 4.
+}
+.init mySub = Sub
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (component_decl
+    (comp_kw)
+    (component_type
+      (identifier))
+    (relation_decl
+      (decl_kw)
+      (identifier)
+      (attribute
+        (identifier)
+        (type_name
+          (primitive_type)))
+      (relation_qualifier))
+    (fact
+      (atom
+        (qualified_name
+          (identifier))
+        (argument
+          (constant
+            (decimal)))))
+    (rule
+      (rule_head
+        (atom
+          (qualified_name
+            (identifier))
+          (argument
+            (binary_operation
+              (lhs
+                (variable
+                  (identifier)))
+              (op)
+              (rhs
+                (constant
+                  (decimal)))))))
+      (disjunction
+        (conjunction
+          (conjunction_clause
+            (atom
+              (qualified_name
+                (identifier))
+              (argument
+                (variable
+                  (identifier)))))
+          (conjunction_clause
+            (constraint
+              (binary_constraint
+                (argument
+                  (variable
+                    (identifier)))
+                (argument
+                  (constant
+                    (decimal)))))))))
+    (directive
+      (directive_qualifier
+        (output_kw))
+      (qualified_name
+        (identifier))))
+  (component_decl
+    (comp_kw)
+    (component_type
+      (identifier))
+    (component_type
+      (identifier))
+    (component_override
+      (override_kw)
+      (identifier))
+    (fact
+      (atom
+        (qualified_name
+          (identifier))
+        (argument
+          (constant
+            (decimal)))))
+    (rule
+      (rule_head
+        (atom
+          (qualified_name
+            (identifier))
+          (argument
+            (binary_operation
+              (lhs
+                (variable
+                  (identifier)))
+              (op)
+              (rhs
+                (constant
+                  (decimal)))))))
+      (disjunction
+        (conjunction
+          (conjunction_clause
+            (atom
+              (qualified_name
+                (identifier))
+              (argument
+                (variable
+                  (identifier)))))
+          (conjunction_clause
+            (constraint
+              (binary_constraint
+                (argument
+                  (variable
+                    (identifier)))
+                (argument
+                  (constant
+                    (decimal))))))))))
+  (component_init
+    (init_kw)
+    (identifier)
+    (component_type
+      (identifier))))

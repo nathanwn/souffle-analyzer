@@ -1,0 +1,144 @@
+================================================================================
+single binary operation
+================================================================================
+
+e(1 - 2).
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (fact
+    (atom
+      (qualified_name
+        (identifier))
+      (argument
+        (binary_operation
+          (lhs
+            (constant
+              (decimal)))
+          (op)
+          (rhs
+            (constant
+              (decimal))))))))
+
+================================================================================
+single binary operation with floats
+================================================================================
+
+e(1.2 - 2.3).
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (fact
+    (atom
+      (qualified_name
+        (identifier))
+      (argument
+        (binary_operation
+          (lhs
+            (constant
+              (float)))
+          (op)
+          (rhs
+            (constant
+              (float))))))))
+
+================================================================================
+multiple binary operations
+================================================================================
+
+e(1 * 2 + 3 * 4).
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (fact
+    (atom
+      (qualified_name
+        (identifier))
+      (argument
+        (binary_operation
+          (lhs
+            (binary_operation
+              (lhs
+                (constant
+                  (decimal)))
+              (op)
+              (rhs
+                (constant
+                  (decimal)))))
+          (op)
+          (rhs
+            (binary_operation
+              (lhs
+                (constant
+                  (decimal)))
+              (op)
+              (rhs
+                (constant
+                  (decimal))))))))))
+
+================================================================================
+unary and binary operations
+================================================================================
+
+e(-1 - 2).
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (fact
+    (atom
+      (qualified_name
+        (identifier))
+      (argument
+        (binary_operation
+          (lhs
+            (unary_operation
+              (op)
+              (argument
+                (constant
+                  (decimal)))))
+          (op)
+          (rhs
+            (constant
+              (decimal))))))))
+
+================================================================================
+unary and binary operations with variables
+================================================================================
+
+e(-a * b + c / d).
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (fact
+    (atom
+      (qualified_name
+        (identifier))
+      (argument
+        (binary_operation
+          (lhs
+            (binary_operation
+              (lhs
+                (unary_operation
+                  (op)
+                  (argument
+                    (variable
+                      (identifier)))))
+              (op)
+              (rhs
+                (variable
+                  (identifier)))))
+          (op)
+          (rhs
+            (binary_operation
+              (lhs
+                (variable
+                  (identifier)))
+              (op)
+              (rhs
+                (variable
+                  (identifier))))))))))

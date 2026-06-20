@@ -1,0 +1,18 @@
+====================================
+nil argument
+====================================
+
+f(0, nil).
+
+---
+
+(source_file
+  (fact
+    (atom
+      (qualified_name
+        (identifier))
+      (argument
+        (constant
+          (decimal)))
+      (argument
+        (nil)))))

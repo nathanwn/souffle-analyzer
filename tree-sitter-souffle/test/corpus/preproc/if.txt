@@ -1,0 +1,54 @@
+=========================================
+preprocessor if
+=========================================
+
+#if BUFSIZE >= 1024 && BUF_SIZE <= 2048
+
+-----------------------------------------
+
+(source_file
+ (preproc_directive
+  (preproc_if
+   (preproc_binary_exp
+    (preproc_binary_exp
+     (identifier)
+     (decimal))
+    (preproc_binary_exp
+     (identifier)
+     (decimal))))))
+
+
+=========================================
+preprocessor if defined with paren
+=========================================
+
+#if defined (__vax__) || defined (__ns16000__)
+
+------------------------------------
+
+(source_file
+ (preproc_directive
+  (preproc_if
+   (preproc_binary_exp
+    (preproc_defined_exp
+     (identifier))
+    (preproc_defined_exp
+     (identifier))))))
+
+
+=========================================
+preprocessor if defined without paren
+=========================================
+
+#if defined __vax__ || defined __ns16000__
+
+------------------------------------
+
+(source_file
+ (preproc_directive
+  (preproc_if
+   (preproc_binary_exp
+    (preproc_defined_exp
+     (identifier))
+    (preproc_defined_exp
+     (identifier))))))

@@ -1,0 +1,18 @@
+================================================================================
+limitsize directive
+================================================================================
+
+.limitsize A(n=47)
+
+--------------------------------------------------------------------------------
+
+(source_file
+  (directive
+    (directive_qualifier
+      (limitsize_kw))
+    (qualified_name
+      (identifier))
+    (directive_attribute_assignment
+      (identifier)
+      (directive_value
+        (decimal)))))

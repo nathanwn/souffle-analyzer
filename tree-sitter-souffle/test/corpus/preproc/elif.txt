@@ -1,0 +1,18 @@
+=========================================
+preprocessor elif
+=========================================
+
+#elif ABC >= 1024 && XYZ == 2048
+
+-----------------------------------------
+
+(source_file
+ (preproc_directive
+  (preproc_elif
+   (preproc_binary_exp
+    (preproc_binary_exp
+     (identifier)
+     (decimal))
+    (preproc_binary_exp
+     (identifier)
+     (decimal))))))

@@ -1,0 +1,51 @@
+===================================
+branch init
+===================================
+
+A($Add($Number(10), $Imaginary())).
+A($Add($Number(10), $Variable("x"))).
+
+-----------------------------------
+
+(source_file
+ (fact
+  (atom
+   (qualified_name
+    (identifier))
+   (argument
+    (branch_init
+     (qualified_name
+      (identifier))
+     (argument
+      (branch_init
+       (qualified_name
+        (identifier))
+       (argument
+        (constant
+         (decimal)))))
+     (argument
+      (branch_init
+       (qualified_name
+        (identifier))))))))
+ (fact
+  (atom
+   (qualified_name
+    (identifier))
+   (argument
+    (branch_init
+     (qualified_name
+      (identifier))
+     (argument
+      (branch_init
+       (qualified_name
+        (identifier))
+       (argument
+        (constant
+         (decimal)))))
+     (argument
+      (branch_init
+       (qualified_name
+        (identifier))
+       (argument
+        (constant
+         (string_literal))))))))))

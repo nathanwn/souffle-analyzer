@@ -1,0 +1,117 @@
+==================================
+hex numbers
+==================================
+
+A(0xF1).
+A(0xE2).
+A(0x33).
+
+B(0x44).
+B(0xF1).
+B(0xAB).
+
+----------------------------------
+
+(source_file
+ (fact
+  (atom
+   (qualified_name
+    (identifier))
+   (argument
+    (constant
+     (hex)))))
+ (fact
+  (atom
+   (qualified_name
+    (identifier))
+   (argument
+    (constant
+     (hex)))))
+ (fact
+  (atom
+   (qualified_name
+    (identifier))
+   (argument
+    (constant
+     (hex)))))
+ (fact
+  (atom
+   (qualified_name
+    (identifier))
+   (argument
+    (constant
+     (hex)))))
+ (fact
+  (atom
+   (qualified_name
+    (identifier))
+   (argument
+    (constant
+     (hex)))))
+ (fact
+  (atom
+   (qualified_name
+    (identifier))
+   (argument
+    (constant
+     (hex))))))
+
+
+==================================
+binary numbers
+==================================
+
+B(0b0).
+B(0b1).
+B(0b101110).
+
+----------------------------------
+
+(source_file
+ (fact
+  (atom
+   (qualified_name
+    (identifier))
+   (argument
+    (constant
+     (binary)))))
+ (fact
+  (atom
+   (qualified_name
+    (identifier))
+   (argument
+    (constant
+     (binary)))))
+ (fact
+  (atom
+   (qualified_name
+    (identifier))
+   (argument
+    (constant
+     (binary))))))
+
+
+==================================
+unsigned numbers
+==================================
+
+U(0u).
+U(99u).
+
+----------------------------------
+
+(source_file
+ (fact
+  (atom
+   (qualified_name
+    (identifier))
+   (argument
+    (constant
+     (unsigned)))))
+ (fact
+  (atom
+   (qualified_name
+    (identifier))
+   (argument
+    (constant
+     (unsigned))))))
