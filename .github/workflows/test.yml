@@ -1,3 +1,4 @@
+---
 name: main
 
 on:
@@ -7,7 +8,7 @@ on:
   pull_request:
 
 permissions:
-      contents: read
+  contents: read
 
 jobs:
   lint:
@@ -55,5 +56,5 @@ jobs:
       - run: npm install
       - run: npm run lint
       - run: npm run compile
-      # TODO(nathanwn): Figure out how to run e2e tests on GitHub Actions.
-      # - run: npm run test
+    # TODO(nathanwn): Figure out how to run e2e tests on GitHub Actions.
+    # - run: npm run test

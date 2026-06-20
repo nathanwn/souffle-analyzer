@@ -1,3 +1,4 @@
+---
 name: release
 on:
   workflow_dispatch:
@@ -41,9 +42,7 @@ jobs:
           python -m pip install .
       - name: Build executable
         run: >
-          python -m PyInstaller -F --name ${{ matrix.asset_name }}
-          --copy-metadata souffle-analyzer
-          src/souffle_analyzer/__main__.py
+          python -m PyInstaller -F --name ${{ matrix.asset_name }} --copy-metadata souffle-analyzer src/souffle_analyzer/__main__.py
       - name: Test executable
         run: |
           ./dist/${{ matrix.asset_name }} --version
